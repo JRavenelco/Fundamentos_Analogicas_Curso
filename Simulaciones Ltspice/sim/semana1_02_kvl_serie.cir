@@ -1,0 +1,15 @@
+* Semana 1.2 - KVL, caidas de tension y balance de potencia
+V1 vin 0 12
+R1 vin n1 1k
+R2 n1 n2 2.2k
+R3 n2 0 3.3k
+.op
+.meas op I_total_mA PARAM -I(V1)*1e3
+.meas op V_R1 PARAM V(vin)-V(n1)
+.meas op V_R2 PARAM V(n1)-V(n2)
+.meas op V_R3 PARAM V(n2)
+.meas op KVL_error_uV PARAM (V(vin)-(V_R1+V_R2+V_R3))*1e6
+.meas op P_source_mW PARAM V(vin)*(-I(V1))*1e3
+.meas op P_resistors_mW PARAM ((V_R1+V_R2+V_R3)*(-I(V1)))*1e3
+.save V(vin) V(n1) V(n2) I(V1)
+.end

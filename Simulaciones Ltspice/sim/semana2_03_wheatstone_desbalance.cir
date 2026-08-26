@@ -1,0 +1,14 @@
+* Semana 2.3 - Puente de Wheatstone, cuarto de puente
+VEX top 0 5
+R1 top left {1k*(1+DELTA)}
+R2 left 0 1k
+R3 top right 1k
+R4 right 0 1k
+.param DELTA=0
+.step param DELTA -0.01 0.01 0.001
+.op
+.meas op VLEFT FIND V(left)
+.meas op VRIGHT FIND V(right)
+.meas op VDIFF PARAM V(left)-V(right)
+.meas op P_R1 PARAM (V(top)-V(left))*(V(top)-V(left))/(1000*(1+DELTA))
+.end

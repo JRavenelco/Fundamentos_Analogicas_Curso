@@ -1,0 +1,17 @@
+* Semana 1 - Ohm, potencia y derating
+* Red serie segura para laboratorio: Vin <= 12 V, I aprox 1.846 mA
+V1 vin 0 12
+R1 vin n1 1k
+R2 n1 n2 2.2k
+R3 n2 0 3.3k
+.op
+.meas op I_total_mA PARAM -I(V1)*1e3
+.meas op V_R1 PARAM V(vin)-V(n1)
+.meas op V_R2 PARAM V(n1)-V(n2)
+.meas op V_R3 PARAM V(n2)
+.meas op P_R1_mW PARAM ((V(vin)-V(n1))*(-I(V1)))*1e3
+.meas op P_R2_mW PARAM ((V(n1)-V(n2))*(-I(V1)))*1e3
+.meas op P_R3_mW PARAM (V(n2)*(-I(V1)))*1e3
+.save V(vin) V(n1) V(n2) I(V1)
+.end
+

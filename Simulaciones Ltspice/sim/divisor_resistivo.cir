@@ -1,0 +1,8 @@
+V1 vin 0 12
+R1 vin vout 30k
+R2 vout 0 10k
+Rload vout 0 100k
+.step param Rload list 100k 47k 10k
+.op
+.save V(vin) V(vout) I(V1)
+.end

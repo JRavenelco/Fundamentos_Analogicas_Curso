@@ -1,0 +1,376 @@
+% =====================================================================
+% Semana 1 · Actividades: normas de los resistores
+% Fundamentos de Sistemas Electrónicos Analógicos (Ingeniería Aeroespacial)
+% Compilar: pdflatex semana_1_actividades_normas_resistores.tex (2 pasadas)
+% =====================================================================
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{circuitikz}
+
+\definecolor{navy}{RGB}{23,54,93}
+\definecolor{navysoft}{RGB}{72,101,140}
+\definecolor{gold}{RGB}{179,142,62}
+\definecolor{ink}{RGB}{44,51,58}
+\definecolor{soft}{RGB}{244,241,234}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamercolor{structure}{fg=navy}
+\setbeamercolor{frametitle}{fg=white,bg=navy}
+\setbeamercolor{title}{fg=navy}
+\setbeamercolor{subtitle}{fg=navysoft}
+\setbeamercolor{itemize item}{fg=gold}
+\setbeamercolor{itemize subitem}{fg=gold}
+\setbeamercolor{block title}{fg=white,bg=navy}
+\setbeamercolor{block body}{bg=soft}
+\setbeamercolor{example text}{fg=navy}
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}
+\setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\circ$}}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+% macro de enlace clicable
+\newcommand{\enlace}[2]{\href{#1}{\textcolor{navy}{\underline{#2}}}}
+
+\title[Actividades · Normas de resistores]{Actividades · Normas de los resistores}
+\subtitle{Semana 1 · Trabajo autónomo con recursos en línea}
+\institute{Licenciatura en Ingeniería Aeroespacial\\ UNAM · ENES Unidad Juriquilla}
+\author{M. en C. José de Jesús Santana Ramírez}
+\date{Semestre 2027-1}
+
+\begin{document}
+
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Objetivos y cómo trabajar}
+  \begin{itemize}
+    \item Leer el \textbf{código de colores} (IEC 60062).
+    \item Elegir el \textbf{valor normalizado} (series E12/E24/E96).
+    \item Calcular \textbf{tolerancia, peor caso y TCR}.
+    \item Seleccionar por \textbf{potencia con derating} (normas aeroespaciales).
+  \end{itemize}
+  \pause
+  \begin{block}{Método por actividad}
+    \textbf{¿Qué necesitas saber?} $\rightarrow$ \textbf{Paso a paso} $\rightarrow$
+    \textbf{Ejemplo resuelto} $\rightarrow$ \textbf{Tu turno} $\rightarrow$ \textbf{Investiga}
+    (clic en el enlace). Toda cantidad con su unidad.
+  \end{block}
+  \pause
+  \begin{block}{Los 4 parámetros que rigen un resistor}
+    Valor ($\Omega$) · Tolerancia (\%) · TCR (ppm/°C) · Potencia/derating (W). En
+    aeroespacial \emph{deben cumplirse los 4 a la vez}.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Actividad 1 · Código de colores (IEC 60062)}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \textbf{Paso a paso}
+      \begin{enumerate}
+        \item Cuenta las bandas (4, 5 o 6).
+        \item Lee los colores de izquierda a derecha.
+        \item Dígitos $\times$ multiplicador.
+        \item Última banda = tolerancia.
+      \end{enumerate}
+      \textbf{Ejemplo} \texttt{Marrón-Negro-Rojo-Dorado}: $10\times100 = \SI{1}{\kilo\ohm}\ \pm 5\,\text{\%}$.
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \footnotesize
+      \begin{tabular}{lll}
+        \toprule
+        Color & Dígito & Mult. \\
+        \midrule
+        Negro & 0 & $\times1$ \\
+        Marrón & 1 & $\times10$ ($\pm1$\,\text{\%}) \\
+        Rojo & 2 & $\times100$ \\
+        Naranja & 3 & $\times1$k \\
+        Amarillo & 4 & $\times10$k \\
+        Verde & 5 & $\times100$k \\
+        Azul & 6 & $\times1$M \\
+        Violeta & 7 & — \\
+        Gris & 8 & — \\
+        Blanco & 9 & — \\
+        Dorado & — & $\times0.1$ ($\pm5$\,\text{\%}) \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Actividad 1 · Tu turno}
+  \begin{enumerate}
+    \item Marrón–Negro–Rojo–Dorado  $\rightarrow$ \_\_\_\_\_\_ $\Omega\ \pm5\,\text{\%}$
+    \item Rojo–Violeta–Marrón–Dorado  $\rightarrow$ \_\_\_\_\_\_ $\Omega\ \pm5\,\text{\%}$
+    \item Naranja–Naranja–Naranja–Dorado  $\rightarrow$ \_\_\_\_\_\_ k$\Omega\ \pm5\,\text{\%}$
+    \item Marrón–Negro–Negro–Marrón–Marrón  $\rightarrow$ \_\_\_\_\_\_ k$\Omega\ \pm1\,\text{\%}$
+  \end{enumerate}
+  \pause
+  \begin{block}{Investiga (haz clic)}
+    \small
+    Calculadora de código de colores:
+    \enlace{https://www.digikey.com/en/resources/conversion-calculators/conversion-calculator-resistor-color-code}{DigiKey}
+    $\;|\;$
+    \enlace{https://www.calculator.net/resistor-color-code-calculator.html}{Calculator.net}\\
+    Simulador de Ohm para comprobar: \enlace{https://phet.colorado.edu/sims/html/ohms-law/latest/ohms-law_en.html}{PhET Ley de Ohm}.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Actividad 2 · Series normalizadas (IEC 60063)}
+  Se elige el valor de la serie \textbf{más cercano} al cálculo.
+  \begin{itemize}
+    \item \textbf{E24} (±5\,\text{\%}): \texttt{1.0, 1.1, 1.2, 1.3, 1.5, 1.6, 1.8, 2.0, 2.2, 2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.3, 4.7, 5.1, 5.6, 6.2, 6.8, 7.5, 8.2, 9.1}
+    \item \textbf{E96} (±1\,\text{\%}): 3 cifras (permite errores menores).
+  \end{itemize}
+  \vspace{0.3em}
+  \textbf{Ejemplo:} $R = \SI{2.37}{\kilo\ohm}$ $\Rightarrow$ E24: \texttt{2.4 k} (error 1.27\,\text{\%}); E96: \texttt{2.37 k} (error 0\,\text{\%}).
+  \pause
+  \vspace{0.4em}
+  \textbf{Tu turno:} $R = \SI{3.10}{\kilo\ohm}$. E24 más cercano $\rightarrow$ \_\_\_\_\_\_ (error \_\_\_\_\_\_\,\text{\%}); ¿existe \texttt{3.09 k} en E96? $\rightarrow$ \_\_\_\_\_\_
+
+  \pause
+  \begin{block}{Investiga}
+   \small
+    Tabla de valores preferidos: \enlace{https://en.wikipedia.org/wiki/E_series_of_preferred_numbers}{Wikipedia E-series}.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Actividad 3 · Tolerancia y peor caso}
+  \[
+    R_{min} = R\left(1-\frac{t}{100}\right)
+    \qquad
+    R_{max} = R\left(1+\frac{t}{100}\right)
+  \]
+  \textbf{Ejemplo:} $1\,\text{k}\Omega \pm 5\,\text{\%}$ $\Rightarrow$ \SI{950}{\ohm} a \SI{1050}{\ohm}.
+  \pause
+  \vspace{0.4em}
+  \textbf{Tu turno:}
+  \begin{enumerate}
+    \item $1\,\text{k}\Omega \pm 1\,\text{\%}$ $\rightarrow$ \_\_\_\_\_\_ a \_\_\_\_\_\_ $\Omega$
+    \item $4.7\,\text{k}\Omega \pm 1\,\text{\%}$ $\rightarrow$ \_\_\_\_\_\_ a \_\_\_\_\_\_ $\Omega$
+    \item Divisor 1:1 con $\pm1\,\text{\%}$ en $V_{in}=5\,\text{V}$: rango de $V_{out}$ y su desvío de 2.5 V.
+  \end{enumerate}
+  \pause
+  \begin{block}{Investiga}
+    \small
+    Arma y mide el divisor: \enlace{https://phet.colorado.edu/sims/html/circuit-construction-kit-dc/latest/circuit-construction-kit-dc_en.html}{PhET Kit DC}
+    $\;|\;$ \enlace{https://www.falstad.com/circuit/}{Falstad}
+    $\;|\;$ repasa la simulación \texttt{semana2\_02\_divisor\_tolerancia.cir}.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Actividad 4 · TCR y deriva térmica}
+  \[
+    \Delta R = R\cdot TCR\cdot \Delta T
+    \qquad
+    error\,\text{\%} = 100\cdot\frac{\Delta R}{R}
+  \]
+  \textbf{Ejemplo:} $R=\SI{10}{\kilo\ohm}$, $TCR=100\,\text{ppm/°C}$, $\Delta T = 50\,^\circ\text{C}$
+  $\Rightarrow$ $\Delta R = \SI{50}{\ohm}$ (0.5\,\text{\%}).
+  \pause
+  \vspace{0.4em}
+  \textbf{Tu turno:} con $R = 10\,\text{k}\Omega$, $\Delta T = 50\,^\circ\text{C}$ y
+  $TCR = 25\,\text{ppm/°C}$ (película metálica) $\Rightarrow$
+  $\Delta R =$ \_\_\_\_\_\_ $\Omega$ (\_\_\_\_\_\_\,\text{\%}). ¿Por qué un divisor de referencia de ADC exige TCR bajo?
+
+  \pause
+  \begin{block}{Investiga}
+    \small
+    \enlace{https://en.wikipedia.org/wiki/Temperature_coefficient}{Wikipedia - Temperature coefficient}
+    $\;|\;$ repasa los tipos de resistor y su TCR en las diapositivas de la Clase 2
+    (\texttt{docs/presentations/semana\_1\_diapositivas.md}).
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Actividad 5 · Potencia nominal y derating}
+  \[
+    P = \frac{V^2}{R}
+    \qquad
+    P_{derated} = 0.5\cdot P_{nominal}
+  \]
+  \textbf{Ejemplo:} $1\,\text{k}\Omega$, $1/4\,\text{W}$ a \SI{12}{\volt} $\Rightarrow$
+  $P=\SI{144}{\milli\watt}$; $P_{derated}=\SI{125}{\milli\watt}$ $\Rightarrow$ \textbf{no cumple} → usar $1/2\,\text{W}$.
+  \pause
+  \vspace{0.4em}
+  \textbf{Tu turno:} $2.2\,\text{k}\Omega$, $1/4\,\text{W}$ a \SI{12}{\volt} $\Rightarrow$
+  $P=$ \_\_\_\_\_\_ mW; ¿cumple? $\rightarrow$ \_\_\_\_\_\_
+
+  \pause
+  \begin{block}{Investiga}
+    \small
+    Busca en cada norma la \textbf{tabla de derating de resistores} (no el documento completo):
+    \enlace{https://llis.nasa.gov/lesson/676}{NASA LLIS-0676}
+    $\;|\;$ \enlace{https://snebulos.mit.edu/projects/reference/NASA-Generic/EEE-INST-002-DeratingPages.pdf}{NASA EEE-INST-002}
+    $\;|\;$ \enlace{https://ecss.nl/standard/ecss-q-st-30-11c-derating-eee-components/}{ECSS-Q-ST-30-11C}.
+    En la de resistores, la regla es $\approx 50\,\text{\%}$ de la potencia nominal.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Actividad 6 · Selección integral (ficha)}
+  Diseño: divisor que entregue $V_{out}\approx 2.5\,\text{V}$ desde $V_{in}=12\,\text{V}$ (ref. ADC, carga despreciable).
+  \[
+    \frac{R_2}{R_1+R_2}=0.208 \qquad \text{prueba } R_1=4.7\,\text{k}\Omega,\ R_2\approx \SI{1.24}{\kilo\ohm}\ (\text{E96})
+  \]
+  \begin{table}
+    \small
+    \begin{tabular}{lll}
+      \toprule
+      Parámetro & Qué pedir & Tu decisión \\
+      \midrule
+      Valor (serie E) & $V_{out}\approx 2.5$ V & R1 = \_\_\_\_, R2 = \_\_\_\_ \\
+      Tolerancia & $V_{out}$ en $\pm0.5$\,\text{\%} & \_\_\_\_\,\text{\%} \\
+      TCR & deriva $<0.1$\,\text{\%} en $40\,^\circ\text{C}$ & \_\_\_\_ ppm/°C \\
+      Potencia & $P\le 0.5\cdot P_{nom}$ & \_\_\_\_ W \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \begin{block}{Justificación por escrito (vale el 10 \%)}
+    Junto a la ficha, redacta \textbf{1–2 líneas por parámetro} explicando \emph{por
+    qué} elegiste ese valor, tolerancia, TCR y potencia. La tabla sin razonamiento
+    \textbf{no} suma esos puntos.
+  \end{block}
+  \pause
+  \begin{block}{Investiga}
+    \small
+    Diseño espacial y peor caso: \enlace{https://s3vi.ndc.nasa.gov/ssri-kb/static/resources/electronic-circuit-design-and-analysis-for-space-applications.pdf}{NASA S3VI}
+    $\;|\;$ \enlace{https://www.falstad.com/circuit/}{Falstad}.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Cómo y cuándo entregar}
+  \begin{itemize}
+    \item \textbf{Formato:} un solo \textbf{PDF} con: (1) respuestas y cálculos
+      (puedes escanear tu cuaderno), (2) capturas de las \textbf{simulaciones}
+      (PhET/Falstad/LTspice), y (3) la \textbf{ficha + justificación} de la Actividad 6.
+    \item \textbf{Archivo:} \texttt{Apellido\_Nombre\_actividad\_resistores.pdf}
+    \item \textbf{Plataforma y fecha:} subir a \textbf{aula virtual} antes del
+      \textbf{\texttt{fecha límite}} a las \textbf{\texttt{hora}}.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Investigación · 1. Herramientas y estándares}
+  \begin{itemize}
+    \item \textbf{Código de colores (DigiKey):} comprueba tus cálculos de la
+      \textbf{Actividad 1}. ¿Qué información técnica \textbf{adicional} aporta la
+      \textbf{6ª banda} en resistores de alta precisión que no existe en los de 4 bandas?
+    \item \textbf{Series E (Wikipedia):} localiza la \textbf{ecuación} que define los
+      valores de la serie. ¿Por qué la norma \textbf{IEC 60063} usa \textbf{escala
+      logarítmica} en lugar de incrementos lineales (subir de 10 $\Omega$ en 10 $\Omega$)?
+    \item \textbf{TCR (Wikipedia):} anota los rangos típicos de TCR de tres tecnologías:
+      \textbf{carbón}, \textbf{película metálica} y \textbf{alambre enrollado (wirewound)}.
+      ¿Cuál es el \textbf{único viable} para el divisor de la Actividad 6?
+  \end{itemize}
+  \pause
+  \begin{block}{Recursos}
+    \small
+    \enlace{https://www.digikey.com/en/resources/conversion-calculators/conversion-calculator-resistor-color-code}{DigiKey}
+    $\;|\;$ \enlace{https://en.wikipedia.org/wiki/E_series_of_preferred_numbers}{Series E}
+    $\;|\;$ \enlace{https://en.wikipedia.org/wiki/Temperature_coefficient}{TCR}.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Investigación · 2. Simulación y verificación}
+  \begin{itemize}
+    \item \textbf{PhET Ley de Ohm / Kit DC:} arma en el simulador el divisor de la
+      \textbf{Actividad 3}, mide $V_{out}$ y anota el resultado. ¿Qué ocurre con la
+      \textbf{corriente} si simulas las resistencias en su escenario de \textbf{peor caso}?
+    \item \textbf{Falstad:} dibuja el circuito final de la \textbf{Actividad 6}. Al pasar
+      el cursor sobre las resistencias, la herramienta muestra la \textbf{potencia}
+      disipada en tiempo real. Captura el dato y verifica si cumple tu margen de derating.
+  \end{itemize}
+  \pause
+  \begin{block}{Recursos}
+    \small
+    \enlace{https://phet.colorado.edu/sims/html/ohms-law/latest/ohms-law_en.html}{PhET Ley de Ohm}
+    $\;|\;$ \enlace{https://phet.colorado.edu/sims/html/circuit-construction-kit-dc/latest/circuit-construction-kit-dc_en.html}{PhET Kit DC}
+    $\;|\;$ \enlace{https://www.falstad.com/circuit/}{Falstad}.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Investigación · 3. Normativas aeroespaciales}
+  \begin{itemize}
+    \item \textbf{NASA LLIS-0676 (Lessons Learned):} describe en un \textbf{párrafo} el
+      mecanismo principal de \textbf{falla térmica} de un componente cuando opera en el
+      \textbf{vacío} del espacio, frente a su disipación en la atmósfera terrestre.
+    \item \textbf{NASA EEE-INST-002 / ECSS-Q-ST-30-11C:} navega al \textbf{índice} y busca
+      la \textbf{tabla de derating para resistores}. Extrae las \textbf{dos reglas de oro}:
+      \begin{itemize}
+        \item ¿Cuál es el \textbf{\% máximo} de potencia nominal (factor de derating) permitido?
+        \item ¿Cuál es la \textbf{temperatura máxima} permitida para el componente?
+      \end{itemize}
+    \item \textbf{NASA S3VI:} enumera \textbf{2 riesgos} principales de usar resistores
+      comerciales (COTS) sin clasificar en lugar de componentes con grado espacial
+      (ej. radiación, ciclado térmico).
+  \end{itemize}
+  \pause
+  \begin{block}{Recursos}
+    \small
+    \enlace{https://llis.nasa.gov/lesson/676}{NASA LLIS-0676}
+    $\;|\;$ \enlace{https://snebulos.mit.edu/projects/reference/NASA-Generic/EEE-INST-002-DeratingPages.pdf}{NASA EEE-INST-002}
+    $\;|\;$ \enlace{https://ecss.nl/standard/ecss-q-st-30-11c-derating-eee-components/}{ECSS-Q-ST-30-11C}
+    $\;|\;$ \enlace{https://s3vi.ndc.nasa.gov/ssri-kb/static/resources/electronic-circuit-design-and-analysis-for-space-applications.pdf}{NASA S3VI}.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Rúbrica y recursos}
+  \begin{columns}[T]
+    \begin{column}{0.44\textwidth}
+      \begin{table}
+        \small
+        \begin{tabular}{lr}
+          \toprule
+          Criterio & Peso \\
+          \midrule
+          Código de colores & 15\,\text{\%} \\
+          Serie E & 20\,\text{\%} \\
+          Tolerancia/peor caso & 20\,\text{\%} \\
+          TCR & 15\,\text{\%} \\
+          Potencia/derating & 20\,\text{\%} \\
+          Ficha justificada & 10\,\text{\%} \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+    \end{column}
+    \begin{column}{0.52\textwidth}
+      \small\textbf{Recursos en línea}
+      \begin{itemize}
+        \item \enlace{https://www.digikey.com/en/resources/conversion-calculators/conversion-calculator-resistor-color-code}{Código de colores (DigiKey)}
+        \item \enlace{https://en.wikipedia.org/wiki/E_series_of_preferred_numbers}{Series E (Wikipedia)}
+        \item \enlace{https://phet.colorado.edu/sims/html/ohms-law/latest/ohms-law_en.html}{PhET Ley de Ohm}
+        \item \enlace{https://phet.colorado.edu/sims/html/circuit-construction-kit-dc/latest/circuit-construction-kit-dc_en.html}{PhET Kit DC}
+        \item \enlace{https://www.falstad.com/circuit/}{Falstad}
+        \item \enlace{https://llis.nasa.gov/lesson/676}{NASA LLIS-0676}
+        \item \enlace{https://snebulos.mit.edu/projects/reference/NASA-Generic/EEE-INST-002-DeratingPages.pdf}{NASA EEE-INST-002}
+        \item \enlace{https://ecss.nl/standard/ecss-q-st-30-11c-derating-eee-components/}{ECSS-Q-ST-30-11C}
+        \item \enlace{https://s3vi.ndc.nasa.gov/ssri-kb/static/resources/electronic-circuit-design-and-analysis-for-space-applications.pdf}{NASA S3VI}
+        \item \enlace{https://en.wikipedia.org/wiki/Temperature_coefficient}{TCR (Wikipedia)}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,12 @@
+* Semana 2.2 - Peor caso de tolerancia en un divisor 1:1
+V1 vin 0 5
+R1 vin vout {1k*(1+T1)}
+R2 vout 0 {1k*(1+T2)}
+.param CASE=0
+.param T1=table(CASE,0,-0.01,1,-0.01,2,0.01,3,0.01)
+.param T2=table(CASE,0,-0.01,1,0.01,2,-0.01,3,0.01)
+.step param CASE list 0 1 2 3
+.op
+.meas op VOUT FIND V(vout)
+.meas op ERROR_PCT PARAM 100*(V(vout)-2.5)/2.5
+.end

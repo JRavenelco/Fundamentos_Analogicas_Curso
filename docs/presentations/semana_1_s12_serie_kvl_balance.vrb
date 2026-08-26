@@ -1,0 +1,15 @@
+\frametitle{Verificación en LTspice}
+Abrir \texttt{semana1\_02\_kvl\_serie.asc}, ejecutar \texttt{.op} y consultar
+  \texttt{View > SPICE Error Log}. El esquema ya mide $I$, las caídas y el error
+  de KVL; para cerrar el balance agregar:
+
+  \begin{verbatim}
+.meas op P_R1_mW PARAM I(R1)*I(R1)*1k*1e3
+.meas op P_R2_mW PARAM I(R2)*I(R2)*2.2k*1e3
+.meas op P_R3_mW PARAM I(R3)*I(R3)*3.3k*1e3
+.meas op P_fuente_mW PARAM V(vin)*(-I(V1))*1e3
+.meas op Balance_mW PARAM P_fuente_mW-(P_R1_mW+P_R2_mW+P_R3_mW)
+  \end{verbatim}
+
+  \textbf{Criterio de éxito:} \texttt{KVL\_error\_uV} $\approx 0$ y
+  \texttt{Balance\_mW} $\approx 0$.

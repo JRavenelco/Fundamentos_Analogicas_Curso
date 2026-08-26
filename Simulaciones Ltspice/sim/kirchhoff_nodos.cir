@@ -1,0 +1,9 @@
+V1 n1 0 10
+R1 n1 n2 2k
+R2 n2 0 1k
+R3 n2 n3 3k
+R4 n3 0 2k
+R5 n3 0 4k
+.op
+.save V(n1) V(n2) V(n3) I(V1)
+.end

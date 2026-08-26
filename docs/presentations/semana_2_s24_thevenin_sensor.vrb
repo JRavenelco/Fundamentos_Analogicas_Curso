@@ -1,0 +1,11 @@
+\frametitle{Verificación en LTspice}
+Abrir \texttt{semana2\_04\_thevenin\_sensor.cir} (barrido de $R_L$: $1\,\text{k}$, $10\,\text{k}$, $100\,\text{k}$)
+  y consultar el Error Log:
+
+  \begin{verbatim}
+.meas op V_ORIGINAL   FIND V(original)
+.meas op V_EQUIVALENT FIND V(equivalent)
+.meas op DIFFERENCE   PARAM V(original)-V(equivalent)
+  \end{verbatim}
+
+  \textbf{Criterio de éxito:} \texttt{DIFFERENCE} $\approx 0$ para las tres cargas.

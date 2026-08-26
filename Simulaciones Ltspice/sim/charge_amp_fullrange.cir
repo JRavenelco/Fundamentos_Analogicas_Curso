@@ -1,0 +1,30 @@
+* ============================================================================
+*  CL-YD-301  -  AMPLIFICADOR DE CARGA dimensionado para el RANGO COMPLETO
+*  0 - 5000 N  (compresion).   Q_max = Sq*Fmax = 4pC/N * 5000N = 20 nC
+* ----------------------------------------------------------------------------
+*  Para que Vout_max = Q_max/Cf quepa en los rieles (+/-12 V, OPA134 ~ +/-10.5 V):
+*     Cf >= Q_max / 10V = 2 nF   ->  se elige Cf = 2.2 nF
+*     S = Sq/Cf = 4pC / 2.2nF = 1.82 mV/N ;  Vout(5000N) = -9.09 V (fondo de escala)
+*  Rf = 10G  ->  tau = Rf*Cf = 22 s (fuga despreciable para fuerza casi-estatica)
+* ============================================================================
+.include C:\Users\jesus\Documents\LTspiceXVII\lib\sub\OPAx134.lib
+
+.param Sq=4p  Cs=7p  Rins=1e13
+.param Cf=2.2n  Rf=10G
+
+* Rampa de fuerza 0 -> 5000 N -> 0  (carga y descarga, para ver linealidad/histeresis)
+Vforce force 0 PWL(0 0  10m 0  60m 5000  110m 5000  160m 0)
+
+Bvoc   voc 0   V=(Sq/Cs)*V(force)
+Cs     voc inv {Cs}
+Rins   voc inv {Rins}
+Cf     inv out {Cf}
+Rf     inv out {Rf}
+
+V4     vcc 0  12
+V5     vee 0 -12
+Xopa   0 inv vcc vee out  OPAx134
+
+.save V(out) V(force)
+.tran 0 0.17 0 50u
+.end

@@ -1,0 +1,15 @@
+\frametitle{Verificación en LTspice}
+Abrir \texttt{semana1\_03\_kcl\_paralelo.asc}, ejecutar \texttt{.op} y consultar
+  \texttt{View > SPICE Error Log}. El esquema ya mide las tres corrientes de rama,
+  la corriente de fuente y el error de KCL; para cerrar el balance agregar:
+
+  \begin{verbatim}
+.meas op P_R1_mW PARAM V(bus)*V(bus)/1k*1e3
+.meas op P_R2_mW PARAM V(bus)*V(bus)/2.2k*1e3
+.meas op P_R3_mW PARAM V(bus)*V(bus)/3.3k*1e3
+.meas op P_fuente_mW PARAM V(bus)*(-I(V1))*1e3
+.meas op Balance_mW PARAM P_fuente_mW-(P_R1_mW+P_R2_mW+P_R3_mW)
+  \end{verbatim}
+
+  \textbf{Criterio de éxito:} \texttt{KCL\_error\_uA} $\approx 0$ y
+  \texttt{Balance\_mW} $\approx 0$.

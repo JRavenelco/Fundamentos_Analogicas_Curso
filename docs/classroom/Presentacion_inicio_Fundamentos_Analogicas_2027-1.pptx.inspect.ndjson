@@ -1,0 +1,287 @@
+{"kind":"deck","id":"pr/qahvv2","name":"Deck"}
+{"kind":"layout","layoutId":"77c856c1-a5e8-4065-909d-b5cb7dd02733","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"90e7e503-3d91-4f62-9a07-c9dd0ba4ead8","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/wd8zzv","slide":1,"title":"UNAM · ENES JURIQUILLA · INGENIERÍA AEROESPACIAL","textShapes":4}
+{"kind":"shape","id":"sh/al8bup0n","slide":1,"name":"cover-overlay","bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/vmhc3uh8","slide":1,"name":"cover-gold-rule","bbox":[62,78,9,484]}
+{"kind":"textbox","id":"sh/kbad0zip","slide":1,"name":"cover-kicker","text":"UNAM · ENES JURIQUILLA · INGENIERÍA AEROESPACIAL","textPreview":"UNAM · ENES JURIQUILLA · INGENIERÍA AEROESPACIAL","textChars":48,"textLines":1,"bbox":[96,80,670,34]}
+{"kind":"textbox","id":"sh/5cju94za","slide":1,"name":"cover-title","text":"Fundamentos de Sistemas\nElectrónicos Analógicos","textPreview":"Fundamentos de Sistemas | Electrónicos Analógicos","textChars":47,"textLines":2,"bbox":[96,155,720,190]}
+{"kind":"textbox","id":"sh/i9sbyp0z","slide":1,"name":"cover-subtitle","text":"Programa, evaluación, ruta temática y trabajo seguro de laboratorio","textPreview":"Programa, evaluación, ruta temática y trabajo seguro de laboratorio","textChars":67,"textLines":1,"bbox":[96,374,650,76]}
+{"kind":"textbox","id":"sh/ja1c7uh4","slide":1,"name":"cover-meta","text":"Semestre 2027-1  |  17 de agosto–6 de diciembre de 2026\nM. en C. José de Jesús Santana Ramírez","textPreview":"Semestre 2027-1  |  17 de agosto–6 de diciembre de 2026 | M. en C. José de Jesús Santana Ramírez","textChars":94,"textLines":2,"bbox":[96,528,650,64]}
+{"kind":"image","id":"im/onexsnuh","slide":1,"name":"","alt":"Laboratorio universitario de electrónica analógica de baja tensión","bbox":[0,0,1280,720]}
+{"kind":"notes","id":"nt/wd8zzv","slide":1,"text":"Dar la bienvenida y explicar que esta sesión fija expectativas comunes desde el primer día.\nSeñalar que programa, criterios y lineamientos permanecerán disponibles en Classroom.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Lineamientos_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx\n- OpenAI ImageGen, imagen original generada para esta presentación.\n[/Sources]"}
+{"kind":"slide","id":"sl/9qesqv","slide":2,"title":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textShapes":8}
+{"kind":"textbox","id":"sh/lo72xw72","slide":2,"name":"section-2","text":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textPreview":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textChars":47,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/y1gj2hor","slide":2,"name":"title-2","text":"La materia convierte señales físicas en decisiones de ingeniería","textPreview":"La materia convierte señales físicas en decisiones de ingeniería","textChars":64,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/z2pkvmpc","slide":2,"name":"rule-2","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/czy1076l","slide":2,"name":"page-2","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"textbox","id":"sh/x072tc76","slide":2,"name":"purpose-lead","text":"Estudiaremos los bloques que polarizan, amplifican, filtran, generan y convierten señales analógicas.","textPreview":"Estudiaremos los bloques que polarizan, amplifican, filtran, generan y convierten señales analógicas.","textChars":101,"textLines":1,"bbox":[62,182,720,94]}
+{"kind":"textbox","id":"sh/axwjyxof","slide":2,"name":"purpose-list","text":"•  Diseñar con rango, ruido, tolerancias y temperatura.\n•  Comprobar márgenes, disipación, protección y derating.\n•  Sostener cada decisión con cálculo, simulación y medición.","textPreview":"•  Diseñar con rango, ruido, tolerancias y temperatura. | •  Comprobar márgenes, disipación, protección y derating. | •  Sostener cada de...","textChars":175,"textLines":3,"bbox":[62,306,710,240]}
+{"kind":"shape","id":"sh/by50r2p0","slide":2,"name":"purpose-panel","bbox":[838,180,330,414]}
+{"kind":"textbox","id":"sh/ove1w76p","slide":2,"name":"purpose-question","text":"Pregunta central","textPreview":"Pregunta central","textChars":16,"textLines":1,"bbox":[872,218,260,34]}
+{"kind":"textbox","id":"sh/pwnips7u","slide":2,"name":"purpose-main","text":"¿Cómo transformar una señal pequeña y vulnerable en información útil, medible y confiable?","textPreview":"¿Cómo transformar una señal pequeña y vulnerable en información útil, medible y confiable?","textChars":90,"textLines":1,"bbox":[872,278,258,220]}
+{"kind":"textbox","id":"sh/lk3ilkja","slide":2,"name":"purpose-context","text":"Contexto: instrumentación aeroespacial de baja tensión","textPreview":"Contexto: instrumentación aeroespacial de baja tensión","textChars":54,"textLines":1,"bbox":[872,520,258,54]}
+{"kind":"notes","id":"nt/9qesqv","slide":2,"text":"Conectar la materia con sensores reales: temperatura, deformación, vibración, luz y presión.\nEnfatizar que el objetivo no es memorizar configuraciones, sino justificar decisiones y verificar límites.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Introducción y objetivo general.\n[/Sources]"}
+{"kind":"slide","id":"sl/wg6m8q","slide":3,"title":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textShapes":15}
+{"kind":"textbox","id":"sh/ml87q18f","slide":3,"name":"section-3","text":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textPreview":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textChars":47,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/98j61wrq","slide":3,"name":"title-3","text":"Al finalizar, diseñarán y defenderán una cadena analógica","textPreview":"Al finalizar, diseñarán y defenderán una cadena analógica","textChars":57,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/o7apsbq5","slide":3,"name":"rule-3","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/zihovm9o","slide":3,"name":"page-3","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"shape","id":"sh/eh87mh83","slide":3,"name":"outcome-0","bbox":[62,190,548,170]}
+{"kind":"textbox","id":"sh/1kz6xwru","slide":3,"name":"outcome-n-0","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[86,210,72,42]}
+{"kind":"textbox","id":"sh/0jqporq9","slide":3,"name":"outcome-h-0","text":"Polarizar","textPreview":"Polarizar","textChars":9,"textLines":1,"bbox":[166,209,380,40]}
+{"kind":"textbox","id":"sh/jel87q9s","slide":3,"name":"outcome-b-0","text":"Determinar puntos Q robustos para TBJ, JFET y MOSFET.","textPreview":"Determinar puntos Q robustos para TBJ, JFET y MOSFET.","textChars":53,"textLines":1,"bbox":[86,268,488,70]}
+{"kind":"shape","id":"sh/yds7yl87","slide":3,"name":"outcome-1","bbox":[656,190,548,170]}
+{"kind":"textbox","id":"sh/grax0vul","slide":3,"name":"outcome-n-1","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[680,210,72,42]}
+{"kind":"textbox","id":"sh/hc3y90v6","slide":3,"name":"outcome-h-1","text":"Amplificar","textPreview":"Amplificar","textChars":10,"textLines":1,"bbox":[760,209,380,40]}
+{"kind":"textbox","id":"sh/upsfy5cv","slide":3,"name":"outcome-b-1","text":"Analizar ganancia, impedancias, ancho de banda y saturación.","textPreview":"Analizar ganancia, impedancias, ancho de banda y saturación.","textChars":60,"textLines":1,"bbox":[680,268,488,70]}
+{"kind":"shape","id":"sh/fq1g7adg","slide":3,"name":"outcome-2","bbox":[62,398,548,170]}
+{"kind":"textbox","id":"sh/snaxwvup","slide":3,"name":"outcome-n-2","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[86,418,72,42]}
+{"kind":"textbox","id":"sh/tojy50va","slide":3,"name":"outcome-h-2","text":"Filtrar y convertir","textPreview":"Filtrar y convertir","textChars":19,"textLines":1,"bbox":[166,417,380,40]}
+{"kind":"textbox","id":"sh/6lsfulcj","slide":3,"name":"outcome-b-2","text":"Traducir especificaciones a filtros, ADC y DAC verificables.","textPreview":"Traducir especificaciones a filtros, ADC y DAC verificables.","textChars":60,"textLines":1,"bbox":[86,476,488,70]}
+{"kind":"shape","id":"sh/7m1w3qd4","slide":3,"name":"outcome-3","bbox":[656,398,548,170]}
+{"kind":"textbox","id":"sh/kjqxsbut","slide":3,"name":"outcome-n-3","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[680,418,72,42]}
+{"kind":"textbox","id":"sh/5kze1gvy","slide":3,"name":"outcome-h-3","text":"Verificar","textPreview":"Verificar","textChars":9,"textLines":1,"bbox":[760,417,380,40]}
+{"kind":"textbox","id":"sh/lgre5cn2","slide":3,"name":"outcome-b-3","text":"Comparar teoría, SPICE y medición con trazabilidad y criterio.","textPreview":"Comparar teoría, SPICE y medición con trazabilidad y criterio.","textChars":62,"textLines":1,"bbox":[680,476,488,70]}
+{"kind":"notes","id":"nt/wg6m8q","slide":3,"text":"Leer los cuatro resultados como compromisos de desempeño observables.\nAnticipar que el proyecto integrador exigirá los cuatro al mismo tiempo.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Objetivos específicos.\n[/Sources]"}
+{"kind":"slide","id":"sl/0k9c11","slide":4,"title":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textShapes":12}
+{"kind":"textbox","id":"sh/jid8r6l8","slide":4,"name":"section-4","text":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textPreview":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textChars":47,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/kjmpkb2t","slide":4,"name":"title-4","text":"Cada tema recorre el mismo ciclo de ingeniería","textPreview":"Cada tema recorre el mismo ciclo de ingeniería","textChars":46,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/5kvqtg3e","slide":4,"name":"rule-4","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/adk7e1kr","slide":4,"name":"page-4","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"shape","id":"sh/wfmpgr2h","slide":4,"name":"loop-n-0","bbox":[64,190,54,54]}
+{"kind":"textbox","id":"sh/xgvqpw32","slide":4,"name":"loop-num-0","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[64,197,54,40]}
+{"kind":"textbox","id":"sh/mpk7ahkf","slide":4,"name":"loop-head-0","text":"Predecir","textPreview":"Predecir","textChars":8,"textLines":1,"bbox":[142,190,360,42]}
+{"kind":"textbox","id":"sh/nqt8jml0","slide":4,"name":"loop-body-0","text":"Modelo, supuestos, unidades y márgenes.","textPreview":"Modelo, supuestos, unidades y márgenes.","textChars":39,"textLines":1,"bbox":[142,237,410,64]}
+{"kind":"shape","id":"sh/jat8fm9s","slide":4,"name":"loop-n-1","bbox":[64,327,54,54]}
+{"kind":"textbox","id":"sh/i9krmhs7","slide":4,"name":"loop-num-1","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[64,334,54,40]}
+{"kind":"textbox","id":"sh/5cbqhwri","slide":4,"name":"loop-head-1","text":"Simular","textPreview":"Simular","textChars":7,"textLines":1,"bbox":[142,327,360,42]}
+{"kind":"textbox","id":"sh/4b29orad","slide":4,"name":"loop-body-1","text":"Barridos, tolerancias, transitorios y peor caso.","textPreview":"Barridos, tolerancias, transitorios y peor caso.","textChars":48,"textLines":1,"bbox":[142,374,410,64]}
+{"kind":"shape","id":"sh/red8j69o","slide":4,"name":"loop-n-2","bbox":[64,464,54,54]}
+{"kind":"textbox","id":"sh/6d4rq1s3","slide":4,"name":"loop-num-2","text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[64,471,54,40]}
+{"kind":"textbox","id":"sh/tgvqlwru","slide":4,"name":"loop-head-2","text":"Medir","textPreview":"Medir","textChars":5,"textLines":1,"bbox":[142,464,360,42]}
+{"kind":"textbox","id":"sh/sfm9sra9","slide":4,"name":"loop-body-2","text":"Datos crudos, incertidumbre y explicación de diferencias.","textPreview":"Datos crudos, incertidumbre y explicación de diferencias.","textChars":57,"textLines":1,"bbox":[142,511,410,64]}
+{"kind":"image","id":"im/qtszuxcz","slide":4,"name":"","alt":"Cálculo, simulación y medición de un circuito analógico","bbox":[620,180,604,420]}
+{"kind":"notes","id":"nt/0k9c11","slide":4,"text":"Usar esta lámina para explicar la estructura recurrente de tareas, prácticas e informes.\nUna captura de pantalla no sustituye un archivo reproducible ni los datos crudos.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Estrategias didácticas y entregas.\n- OpenAI ImageGen, imagen original generada para esta presentación.\n[/Sources]"}
+{"kind":"slide","id":"sl/l82slg","slide":5,"title":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textShapes":18}
+{"kind":"textbox","id":"sh/8v6hojux","slide":5,"name":"section-5","text":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textPreview":"FUNDAMENTOS DE SISTEMAS ELECTRÓNICOS ANALÓGICOS","textChars":47,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/7ux0fetc","slide":5,"name":"title-5","text":"Siete unidades construyen la cadena de señal","textPreview":"Siete unidades construyen la cadena de señal","textChars":44,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/mtozm9cr","slide":5,"name":"rule-5","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/hkzilobe","slide":5,"name":"page-5","text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"shape","id":"sh/vyh0jet8","slide":5,"name":"unit-line-0","bbox":[58,443,157,5]}
+{"kind":"textbox","id":"sh/ux8jqtcn","slide":5,"name":"unit-no-0","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[58,466,157,28]}
+{"kind":"textbox","id":"sh/x4vi94ba","slide":5,"name":"unit-name-0","text":"Polarización","textPreview":"Polarización","textChars":12,"textLines":1,"bbox":[58,500,157,72]}
+{"kind":"shape","id":"sh/c3mhgzup","slide":5,"name":"unit-line-1","bbox":[224,443,157,5]}
+{"kind":"textbox","id":"sh/61ovels3","slide":5,"name":"unit-no-1","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[224,466,157,28]}
+{"kind":"textbox","id":"sh/72hc7q9o","slide":5,"name":"unit-name-1","text":"Amplificación","textPreview":"Amplificación","textChars":13,"textLines":1,"bbox":[224,500,157,72]}
+{"kind":"shape","id":"sh/s3qdgva9","slide":5,"name":"unit-line-2","bbox":[390,443,157,5]}
+{"kind":"textbox","id":"sh/t4zu90ru","slide":5,"name":"unit-no-2","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[390,466,157,28]}
+{"kind":"textbox","id":"sh/u58vi5sf","slide":5,"name":"unit-name-2","text":"Potencia","textPreview":"Potencia","textChars":8,"textLines":1,"bbox":[390,500,157,72]}
+{"kind":"shape","id":"sh/f6hcba90","slide":5,"name":"unit-line-3","bbox":[556,443,157,5]}
+{"kind":"textbox","id":"sh/g7qdkval","slide":5,"name":"unit-no-3","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[556,466,157,28]}
+{"kind":"textbox","id":"sh/h8zud0rq","slide":5,"name":"unit-name-3","text":"Osciladores","textPreview":"Osciladores","textChars":11,"textLines":1,"bbox":[556,500,157,72]}
+{"kind":"shape","id":"sh/29svm58b","slide":5,"name":"unit-line-4","bbox":[722,443,157,5]}
+{"kind":"textbox","id":"sh/3a1cfa9w","slide":5,"name":"unit-no-4","text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[722,466,157,28]}
+{"kind":"textbox","id":"sh/zy1c3ap4","slide":5,"name":"unit-name-4","text":"Op-amps","textPreview":"Op-amps","textChars":7,"textLines":1,"bbox":[722,500,157,72]}
+{"kind":"shape","id":"sh/edsbu5oj","slide":5,"name":"unit-line-5","bbox":[888,443,157,5]}
+{"kind":"textbox","id":"sh/10ju5k7a","slide":5,"name":"unit-no-5","text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[888,466,157,28]}
+{"kind":"textbox","id":"sh/0zatwf6p","slide":5,"name":"unit-name-5","text":"Filtros","textPreview":"Filtros","textChars":7,"textLines":1,"bbox":[888,500,157,72]}
+{"kind":"shape","id":"sh/ra1czaps","slide":5,"name":"unit-line-6","bbox":[1054,443,157,5]}
+{"kind":"textbox","id":"sh/q9sbq5on","slide":5,"name":"unit-no-6","text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1054,466,157,28]}
+{"kind":"textbox","id":"sh/dcju107y","slide":5,"name":"unit-name-6","text":"ADC / DAC","textPreview":"ADC / DAC","textChars":9,"textLines":1,"bbox":[1054,500,157,72]}
+{"kind":"textbox","id":"sh/cbatsf6d","slide":5,"name":"unit-total","text":"64 h teoría  ·  32 h práctica  ·  96 h presenciales","textPreview":"64 h teoría  ·  32 h práctica  ·  96 h presenciales","textChars":51,"textLines":1,"bbox":[58,617,850,36]}
+{"kind":"image","id":"im/d0zitor6","slide":5,"name":"","alt":"Componentes que representan la progresión temática del curso","bbox":[54,168,1172,242]}
+{"kind":"notes","id":"nt/l82slg","slide":5,"text":"Mostrar que las unidades no son temas aislados: cada bloque habilita el siguiente.\nLa asignatura dispone de cuatro horas de teoría y dos horas de práctica por semana.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Unidades del curso.\n- OpenAI ImageGen, imagen original generada para esta presentación.\n[/Sources]"}
+{"kind":"slide","id":"sl/uglpah","slide":6,"title":"RUTA TEMÁTICA · 16 SEMANAS","textShapes":4}
+{"kind":"textbox","id":"sh/1sjqh4bm","slide":6,"name":"section-6","text":"RUTA TEMÁTICA · 16 SEMANAS","textPreview":"RUTA TEMÁTICA · 16 SEMANAS","textChars":26,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/eps7m9cb","slide":6,"name":"title-6","text":"Semanas 1–4: del circuito resistivo al punto de operación","textPreview":"Semanas 1–4: del circuito resistivo al punto de operación","textChars":57,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/fq18futg","slide":6,"name":"rule-6","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/ovupsjud","slide":6,"name":"page-6","text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"textbox","id":"sh/pw3qloby","slide":6,"name":"road-sub-6","text":"17 de agosto–13 de septiembre","textPreview":"17 de agosto–13 de septiembre","textChars":29,"textLines":1,"bbox":[58,157,1100,40]}
+{"kind":"table","id":"tb/jalorqh8","slide":6,"name":"","rows":5,"cols":4,"preview":"Semana | Tema | Práctica central | Evidencia","bbox":[58,218,1164,382]}
+{"kind":"notes","id":"nt/uglpah","slide":6,"text":"Explicar el propósito de cada semana y aclarar que las fechas exactas de entrega se publicarán en Classroom.\nLas semanas son bloques lunes-domingo; los días inhábiles se ajustarán por escrito.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Planeación semanal.\n[/Sources]"}
+{"kind":"slide","id":"sl/ji2xgr","slide":7,"title":"RUTA TEMÁTICA · 16 SEMANAS","textShapes":4}
+{"kind":"textbox","id":"sh/gra5kf65","slide":7,"name":"section-7","text":"RUTA TEMÁTICA · 16 SEMANAS","textPreview":"RUTA TEMÁTICA · 16 SEMANAS","textChars":26,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/fq14ra5k","slide":7,"name":"title-7","text":"Semanas 5–8: amplificación, potencia y protección","textPreview":"Semanas 5–8: amplificación, potencia y protección","textChars":49,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/upsni5oz","slide":7,"name":"rule-7","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/pw36xknm","slide":7,"name":"page-7","text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"textbox","id":"sh/ova5ozm1","slide":7,"name":"road-sub-7","text":"14 de septiembre–11 de octubre","textPreview":"14 de septiembre–11 de octubre","textChars":30,"textLines":1,"bbox":[58,157,1100,40]}
+{"kind":"table","id":"tb/u1w7mtcr","slide":7,"name":"","rows":5,"cols":4,"preview":"Semana | Tema | Práctica central | Evidencia","bbox":[58,218,1164,382]}
+{"kind":"notes","id":"nt/ji2xgr","slide":7,"text":"Explicar el propósito de cada semana y aclarar que las fechas exactas de entrega se publicarán en Classroom.\nLas semanas son bloques lunes-domingo; los días inhábiles se ajustarán por escrito.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Planeación semanal.\n[/Sources]"}
+{"kind":"slide","id":"sl/io5lyh","slide":8,"title":"RUTA TEMÁTICA · 16 SEMANAS","textShapes":4}
+{"kind":"textbox","id":"sh/a1gfed8z","slide":8,"name":"section-8","text":"RUTA TEMÁTICA · 16 SEMANAS","textPreview":"RUTA TEMÁTICA · 16 SEMANAS","textChars":26,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/xo7epsrq","slide":8,"name":"title-8","text":"Semanas 9–12: oscilación, op-amps y filtros","textPreview":"Semanas 9–12: oscilación, op-amps y filtros","textChars":43,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/cnyxgnq5","slide":8,"name":"rule-8","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/ny5wjy98","slide":8,"name":"page-8","text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"textbox","id":"sh/2xwfat83","slide":8,"name":"road-sub-8","text":"12 de octubre–8 de noviembre","textPreview":"12 de octubre–8 de noviembre","textChars":28,"textLines":1,"bbox":[58,157,1100,40]}
+{"kind":"table","id":"tb/07ilkj2p","slide":8,"name":"","rows":5,"cols":4,"preview":"Semana | Tema | Práctica central | Evidencia","bbox":[58,218,1164,382]}
+{"kind":"notes","id":"nt/io5lyh","slide":8,"text":"Explicar el propósito de cada semana y aclarar que las fechas exactas de entrega se publicarán en Classroom.\nLas semanas son bloques lunes-domingo; los días inhábiles se ajustarán por escrito.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Planeación semanal.\n[/Sources]"}
+{"kind":"slide","id":"sl/9utbnf","slide":9,"title":"RUTA TEMÁTICA · 16 SEMANAS","textShapes":4}
+{"kind":"textbox","id":"sh/2tg7q5sv","slide":9,"name":"section-9","text":"RUTA TEMÁTICA · 16 SEMANAS","textPreview":"RUTA TEMÁTICA · 16 SEMANAS","textChars":26,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/pw7qlkr6","slide":9,"name":"title-9","text":"Semanas 13–16: conversión y proyecto integrador","textPreview":"Semanas 13–16: conversión y proyecto integrador","textChars":47,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/ovypsfal","slide":9,"name":"rule-9","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/f6p8vq94","slide":9,"name":"page-9","text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"textbox","id":"sh/e5g7mlsj","slide":9,"name":"road-sub-9","text":"9 de noviembre–6 de diciembre","textPreview":"9 de noviembre–6 de diciembre","textChars":29,"textLines":1,"bbox":[58,157,1100,40]}
+{"kind":"table","id":"tb/kz2ds365","slide":9,"name":"","rows":5,"cols":4,"preview":"Semana | Tema | Práctica central | Evidencia","bbox":[58,218,1164,382]}
+{"kind":"notes","id":"nt/9utbnf","slide":9,"text":"Explicar el propósito de cada semana y aclarar que las fechas exactas de entrega se publicarán en Classroom.\nLas semanas son bloques lunes-domingo; los días inhábiles se ajustarán por escrito.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Planeación semanal.\n[/Sources]"}
+{"kind":"slide","id":"sl/2uwudl","slide":10,"title":"EVALUACIÓN","textShapes":13}
+{"kind":"textbox","id":"sh/1wbuh0nm","slide":10,"name":"section-10","text":"EVALUACIÓN","textPreview":"EVALUACIÓN","textChars":10,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/e90bmlov","slide":10,"name":"title-10","text":"La calificación privilegia evidencia verificable","textPreview":"La calificación privilegia evidencia verificable","textChars":48,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/futcfq5g","slide":10,"name":"rule-10","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/oz2tsv6d","slide":10,"name":"page-10","text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"textbox","id":"sh/2xkbqlo7","slide":10,"name":"grade-pct-0","text":"40 %","textPreview":"40 %","textChars":4,"textLines":1,"bbox":[680,184,118,54]}
+{"kind":"textbox","id":"sh/3ytcjq5s","slide":10,"name":"grade-label-0","text":"Tres exámenes parciales acumulativos","textPreview":"Tres exámenes parciales acumulativos","textChars":36,"textLines":1,"bbox":[818,188,368,54]}
+{"kind":"shape","id":"sh/43itgb6t","slide":10,"name":"grade-rule-0","bbox":[680,246,506,1]}
+{"kind":"textbox","id":"sh/54ra9gne","slide":10,"name":"grade-pct-1","text":"30 %","textPreview":"30 %","textChars":4,"textLines":1,"bbox":[680,268,118,54]}
+{"kind":"textbox","id":"sh/p8nahwn2","slide":10,"name":"grade-label-1","text":"Prácticas, simulaciones e informes","textPreview":"Prácticas, simulaciones e informes","textChars":34,"textLines":1,"bbox":[818,272,368,54]}
+{"kind":"shape","id":"sh/47utormh","slide":10,"name":"grade-rule-1","bbox":[680,330,506,1]}
+{"kind":"textbox","id":"sh/36lsfm5c","slide":10,"name":"grade-pct-2","text":"15 %","textPreview":"15 %","textChars":4,"textLines":1,"bbox":[680,352,118,54]}
+{"kind":"textbox","id":"sh/25cbmh4r","slide":10,"name":"grade-label-2","text":"Proyecto integrador aeroespacial","textPreview":"Proyecto integrador aeroespacial","textChars":32,"textLines":1,"bbox":[818,356,368,54]}
+{"kind":"shape","id":"sh/dcnulw3e","slide":10,"name":"grade-rule-2","bbox":[680,414,506,1]}
+{"kind":"textbox","id":"sh/cbetsbmt","slide":10,"name":"grade-pct-3","text":"10 %","textPreview":"10 %","textChars":4,"textLines":1,"bbox":[680,436,118,54]}
+{"kind":"textbox","id":"sh/ra5sj658","slide":10,"name":"grade-label-3","text":"Tareas de diseño","textPreview":"Tareas de diseño","textChars":16,"textLines":1,"bbox":[818,440,368,54]}
+{"kind":"shape","id":"sh/q9wbq14n","slide":10,"name":"grade-rule-3","bbox":[680,498,506,1]}
+{"kind":"textbox","id":"sh/107upg3a","slide":10,"name":"grade-pct-4","text":"5 %","textPreview":"5 %","textChars":3,"textLines":1,"bbox":[680,520,118,54]}
+{"kind":"textbox","id":"sh/0zetwbmp","slide":10,"name":"grade-label-4","text":"Participación y bitácora","textPreview":"Participación y bitácora","textChars":24,"textLines":1,"bbox":[818,524,368,54]}
+{"kind":"shape","id":"sh/kf658jyd","slide":10,"name":"grade-rule-4","bbox":[680,582,506,1]}
+{"kind":"chart","id":"ch/l83mlwfe","slide":10,"name":"","chartType":"doughnut","bbox":[54,175,550,410]}
+{"kind":"notes","id":"nt/2uwudl","slide":10,"text":"Aclarar que la respuesta numérica sin procedimiento, unidades o interpretación puede recibir crédito parcial limitado.\nExplicar que el proyecto tiene defensa individual y la calificación del equipo puede ajustarse por contribución demostrable.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Integración de la calificación y detalle de componentes.\n[/Sources]"}
+{"kind":"slide","id":"sl/g1wq65","slide":11,"title":"ACREDITACIÓN","textShapes":7}
+{"kind":"textbox","id":"sh/psvm5orm","slide":11,"name":"section-11","text":"ACREDITACIÓN","textPreview":"ACREDITACIÓN","textChars":12,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/2p43a98b","slide":11,"name":"title-11","text":"Exentar exige promedio y cumplimiento","textPreview":"Exentar exige promedio y cumplimiento","textChars":37,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/3qd43e9w","slide":11,"name":"rule-11","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/cv6lg3qd","slide":11,"name":"page-11","text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"shape","id":"sh/dwfm98ry","slide":11,"name":"accred-main","bbox":[54,178,400,416]}
+{"kind":"textbox","id":"sh/qt43et87","slide":11,"name":"accred-eight","text":"8.0","textPreview":"8.0","textChars":3,"textLines":1,"bbox":[82,224,344,116]}
+{"kind":"textbox","id":"sh/bud47y9s","slide":11,"name":"accred-label","text":"promedio mínimo para exentar\nel examen ordinario","textPreview":"promedio mínimo para exentar | el examen ordinario","textChars":48,"textLines":2,"bbox":[82,360,344,105]}
+{"kind":"textbox","id":"sh/0z65k3q9","slide":11,"name":"accred-scale","text":"Escala UNAM: 6–10 aprobatoria; 5 no acreditado","textPreview":"Escala UNAM: 6–10 aprobatoria; 5 no acreditado","textChars":46,"textLines":1,"bbox":[82,512,344,58]}
+{"kind":"textbox","id":"sh/lkfmd8ru","slide":11,"name":"accred-list","text":"•  Al menos 80 % de asistencia obligatoria.\n•  Al menos 80 % de prácticas realizadas e informadas.\n•  Presentar los tres parciales y el proyecto integrador.\n•  Una simulación no sustituye automáticamente el montaje físico.\n•  Quien no exente conserva su derecho a ordinarios conforme a la normativa.","textPreview":"•  Al menos 80 % de asistencia obligatoria. | •  Al menos 80 % de prácticas realizadas e informadas. | •  Presentar los tres parciales y ...","textChars":299,"textLines":5,"bbox":[520,190,678,380]}
+{"kind":"notes","id":"nt/g1wq65","slide":11,"text":"Distinguir claramente entre aprobar institucionalmente y exentar por evaluación continua.\nNo presentar el 8.0 como calificación aprobatoria institucional; es el umbral del curso para exentar.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Marco de evaluación y condiciones de evaluación continua.\n[/Sources]"}
+{"kind":"slide","id":"sl/zvat83","slide":12,"title":"EVALUACIÓN DE LABORATORIO","textShapes":19}
+{"kind":"textbox","id":"sh/qtw3u1gn","slide":12,"name":"section-12","text":"EVALUACIÓN DE LABORATORIO","textPreview":"EVALUACIÓN DE LABORATORIO","textChars":25,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/dw7m5wfy","slide":12,"name":"title-12","text":"Cada práctica usa la misma rúbrica","textPreview":"Cada práctica usa la misma rúbrica","textChars":34,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/svylwryd","slide":12,"name":"rule-12","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/3654zmxw","slide":12,"name":"page-12","text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"shape","id":"sh/i5w3qhgb","slide":12,"name":"rubric-band-0","bbox":[58,188,172.8,78]}
+{"kind":"textbox","id":"sh/58nm1wf2","slide":12,"name":"rubric-pct-0","text":"15 %","textPreview":"15 %","textChars":4,"textLines":1,"bbox":[58,207,172.8,40]}
+{"kind":"shape","id":"sh/47elsryh","slide":12,"name":"rubric-band-1","bbox":[230.8,188,230.4,78]}
+{"kind":"textbox","id":"sh/n294bqx0","slide":12,"name":"rubric-pct-1","text":"20 %","textPreview":"20 %","textChars":4,"textLines":1,"bbox":[230.8,207,230.4,40]}
+{"kind":"shape","id":"sh/21gn2lgf","slide":12,"name":"rubric-band-2","bbox":[461.2,188,288,78]}
+{"kind":"textbox","id":"sh/gra1gbm5","slide":12,"name":"rubric-pct-2","text":"25 %","textPreview":"25 %","textChars":4,"textLines":1,"bbox":[461.2,207,288,40]}
+{"kind":"shape","id":"sh/hsj29g3q","slide":12,"name":"rubric-band-3","bbox":[749.2,188,288,78]}
+{"kind":"textbox","id":"sh/upsje14z","slide":12,"name":"rubric-pct-3","text":"25 %","textPreview":"25 %","textChars":4,"textLines":1,"bbox":[749.2,207,288,40]}
+{"kind":"shape","id":"sh/fq1k76lk","slide":12,"name":"rubric-band-4","bbox":[1037.2,188,172.8,78]}
+{"kind":"textbox","id":"sh/sna1crm9","slide":12,"name":"rubric-pct-4","text":"15 %","textPreview":"15 %","textChars":4,"textLines":1,"bbox":[1037.2,207,172.8,40]}
+{"kind":"textbox","id":"sh/toj25w3u","slide":12,"name":"rubric-head-0","text":"Preparación","textPreview":"Preparación","textChars":11,"textLines":1,"bbox":[60,318,340,36]}
+{"kind":"textbox","id":"sh/6lsja143","slide":12,"name":"rubric-body-0","text":"Prelaboratorio y predicción","textPreview":"Prelaboratorio y predicción","textChars":27,"textLines":1,"bbox":[60,366,340,54]}
+{"kind":"textbox","id":"sh/7m1k36lo","slide":12,"name":"rubric-head-1","text":"Seguridad","textPreview":"Seguridad","textChars":9,"textLines":1,"bbox":[450,318,340,36]}
+{"kind":"textbox","id":"sh/kzq18rmx","slide":12,"name":"rubric-body-1","text":"Orden y bitácora","textPreview":"Orden y bitácora","textChars":16,"textLines":1,"bbox":[450,366,340,54]}
+{"kind":"textbox","id":"sh/50z21w3i","slide":12,"name":"rubric-head-2","text":"Ejecución","textPreview":"Ejecución","textChars":9,"textLines":1,"bbox":[840,318,340,36]}
+{"kind":"textbox","id":"sh/14rqpora","slide":12,"name":"rubric-body-2","text":"Montaje, simulación y datos","textPreview":"Montaje, simulación y datos","textChars":27,"textLines":1,"bbox":[840,366,340,54]}
+{"kind":"textbox","id":"sh/03y9gjap","slide":12,"name":"rubric-head-3","text":"Análisis","textPreview":"Análisis","textChars":8,"textLines":1,"bbox":[60,468,340,36]}
+{"kind":"textbox","id":"sh/zip8ne94","slide":12,"name":"rubric-body-3","text":"Incertidumbre y comparación","textPreview":"Incertidumbre y comparación","textChars":27,"textLines":1,"bbox":[60,516,340,54]}
+{"kind":"textbox","id":"sh/ehgre9sj","slide":12,"name":"rubric-head-4","text":"Comunicación","textPreview":"Comunicación","textChars":12,"textLines":1,"bbox":[450,468,340,36]}
+{"kind":"textbox","id":"sh/dg7ql4ry","slide":12,"name":"rubric-body-4","text":"Conclusiones y trazabilidad","textPreview":"Conclusiones y trazabilidad","textChars":27,"textLines":1,"bbox":[450,516,340,54]}
+{"kind":"shape","id":"sh/cfy9cjad","slide":12,"name":"rubric-warning","bbox":[840,465,338,102]}
+{"kind":"textbox","id":"sh/rep8je98","slide":12,"name":"rubric-warning-text","text":"Una conducta insegura puede suspender la ejecución de la práctica.","textPreview":"Una conducta insegura puede suspender la ejecución de la práctica.","textChars":66,"textLines":1,"bbox":[864,485,290,66]}
+{"kind":"notes","id":"nt/zvat83","slide":12,"text":"Explicar que la práctica no termina al obtener una forma de onda: debe haber análisis y trazabilidad.\nUna conducta insegura detiene la actividad; ninguna calificación justifica energizar un montaje inseguro.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Prácticas e informes.\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Lineamientos_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Rúbrica de práctica.\n[/Sources]"}
+{"kind":"slide","id":"sl/msd1la","slide":13,"title":"TRAZABILIDAD","textShapes":10}
+{"kind":"textbox","id":"sh/ut4jmd0f","slide":13,"name":"section-13","text":"TRAZABILIDAD","textPreview":"TRAZABILIDAD","textChars":12,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/hwvix8j6","slide":13,"name":"title-13","text":"La bitácora permite reconstruir cada decisión","textPreview":"La bitácora permite reconstruir cada decisión","textChars":45,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/gvm1o3il","slide":13,"name":"rule-13","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/7qt0ry1o","slide":13,"name":"page-13","text":"13","textPreview":"13","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"shape","id":"sh/m5kjit0j","slide":13,"name":"log-line","bbox":[110,292,1050,4]}
+{"kind":"shape","id":"sh/9svit8ju","slide":13,"name":"log-dot-0","bbox":[85,266,56,56]}
+{"kind":"textbox","id":"sh/8r21k3i9","slide":13,"name":"log-label-0","text":"ANTES","textPreview":"ANTES","textChars":5,"textLines":1,"bbox":[75,196,180,38]}
+{"kind":"textbox","id":"sh/rmxk3218","slide":13,"name":"log-body-0","text":"Objetivo · esquema y versión · valores · predicciones · riesgos","textPreview":"Objetivo · esquema y versión · valores · predicciones · riesgos","textChars":63,"textLines":1,"bbox":[75,352,330,170]}
+{"kind":"shape","id":"sh/qlojux0n","slide":13,"name":"log-dot-1","bbox":[481,266,56,56]}
+{"kind":"textbox","id":"sh/wfqtc7ip","slide":13,"name":"log-label-1","text":"DURANTE","textPreview":"DURANTE","textChars":7,"textLines":1,"bbox":[471,196,180,38]}
+{"kind":"textbox","id":"sh/x0za5cza","slide":13,"name":"log-body-1","text":"Instrumentos · configuración · datos crudos · cambios · anomalías","textPreview":"Instrumentos · configuración · datos crudos · cambios · anomalías","textChars":65,"textLines":1,"bbox":[471,352,330,170]}
+{"kind":"shape","id":"sh/adobax0j","slide":13,"name":"log-dot-2","bbox":[877,266,56,56]}
+{"kind":"textbox","id":"sh/vexs32h4","slide":13,"name":"log-label-2","text":"DESPUÉS","textPreview":"DESPUÉS","textChars":7,"textLines":1,"bbox":[867,196,180,38]}
+{"kind":"textbox","id":"sh/8b6t8nit","slide":13,"name":"log-body-2","text":"Comparación · incertidumbre · causa de diferencias · conclusión","textPreview":"Comparación · incertidumbre · causa de diferencias · conclusión","textChars":63,"textLines":1,"bbox":[867,352,330,170]}
+{"kind":"textbox","id":"sh/9cfa1szy","slide":13,"name":"log-rule","text":"No se borran resultados adversos: se corrigen con una nueva entrada que explique la causa.","textPreview":"No se borran resultados adversos: se corrigen con una nueva entrada que explique la causa.","textChars":90,"textLines":1,"bbox":[116,572,1010,54]}
+{"kind":"notes","id":"nt/msd1la","slide":13,"text":"Mostrar una bitácora ejemplo durante la exposición si se dispone de ella.\nRecordar que integrantes y contribuciones deben quedar identificados, pero no se proyectará el padrón del grupo.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Lineamientos_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Bitácora y trazabilidad.\n[/Sources]"}
+{"kind":"slide","id":"sl/jnsxd1","slide":14,"title":"REGLAS NO NEGOCIABLES","textShapes":8}
+{"kind":"textbox","id":"sh/65kryxoz","slide":14,"name":"section-14","text":"REGLAS NO NEGOCIABLES","textPreview":"REGLAS NO NEGOCIABLES","textChars":21,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/tsvatc7q","slide":14,"name":"title-14","text":"La seguridad tiene autoridad para detener la práctica","textPreview":"La seguridad tiene autoridad para detener la práctica","textChars":53,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/srm90765","slide":14,"name":"rule-14","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/j2t8nipo","slide":14,"name":"page-14","text":"14","textPreview":"14","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"shape","id":"sh/i1krux83","slide":14,"name":"safety-stop","bbox":[56,178,340,416]}
+{"kind":"textbox","id":"sh/54baps7u","slide":14,"name":"safety-stop-word","text":"ALTO","textPreview":"ALTO","textChars":4,"textLines":1,"bbox":[76,214,300,95]}
+{"kind":"textbox","id":"sh/4329wnq9","slide":14,"name":"safety-stop-text","text":"Cualquier persona puede pedir que se detenga un montaje si observa un riesgo.","textPreview":"Cualquier persona puede pedir que se detenga un montaje si observa un riesgo.","textChars":77,"textLines":1,"bbox":[86,336,280,152]}
+{"kind":"textbox","id":"sh/vyt8jipc","slide":14,"name":"safety-stop-resume","text":"Sólo se reanuda después de revisión.","textPreview":"Sólo se reanuda después de revisión.","textChars":36,"textLines":1,"bbox":[86,520,280,48]}
+{"kind":"textbox","id":"sh/ux0rqd8r","slide":14,"name":"safety-list","text":"•  Armar y modificar con la fuente apagada.\n•  Verificar polaridad, tierra común y cortocircuitos antes de energizar.\n•  Ajustar primero el límite de corriente; máximo ordinario: 12 V DC.\n•  Confirmar la tierra del osciloscopio y los límites de entrada.\n•  Descargar capacitores y revisar tensión residual.\n•  Reportar fallas, daños o incidentes; nunca ocultarlos.","textPreview":"•  Armar y modificar con la fuente apagada. | •  Verificar polaridad, tierra común y cortocircuitos antes de energizar. | •  Ajustar prim...","textChars":364,"textLines":6,"bbox":[460,184,742,360]}
+{"kind":"textbox","id":"sh/4fqx4ja5","slide":14,"name":"safety-emergency","text":"Emergencia: cortar energía si es seguro, avisar al responsable y seguir la señalización vigente; 911 cuando corresponda.","textPreview":"Emergencia: cortar energía si es seguro, avisar al responsable y seguir la señalización vigente; 911 cuando corresponda.","textChars":120,"textLines":1,"bbox":[462,560,734,70]}
+{"kind":"notes","id":"nt/jnsxd1","slide":14,"text":"Pedir al grupo que identifique paro de emergencia, rutas de evacuación y ubicación del responsable.\nNo mover a una persona lesionada salvo peligro inmediato. Confirmar números y señalización vigentes del campus antes de la sesión.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Lineamientos_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Seguridad eléctrica y emergencias.\n- Reglamento de los Laboratorios de la ENES Juriquilla, enero de 2020.\n[/Sources]"}
+{"kind":"slide","id":"sl/to576t","slide":15,"title":"TRABAJO EN EQUIPO","textShapes":19}
+{"kind":"textbox","id":"sh/z25snqpk","slide":15,"name":"section-15","text":"TRABAJO EN EQUIPO","textPreview":"TRABAJO EN EQUIPO","textChars":17,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/k3etgvq5","slide":15,"name":"title-15","text":"Los roles rotan; la responsabilidad es individual","textPreview":"Los roles rotan; la responsabilidad es individual","textChars":49,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/l4nap07q","slide":15,"name":"rule-15","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/axcbal83","slide":15,"name":"page-15","text":"15","textPreview":"15","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"textbox","id":"sh/bylsj6po","slide":15,"name":"role-no-0","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[62,176,58,42]}
+{"kind":"textbox","id":"sh/czutcbq9","slide":15,"name":"role-title-0","text":"Armado","textPreview":"Armado","textChars":6,"textLines":1,"bbox":[142,176,220,42]}
+{"kind":"textbox","id":"sh/x03alg7e","slide":15,"name":"role-body-0","text":"Construye sin energizar y respeta la versión del esquema.","textPreview":"Construye sin energizar y respeta la versión del esquema.","textChars":57,"textLines":1,"bbox":[384,178,760,54]}
+{"kind":"shape","id":"sh/utgbm587","slide":15,"name":"role-rule-0","bbox":[62,242,1082,1]}
+{"kind":"textbox","id":"sh/vupcvaps","slide":15,"name":"role-no-1","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[62,264,58,42]}
+{"kind":"textbox","id":"sh/3u187ixc","slide":15,"name":"role-title-1","text":"Verificación","textPreview":"Verificación","textChars":12,"textLines":1,"bbox":[142,264,220,42]}
+{"kind":"textbox","id":"sh/2ts7edgr","slide":15,"name":"role-body-1","text":"Revisa polaridad, valores, tierra y límite de corriente.","textPreview":"Revisa polaridad, valores, tierra y límite de corriente.","textChars":56,"textLines":1,"bbox":[384,266,760,54]}
+{"kind":"shape","id":"sh/pwjq98f2","slide":15,"name":"role-rule-1","bbox":[62,330,1082,1]}
+{"kind":"textbox","id":"sh/4vapgnyh","slide":15,"name":"role-no-2","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[62,352,58,42]}
+{"kind":"textbox","id":"sh/ry18bix8","slide":15,"name":"role-title-2","text":"Medición","textPreview":"Medición","textChars":8,"textLines":1,"bbox":[142,352,220,42]}
+{"kind":"textbox","id":"sh/qxsridgn","slide":15,"name":"role-body-2","text":"Configura instrumentos y conserva datos crudos.","textPreview":"Configura instrumentos y conserva datos crudos.","textChars":47,"textLines":1,"bbox":[384,354,760,54]}
+{"kind":"shape","id":"sh/dk3qdsfe","slide":15,"name":"role-rule-2","bbox":[62,418,1082,1]}
+{"kind":"textbox","id":"sh/cza9knyt","slide":15,"name":"role-no-3","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[62,440,58,42]}
+{"kind":"textbox","id":"sh/zml8f2x4","slide":15,"name":"role-title-3","text":"Simulación","textPreview":"Simulación","textChars":10,"textLines":1,"bbox":[142,440,220,42]}
+{"kind":"textbox","id":"sh/elcrmxgz","slide":15,"name":"role-body-3","text":"Mantiene modelos, parámetros y archivos reproducibles.","textPreview":"Mantiene modelos, parámetros y archivos reproducibles.","textChars":54,"textLines":1,"bbox":[384,442,760,54]}
+{"kind":"shape","id":"sh/ahwbe107","slide":15,"name":"role-rule-3","bbox":[62,506,1082,1]}
+{"kind":"textbox","id":"sh/vi5s76hc","slide":15,"name":"role-no-4","text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[62,528,58,42]}
+{"kind":"textbox","id":"sh/wjytgbix","slide":15,"name":"role-title-4","text":"Registro","textPreview":"Registro","textChars":8,"textLines":1,"bbox":[142,528,220,42]}
+{"kind":"textbox","id":"sh/xk7u9wzi","slide":15,"name":"role-body-4","text":"Actualiza bitácora, cambios, anomalías y contribuciones.","textPreview":"Actualiza bitácora, cambios, anomalías y contribuciones.","textChars":56,"textLines":1,"bbox":[384,530,760,54]}
+{"kind":"shape","id":"sh/mtwbah0v","slide":15,"name":"role-rule-4","bbox":[62,594,1082,1]}
+{"kind":"shape","id":"sh/ne5s3mhg","slide":15,"name":"role-callout","bbox":[802,602,342,54]}
+{"kind":"textbox","id":"sh/ofetcri1","slide":15,"name":"role-callout-text","text":"Todas las personas pueden ser interrogadas en la defensa.","textPreview":"Todas las personas pueden ser interrogadas en la defensa.","textChars":57,"textLines":1,"bbox":[820,614,306,34]}
+{"kind":"notes","id":"nt/to576t","slide":15,"text":"Los roles deben cambiar entre prácticas para que nadie quede limitado a una sola función.\nLa calificación común puede ajustarse individualmente por evidencia, defensa o incumplimiento.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Lineamientos_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Trabajo en equipo.\n[/Sources]"}
+{"kind":"slide","id":"sl/ay9q03","slide":16,"title":"INTEGRIDAD ACADÉMICA","textShapes":10}
+{"kind":"textbox","id":"sh/547id87m","slide":16,"name":"section-16","text":"INTEGRIDAD ACADÉMICA","textPreview":"INTEGRIDAD ACADÉMICA","textChars":20,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/ihwj2d8b","slide":16,"name":"title-16","text":"La IA puede apoyar; la comprensión no se delega","textPreview":"La IA puede apoyar; la comprensión no se delega","textChars":47,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/ji50bipw","slide":16,"name":"rule-16","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/s7y18nqd","slide":16,"name":"page-16","text":"16","textPreview":"16","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"shape","id":"sh/t87ihs7y","slide":16,"name":"ai-head-0","bbox":[58,184,350,64]}
+{"kind":"textbox","id":"sh/65gj6d87","slide":16,"name":"ai-head-text-0","text":"SE PERMITE","textPreview":"SE PERMITE","textChars":10,"textLines":1,"bbox":[58,198,350,38]}
+{"kind":"textbox","id":"sh/76p0fips","slide":16,"name":"ai-list-0","text":"•  Explorar alternativas\n•  Depurar código\n•  Mejorar redacción\n•  Contrastar resultados","textPreview":"•  Explorar alternativas | •  Depurar código | •  Mejorar redacción | •  Contrastar resultados","textChars":88,"textLines":4,"bbox":[78,280,312,250]}
+{"kind":"shape","id":"sh/gbi1c7q9","slide":16,"name":"ai-head-1","bbox":[448,184,350,64]}
+{"kind":"textbox","id":"sh/hcrils7u","slide":16,"name":"ai-head-text-1","text":"SE EXIGE","textPreview":"SE EXIGE","textChars":8,"textLines":1,"bbox":[448,198,350,38]}
+{"kind":"textbox","id":"sh/lgzyto7u","slide":16,"name":"ai-list-1","text":"•  Declarar herramienta y propósito\n•  Verificar cálculos y fuentes\n•  Conservar archivos de trabajo\n•  Defender las decisiones","textPreview":"•  Declarar herramienta y propósito | •  Verificar cálculos y fuentes | •  Conservar archivos de trabajo | •  Defender las decisiones","textChars":127,"textLines":4,"bbox":[468,280,312,250]}
+{"kind":"shape","id":"sh/0fqx0369","slide":16,"name":"ai-head-2","bbox":[838,184,350,64]}
+{"kind":"textbox","id":"sh/zehgrypo","slide":16,"name":"ai-head-text-2","text":"SE PROHÍBE","textPreview":"SE PROHÍBE","textChars":10,"textLines":1,"bbox":[838,198,350,38]}
+{"kind":"textbox","id":"sh/yd8fytoj","slide":16,"name":"ai-list-2","text":"•  Inventar datos\n•  Alterar evidencias\n•  Copiar informes\n•  Usar IA en examen sin permiso","textPreview":"•  Inventar datos | •  Alterar evidencias | •  Copiar informes | •  Usar IA en examen sin permiso","textChars":91,"textLines":4,"bbox":[858,280,312,250]}
+{"kind":"textbox","id":"sh/9kjyx876","slide":16,"name":"ai-bottom","text":"Toda entrega debe permitir identificar qué comprende y qué aportó cada estudiante.","textPreview":"Toda entrega debe permitir identificar qué comprende y qué aportó cada estudiante.","textChars":82,"textLines":1,"bbox":[120,580,1040,58]}
+{"kind":"notes","id":"nt/ay9q03","slide":16,"text":"Aclarar que cada actividad podrá restringir herramientas adicionales.\nLa declaración de uso de IA debe ser breve y concreta: herramienta, propósito y verificación realizada.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Integridad académica y uso de IA.\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Lineamientos_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Integridad, fuentes e IA.\n[/Sources]"}
+{"kind":"slide","id":"sl/w4yvvg","slide":17,"title":"COMUNICACIÓN Y ENTREGAS","textShapes":10}
+{"kind":"textbox","id":"sh/r250vy1g","slide":17,"name":"section-17","text":"COMUNICACIÓN Y ENTREGAS","textPreview":"COMUNICACIÓN Y ENTREGAS","textChars":23,"textLines":1,"bbox":[54,28,780,24]}
+{"kind":"textbox","id":"sh/s3eh4j21","slide":17,"name":"title-17","text":"Classroom será el registro oficial","textPreview":"Classroom será el registro oficial","textChars":34,"textLines":1,"bbox":[54,67,1160,66]}
+{"kind":"shape","id":"sh/d47ixojm","slide":17,"name":"rule-17","bbox":[54,139,1172,3]}
+{"kind":"textbox","id":"sh/e5gz6t07","slide":17,"name":"page-17","text":"17","textPreview":"17","textChars":2,"textLines":1,"bbox":[1165,675,60,22]}
+{"kind":"shape","id":"sh/f6p0zy1s","slide":17,"name":"class-line","bbox":[80,325,1110,4]}
+{"kind":"textbox","id":"sh/07yh83id","slide":17,"name":"class-phase-0","text":"CONSULTAR","textPreview":"CONSULTAR","textChars":9,"textLines":1,"bbox":[74,202,330,40]}
+{"kind":"shape","id":"sh/1s7i18ji","slide":17,"name":"class-dot-0","bbox":[74,298,56,56]}
+{"kind":"textbox","id":"sh/2tgzad03","slide":17,"name":"class-body-0","text":"Programa, lineamientos, prácticas, rúbricas, avisos y fechas.","textPreview":"Programa, lineamientos, prácticas, rúbricas, avisos y fechas.","textChars":61,"textLines":1,"bbox":[74,380,330,140]}
+{"kind":"textbox","id":"sh/nup03i1o","slide":17,"name":"class-phase-1","text":"ENTREGAR","textPreview":"ENTREGAR","textChars":8,"textLines":1,"bbox":[470,202,330,40]}
+{"kind":"shape","id":"sh/3y1wn6x8","slide":17,"name":"class-dot-1","bbox":[470,298,56,56]}
+{"kind":"textbox","id":"sh/2dsfe1gn","slide":17,"name":"class-body-1","text":"Versión final que abra correctamente, más archivos fuente y datos.","textPreview":"Versión final que abra correctamente, más archivos fuente y datos.","textChars":66,"textLines":1,"bbox":[470,380,330,140]}
+{"kind":"textbox","id":"sh/p0jepwfy","slide":17,"name":"class-phase-2","text":"REVISAR","textPreview":"REVISAR","textChars":7,"textLines":1,"bbox":[866,202,330,40]}
+{"kind":"shape","id":"sh/4zaxgryd","slide":17,"name":"class-dot-2","bbox":[866,298,56,56]}
+{"kind":"textbox","id":"sh/vahwjmxw","slide":17,"name":"class-body-2","text":"Identificar actividad, criterio de rúbrica y evidencia concreta.","textPreview":"Identificar actividad, criterio de rúbrica y evidencia concreta.","textChars":64,"textLines":1,"bbox":[866,380,330,140]}
+{"kind":"shape","id":"sh/u98fahgb","slide":17,"name":"class-late","bbox":[130,562,1020,70]}
+{"kind":"textbox","id":"sh/hcjelwf2","slide":17,"name":"class-late-text","text":"Después del cierre sólo se califica si existe ventana tardía o excepción documentada. Los cambios generales se publican por escrito y aplican a todo el grupo.","textPreview":"Después del cierre sólo se califica si existe ventana tardía o excepción documentada. Los cambios generales se publican por escrito y apl...","textChars":158,"textLines":1,"bbox":[156,576,968,46]}
+{"kind":"notes","id":"nt/w4yvvg","slide":17,"text":"Pedir al estudiantado activar notificaciones y revisar que use la cuenta correcta.\nNo enviar invitaciones durante esta exposición; el padrón se utilizará después y no forma parte de las diapositivas.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Entregas, retroalimentación y revisión.\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Lineamientos_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Google Classroom y comunicación.\n[/Sources]"}
+{"kind":"slide","id":"sl/t0tvb8","slide":18,"title":"SEMANA 1 · 17–23 DE AGOSTO","textShapes":4}
+{"kind":"shape","id":"sh/9kb2h0ja","slide":18,"name":"close-overlay","bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/ozi1ofip","slide":18,"name":"close-gold","bbox":[64,76,9,520]}
+{"kind":"textbox","id":"sh/bmtkja1g","slide":18,"name":"close-kicker","text":"SEMANA 1 · 17–23 DE AGOSTO","textPreview":"SEMANA 1 · 17–23 DE AGOSTO","textChars":26,"textLines":1,"bbox":[98,84,520,34]}
+{"kind":"textbox","id":"sh/alk3q50v","slide":18,"name":"close-title","text":"Primero predecimos.\nDespués simulamos.\nFinalmente medimos.","textPreview":"Primero predecimos. | Después simulamos. | Finalmente medimos.","textChars":58,"textLines":3,"bbox":[98,158,620,250]}
+{"kind":"textbox","id":"sh/xob2lkjm","slide":18,"name":"close-actions","text":"•  Leer programa y lineamientos.\n•  Confirmar acceso a Classroom.\n•  Preparar calculadora, cuaderno y archivos de simulación.","textPreview":"•  Leer programa y lineamientos. | •  Confirmar acceso a Classroom. | •  Preparar calculadora, cuaderno y archivos de simulación.","textChars":125,"textLines":3,"bbox":[104,458,600,136]}
+{"kind":"textbox","id":"sh/wn2lsfi1","slide":18,"name":"close-question","text":"¿Qué necesitan aclarar antes de comenzar?","textPreview":"¿Qué necesitan aclarar antes de comenzar?","textChars":41,"textLines":1,"bbox":[98,630,680,42]}
+{"kind":"image","id":"im/nqxwbml8","slide":18,"name":"","alt":"Prototipo de acondicionamiento de señal para instrumentación aeroespacial","bbox":[0,0,1280,720]}
+{"kind":"notes","id":"nt/t0tvb8","slide":18,"text":"Cerrar abriendo preguntas y solicitar que el grupo confirme la lectura de los documentos cuando se publiquen.\nAdelantar que el proyecto final será una cadena analógica de baja tensión con requisitos, prueba de aceptación y defensa.\n\n[Sources]\n- C:/Users/jesus/Documents/Fundamentos_Analogicas/docs/classroom/Programa_Fundamentos_Sistemas_Electronicos_Analogicos_2027-1.docx — Planeación semanal y proyecto integrador.\n- OpenAI ImageGen, imagen original generada para esta presentación.\n[/Sources]"}

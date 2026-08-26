@@ -1,0 +1,12 @@
+* Semana 2.1 - Divisor cargado y criterio de impedancia
+V1 vin 0 5
+R1 vin vout 1k
+R2 vout 0 1k
+Rload vout 0 {RL}
+.param RL=100k
+.step param RL list 10k 47k 100k 1Meg
+.op
+.meas op VOUT FIND V(vout)
+.meas op IIN PARAM -I(V1)
+.meas op ERROR_PCT PARAM 100*(V(vout)-2.5)/2.5
+.end

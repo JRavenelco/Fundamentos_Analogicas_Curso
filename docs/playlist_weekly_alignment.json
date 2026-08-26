@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "playlist": {
+    "id": "PLb_ph_WdlLDny2cGloFSxyRgO8B733jeo",
+    "title": "Curso GRATIS de Electronica Analogica",
+    "url": "https://youtube.com/playlist?list=PLb_ph_WdlLDny2cGloFSxyRgO8B733jeo",
+    "video_count": 100
+  },
+  "course_load": {
+    "weeks": 16,
+    "hours_per_week": 6,
+    "theory_hours_per_week": 4,
+    "practice_hours_per_week": 2
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "title": "Magnitudes electricas y criterio de energia",
+      "video_ids": ["KkoudrHOpGE", "57_FZ92uwT8"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Red resistiva de bajo voltaje, medicion de V/I/P y simulacion .op.",
+      "aerospace_focus": "Energia limitada, disipacion, buses de potencia y margen.",
+      "deliverable": "Reporte de V, I, R, P, E y margen de potencia."
+    },
+    {
+      "week": 2,
+      "title": "Resistores, divisores y sensores resistivos",
+      "video_ids": ["jli6YBkRt3U", "Sfkp81yplPc", "Sm2KjO_MBzE", "QWwoDewT43A", "4uYnyIRw46g"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Divisor para ADC con efecto de carga y tolerancias.",
+      "aerospace_focus": "Derating de resistores y sensado de bus/telemetria.",
+      "deliverable": "Divisor validado con error, potencia y tolerancia."
+    },
+    {
+      "week": 3,
+      "title": "Kirchhoff, conversion de fuentes y puentes",
+      "video_ids": ["xl-eCmWCAzY", "JFiDufguZbA", "M8EtFN1_5ik", "Dm_fKNuoPP0", "EjUwGgPhl_8", "TQve3J-0510"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Puente resistivo de bajo voltaje y medicion de desbalance.",
+      "aerospace_focus": "Galgas, termistores y sensores resistivos en estructuras.",
+      "deliverable": "Reporte de puente con sensibilidad, rango y error."
+    },
+    {
+      "week": 4,
+      "title": "Teoremas de redes y metodos sistematicos",
+      "video_ids": ["VHNM40ookBw", "cPCXT5OUwgM", "pFbEUhOmges", "otYl_8qQTAk", "yuHbKjSdEVA", "jiTbW6sleM4", "ZKmfvq3rsks", "0IVNoQC8DyM"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Equivalente Thevenin/Norton de una red de sensor.",
+      "aerospace_focus": "Modelado de subsistemas como bloques equivalentes.",
+      "deliverable": "Equivalente verificado contra circuito original."
+    },
+    {
+      "week": 5,
+      "title": "Mallas, nodos y entrada a corriente alterna",
+      "video_ids": ["z6f951TcIdk", "31idalxvY7w", "f4PXdR_zdnY", "yP7oQMhw8Eg", "FuyJhxB_0Vw", "rrr68mtgfCM", "BhX8N6yhUSs", "cLHHyK1ik7M"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Resolver una red por nodos/mallas y comparar con SPICE.",
+      "aerospace_focus": "Avionica a 400 Hz, fase, RMS y medicion correcta.",
+      "deliverable": "Comparacion nodos/mallas/simulacion."
+    },
+    {
+      "week": 6,
+      "title": "Capacitores y transitorios RC",
+      "video_ids": ["Jf14yyhVrAk", "8RxiB6t7Rh8", "oZ8J9mgo69w", "k9nVIFnkxIE", "N-RlEoNgIbM", "57EwMo4x7D4", "3DcWhL_ZJRY", "7HnPH5XBiT4", "O4cV6k5Y98A"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Medir y simular respuesta RC a escalon.",
+      "aerospace_focus": "Desacoplo, hold-up, fuga, ESR y temperatura.",
+      "deliverable": "Curva de carga/descarga con tau experimental."
+    },
+    {
+      "week": 7,
+      "title": "Inductores, RL y comportamiento reactivo",
+      "video_ids": ["LXwFKTRQzVY", "7mYAfZMzdv8", "ZcSSSi6go7c", "AYQgpRUtLwU", "17Fk2MN9c_Q", "sUYxMDPnGWU", "QoNeZS0Xc7Q", "cdR5rioDoKo", "k0Lgoss3Kdw"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Barrido en frecuencia de red RL/RC.",
+      "aerospace_focus": "Bobinas, relays, actuadores y EMI.",
+      "deliverable": "Grafica de fase/magnitud para RL o RC."
+    },
+    {
+      "week": 8,
+      "title": "Potencia AC y factor de potencia",
+      "video_ids": ["KwDjl2Y1xW0", "bKXM8W-OaE0", "pebkVPmUeVY", "Wlw6peR88-w", "2uoIQwFe_yU", "PBU9dGh6vZo"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Simular cargas R/L/C y calcular triangulo de potencia.",
+      "aerospace_focus": "Sistemas AC de 400 Hz, eficiencia y calentamiento.",
+      "deliverable": "Analisis de potencia AC y factor de potencia."
+    },
+    {
+      "week": 9,
+      "title": "Filtros pasivos, resonancia y transformadores",
+      "video_ids": ["KQvxdAlBj04", "4LhDcDaefzo", "KxDOmMMo6so", "vHFVBn3E3l4", "fHOQ986yyZ0"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Diseno y barrido AC de filtro RC.",
+      "aerospace_focus": "Anti-alias, EMI, ruido e aislamiento.",
+      "deliverable": "Filtro pasivo validado por simulacion y medicion."
+    },
+    {
+      "week": 10,
+      "title": "Diodos y proteccion basica",
+      "video_ids": ["1QQFe_fQ7Oc", "gB7ImT50VY0", "3yek_OGj7Bw", "Euj7xa4WoVE"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Limitador con diodos y flyback para carga inductiva.",
+      "aerospace_focus": "Proteccion contra transitorios y cargas inductivas.",
+      "deliverable": "Circuito de proteccion antes/despues."
+    },
+    {
+      "week": 11,
+      "title": "Rectificacion, clamps y polaridad inversa",
+      "video_ids": ["ptzroHimUGU", "DXmvj0qd0RI", "XIPhBgh3z_Y", "k2w1bMIf7mw", "LVrmY0woUEg", "TVqnYJURm2o", "g4r5cfbkLD8", "KE3NoFTJeLQ"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Rectificador con carga/capacitor y proteccion de polaridad.",
+      "aerospace_focus": "Entrada de potencia robusta y proteccion por conexion incorrecta.",
+      "deliverable": "Rectificador/proteccion con tensiones y potencia."
+    },
+    {
+      "week": 12,
+      "title": "Zener, regulacion y fuentes simples",
+      "video_ids": ["3N2uUs4y4Vo", "fI9cBsGLV2M", "ssxt0WRjs6M", "IrYY6pTdo9g", "eATKEOlqjkw", "C0q4w_cuz_U"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Regulador zener con barrido de carga y entrada.",
+      "aerospace_focus": "Referencias, clamps, margen termico y degradacion.",
+      "deliverable": "Ventana de operacion segura del zener."
+    },
+    {
+      "week": 13,
+      "title": "LED, senales promedio y drivers sencillos",
+      "video_ids": ["13rcRufDGGQ", "J8lNkVzukSM", "JWCLKz6lt7Y", "sekdEc5wU6k"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Driver LED de baja tension y calculo de promedio.",
+      "aerospace_focus": "Indicacion, optoacoplamiento y confiabilidad por corriente.",
+      "deliverable": "Driver LED con margen de corriente y potencia."
+    },
+    {
+      "week": 14,
+      "title": "Transistores BJT y conmutacion",
+      "video_ids": ["k8v-ukhCc2g", "yCPv7Je-D5E", "pfVUD5FVoB0", "0Bp0QL9fmA4", "K-3kEmexz44", "2WhU9fqzEXE", "5_8AFka51lw", "1Cvo0YTPV2g", "Ic3r9JxoKVg", "TE_pQ8pyL80", "slNPfrQaVlo"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Driver BJT para carga de bajo voltaje con proteccion.",
+      "aerospace_focus": "Interfaces discretas, actuadores y fallas de carga.",
+      "deliverable": "Driver BJT con corriente, potencia y proteccion."
+    },
+    {
+      "week": 15,
+      "title": "FET, MOSFET, IGBT y gestion termica",
+      "video_ids": ["GGprFdtFbnU", "h8VcISK7y3w", "u6UeaLh8nUY", "Vyyi62GsjZ0", "FCMzV7k8WEM", "PlFjPAwaTNk", "x8nKy71afas", "xMqHr51SMmk"],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Driver MOSFET de bajo voltaje y calculo termico preliminar.",
+      "aerospace_focus": "Control de cargas, PWM, SOA, disipacion y margen termico.",
+      "deliverable": "Seleccion de transistor con margen de tension/corriente/temperatura."
+    },
+    {
+      "week": 16,
+      "title": "Integracion aeroespacial y proyecto final",
+      "video_ids": [],
+      "theory_hours": 4,
+      "practice_hours": 2,
+      "practice": "Proyecto final de front-end analogico de baja tension.",
+      "aerospace_focus": "Derating, tolerancias, proteccion, temperatura, ruido y validacion.",
+      "deliverable": "Mini dossier: esquematico, calculos, simulacion, tabla de derating y prueba de aceptacion."
+    }
+  ]
+}
+

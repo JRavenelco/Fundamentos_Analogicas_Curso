@@ -1,0 +1,17 @@
+* Semana 1.6 - Potenciometro ideal frente a salida cargada
+V1 vin 0 5
+Valpha alpha 0 0.1
+Rtop_u vin vout_u R=10k*(1-V(alpha))
+Rbot_u vout_u 0 R=10k*V(alpha)
+Rtop_l vin vout_l R=10k*(1-V(alpha))
+Rbot_l vout_l 0 R=10k*V(alpha)
+Rload vout_l 0 10k
+.dc Valpha 0.1 0.9 0.01
+.meas dc V_unloaded_10pct FIND V(vout_u) AT=0.1
+.meas dc V_loaded_10pct FIND V(vout_l) AT=0.1
+.meas dc V_unloaded_50pct FIND V(vout_u) AT=0.5
+.meas dc V_loaded_50pct FIND V(vout_l) AT=0.5
+.meas dc V_unloaded_90pct FIND V(vout_u) AT=0.9
+.meas dc V_loaded_90pct FIND V(vout_l) AT=0.9
+.save V(vin) V(alpha) V(vout_u) V(vout_l)
+.end

@@ -1,0 +1,66 @@
+* ============================================================================
+*  CL-YD-301  -  Sensor de fuerza piezoelectrico (cuarzo)  -  Front-end de carga
+*  Buffer JFET seguidor de fuente (LSK170A) + OPA134 (diferencial ganancia 1)
+*  Analisis TRANSITORIO: respuesta a un pulso de fuerza de 3.5 ms
+* ----------------------------------------------------------------------------
+*  Datasheet CL-YD-301 (Sinocera):  Sq~=4 pC/N | Cs=7 pF | Rais>=1e13 ohm
+* ============================================================================
+
+* ---- Modelos (instalados por scripts\install_models.ps1) ----
+.include C:\Users\jesus\Documents\LTspiceXVII\lib\sub\OPAx134.lib
+.include C:\Users\jesus\Documents\Fundamentos_Analogicas\Simulaciones Ltspice\models\LSK170.lib
+
+* ---- Parametros del sensor (hoja de datos) ----
+.param Sq   = 4p        ; sensibilidad de carga  [C/N]
+.param Cs   = 7p        ; capacitancia del cristal [F]
+.param Rins = 1e13      ; resistencia de aislamiento [ohm]
+.param Fpk  = 5         ; amplitud del escalon de fuerza [N]
+
+* ===========================================================================
+*  Excitacion mecanica:  F(t) en Newton.  Un pulso de 3.5 ms a partir de 100 ms
+*  (flancos de 100 us, mecanicamente realistas)
+* ===========================================================================
+Vforce  force 0  PULSE(0 {Fpk} 100m 100u 100u 3.5m 1)
+
+* ===========================================================================
+*  Modelo del sensor piezoelectrico (equivalente Thevenin, numericamente estable)
+*   - Voc = (Sq/Cs)*F  =  tension de circuito abierto del cristal
+*   - Cs   acopla la carga Q=Sq*F al nodo de compuerta 'g'
+*   - Rins en paralelo con el cristal (fuga interna)
+* ===========================================================================
+Bvoc   voc 0   V = (Sq/Cs)*V(force)
+Cs     voc g   {Cs}
+Rins   voc g   {Rins}
+
+* ---- Resistor de polarizacion/descarga de compuerta -> fija tau (AC-coupling)
+R2     g 0     588.24Meg
+
+* ---- Interruptor de reset del esquema (V_ctl < Vt => permanece ABIERTO) ----
+.model mySW SW(Ron=1e-10 Roff=1e15 Vt=1)
+S1     g 0  ctl 0  mySW
+Vctl   ctl 0  PULSE(0.01 0.099999 1n 1n 1 1 1)
+
+* ===========================================================================
+*  Buffer JFET:  seguidor de fuente con LSK170A
+* ===========================================================================
+V1     vdd 0  3
+J1     vdd g s  LSK170A
+R1     s 0    300
+
+* ===========================================================================
+*  Etapa OPA134:  amplificador diferencial de ganancia unitaria (R=10k todas)
+*  Rieles +/-12 V (V4, V5 del esquema original)
+* ===========================================================================
+V4     vcc 0   12
+V5     vee 0  -12
+R4     s   np   10k       ; entrada no inversora desde la fuente del JFET
+R6     np  0    10k       ; divisor
+R5     nn  0    10k       ; referencia (masa) de la entrada inversora
+R3     out nn   10k       ; realimentacion
+Xopa   np nn vcc vee out  OPAx134
+R7     out 0    10k       ; carga
+
+* ===========================================================================
+.save V(force) V(voc) V(g) V(s) V(np) V(nn) V(out)
+.tran 0 0.20 0 10u
+.end

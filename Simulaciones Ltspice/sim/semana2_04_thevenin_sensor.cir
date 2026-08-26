@@ -1,0 +1,15 @@
+* Semana 2.4 - Red original frente a equivalente de Thevenin
+V1 vin 0 5
+R1 vin original 1k
+R2 original 0 1k
+Rload1 original 0 {RL}
+VTH th 0 2.5
+RTH th equivalent 500
+Rload2 equivalent 0 {RL}
+.param RL=10k
+.step param RL list 1k 10k 100k
+.op
+.meas op V_ORIGINAL FIND V(original)
+.meas op V_EQUIVALENT FIND V(equivalent)
+.meas op DIFFERENCE PARAM V(original)-V(equivalent)
+.end

@@ -1,0 +1,13 @@
+* Semana 3.1 - Polarizacion fija y punto Q
+VCC vcc 0 12
+RB vcc base 470k
+RC vcc cole 3.3k
+Q1 cole base 0 QNPN
+.model QNPN NPN(BF={BETA})
+.param BETA=50
+.step param BETA list 50 100 150 200 300
+.op
+.meas op IB_uA PARAM (V(vcc)-V(base))/470k*1e6
+.meas op IC_mA PARAM I(RC)*1e3
+.meas op VCE_V PARAM V(cole)
+.end

@@ -1,0 +1,17 @@
+* Semana 1.5 - SOLO SIMULACION: fuente real, limite de corriente y falla
+* No construir los casos de baja resistencia en protoboard.
+Videal ideal 0 12
+Rsource ideal bus 10
+Vcontrol control 0 0
+Rload bus 0 R=pow(10,V(control))
+.dc Vcontrol 0 3 0.01
+.meas dc Vbus_R1 FIND V(bus) AT=0
+.meas dc Vbus_R10 FIND V(bus) AT=1
+.meas dc Vbus_R100 FIND V(bus) AT=2
+.meas dc Vbus_R1k FIND V(bus) AT=3
+.meas dc I_R1_mA FIND -I(Videal)*1e3 AT=0
+.meas dc I_R10_mA FIND -I(Videal)*1e3 AT=1
+.meas dc I_R100_mA FIND -I(Videal)*1e3 AT=2
+.meas dc I_R1k_mA FIND -I(Videal)*1e3 AT=3
+.save V(ideal) V(bus) V(control) I(Videal)
+.end

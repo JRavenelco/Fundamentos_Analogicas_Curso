@@ -1,0 +1,13 @@
+* Probe: does LTspice load TI OPA134 (PSpice) and auto-resolve LSK170A?
+.include "C:\Users\jesus\Documents\Fundamentos_Analogicas\Simulaciones Ltspice\models\OPA134_TI\OPAx134.LIB"
+V1 vcc 0 12
+V2 vee 0 -12
+Vin in 0 0.1
+Xop in 0 vcc vee out OPAx134
+Rl out 0 10k
+* JFET from standard.jft (auto-include test)
+Vd d 0 3
+J1 d 0 s LSK170A
+Rs s 0 300
+.op
+.end

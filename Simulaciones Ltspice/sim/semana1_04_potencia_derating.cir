@@ -1,0 +1,13 @@
+* Semana 1.4 - Potencia nominal frente a limite de diseno con derating
+* Resistor: 1 kohm, 0.25 W nominal, limite educativo al 50% = 0.125 W.
+V1 vin 0 0
+R1 vin 0 1k
+.dc V1 0 15 0.01
+.meas dc P_at_5V_mW FIND V(vin)*(-I(V1))*1e3 AT=5
+.meas dc P_at_9V_mW FIND V(vin)*(-I(V1))*1e3 AT=9
+.meas dc P_at_11p18V_mW FIND V(vin)*(-I(V1))*1e3 AT=11.18
+.meas dc P_at_12V_mW FIND V(vin)*(-I(V1))*1e3 AT=12
+.meas dc P_at_15V_mW FIND V(vin)*(-I(V1))*1e3 AT=15
+.meas dc V_at_derated_limit WHEN V(vin)*(-I(V1))=0.125 CROSS=1
+.save V(vin) I(V1)
+.end

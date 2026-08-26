@@ -1,0 +1,38 @@
+* ============================================================================
+*  CL-YD-301  -  AMPLIFICADOR DE CARGA con OPA197  (gemelo batch de
+*  sensor_frontend_opa197.asc, para verificacion automatica con .meas)
+* ----------------------------------------------------------------------------
+*  Vout = -Q/Cf = -(Sq/Cf)*F   -> sensibilidad fijada SOLO por Cf.
+*  La entrada inversora 'inv' es MASA VIRTUAL: toda Q=Sq*F va a Cf; sobre
+*  Ccable (a 0 V) no circula carga -> Vout invariante al cable (se demuestra
+*  barriendo Ccable y comprobando que voutpk no cambia).
+* ============================================================================
+.include C:\Users\jesus\Documents\LTspiceXVII\lib\sub\OPAx197.LIB
+
+.param Sq=4p  Cs=7p  Rins=1e13
+.param Cf=1n  Rf=1G
+
+Vforce force 0 SINE(0 100 200) AC 1
+
+* --- sensor piezo (Thevenin) acoplado a la masa virtual 'inv' ---
+Bvoc   voc 0    V=(Sq/Cs)*V(force)
+Cs     voc inv  {Cs}
+Rins   voc inv  {Rins}
+Ccab   inv 0    {Ccable}
+
+* --- realimentacion del amplificador de carga ---
+Cf     inv out  {Cf}
+Rf     inv out  {Rf}
+
+* --- OPA197:  IN+ IN- VCC VEE OUT ---
+V4     vcc 0   12
+V5     vee 0  -12
+Xopa   0 inv vcc vee out  OPAx197
+
+.step param Ccable list 0 100p 1n
+.save V(out) V(inv) V(force)
+.tran 0 20m 0 1u
+.meas TRAN voutpk MAX V(out)
+.meas TRAN voutmn MIN V(out)
+.meas TRAN scale_mV_per_N PARAM voutpk/100*1000
+.end

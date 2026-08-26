@@ -1,0 +1,13 @@
+\frametitle{Verificación en LTspice}
+Abrir \texttt{semana1\_04\_potencia\_derating.asc} (barrido $V$: 0 a 15 V, paso 10 mV) y consultar el Error Log:
+
+  \begin{verbatim}
+.meas dc P_at_5V_mW FIND V(vin)*(-I(V1))*1e3 AT=5
+.meas dc P_at_11p18V_mW FIND V(vin)*(-I(V1))*1e3 AT=11.18
+.meas dc P_at_12V_mW FIND V(vin)*(-I(V1))*1e3 AT=12
+.meas dc V_at_derated_limit WHEN V(vin)*(-I(V1))=0.125 CROSS=1
+  \end{verbatim}
+
+  \textbf{Criterio de éxito:} $P(11.18\,\text{V}) \approx \SI{125}{\milli\watt}$,
+  $P(12\,\text{V}) \approx \SI{144}{\milli\watt}$, y
+  \texttt{V\_at\_derated\_limit} $\approx \SI{11.18}{\volt}$.

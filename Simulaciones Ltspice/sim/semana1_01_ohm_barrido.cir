@@ -1,0 +1,12 @@
+* Semana 1.1 - Ley de Ohm como relacion, no como formula aislada
+* Predice I y P para cada resistor antes de ejecutar.
+.param Rload=1k
+V1 vin 0 0
+R1 vin 0 {Rload}
+.step param Rload list 1k 2.2k 4.7k
+.dc V1 0 12 0.25
+.meas dc I_at_5V_mA FIND -I(V1)*1e3 AT=5
+.meas dc I_at_12V_mA FIND -I(V1)*1e3 AT=12
+.meas dc P_at_12V_mW FIND V(vin)*(-I(V1))*1e3 AT=12
+.save V(vin) I(V1)
+.end

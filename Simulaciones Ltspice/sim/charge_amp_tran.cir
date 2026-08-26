@@ -1,0 +1,35 @@
+* ============================================================================
+*  CL-YD-301  -  AMPLIFICADOR DE CARGA con OPA134 (entrada FET, Ib~5 pA)
+*  Vout = -Q/Cf = -(Sq/Cf)*F     -> sensibilidad fijada SOLO por Cf,
+*  independiente de la capacitancia del cristal y del cable.
+* ----------------------------------------------------------------------------
+*  La entrada inversora es MASA VIRTUAL: toda la carga Q=Sq*F del sensor se
+*  transfiere a Cf; sobre Ccable (a 0 V) no circula carga -> no afecta a Vout.
+* ============================================================================
+.include C:\Users\jesus\Documents\LTspiceXVII\lib\sub\OPAx134.lib
+
+.param Sq=4p  Cs=7p  Rins=1e13  Fpk=5
+.param Cf=100p          ; cap. de realimentacion -> S = Sq/Cf = 40 mV/N
+.param Rf=1G            ; bias DC y corner inferior f_lo = 1/(2*pi*Rf*Cf) ~ 1.6 Hz
+.param Ccable=0         ; capacitancia de cable/entrada (demostrar invariancia)
+
+Vforce  force 0  PULSE(0 {Fpk} 100m 100u 100u 3.5m 1)
+
+* --- Sensor piezo (equivalente Thevenin) acoplado a la masa virtual 'inv' ---
+Bvoc   voc 0   V=(Sq/Cs)*V(force)
+Cs     voc inv {Cs}
+Rins   voc inv {Rins}
+Ccab   inv 0   {Ccable}        ; cable: NO debe afectar a Vout
+
+* --- Realimentacion del amplificador de carga ---
+Cf     inv out {Cf}
+Rf     inv out {Rf}
+
+* --- OPA134:  In+=0 (masa), In-=inv ---
+V4     vcc 0  12
+V5     vee 0 -12
+Xopa   0 inv vcc vee out  OPAx134
+
+.save V(out) V(inv) V(force)
+.tran 0 0.2 0 10u
+.end

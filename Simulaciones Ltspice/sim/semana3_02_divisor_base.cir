@@ -1,0 +1,14 @@
+* Semana 3.2 - Divisor de base con emisor
+VCC vcc 0 12
+R1 vcc base 47k
+R2 base 0 10k
+RC vcc cole 4.7k
+RE emis 0 1k
+Q1 cole base emis QNPN
+.model QNPN NPN(BF={BETA})
+.param BETA=50
+.step param BETA list 50 100 150 200 300
+.op
+.meas op IC_mA PARAM I(RC)*1e3
+.meas op VCE_V PARAM V(cole)-V(emis)
+.end
