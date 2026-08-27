@@ -415,10 +415,10 @@
     \begin{column}{0.52\textwidth}
       \begin{circuitikz}[american voltages, scale=0.75]
         \draw (0,3) to[V, l_=$12\,\mathrm{V}$] (0,0)
-          to[R, l={$R_s=3\,\Omega$}] (3,3) -- (6.4,3);
-        \draw (0,0) -- (6.4,0);
-        \draw (3.8,3) to[R, l={$R_H=6\,\Omega$}, i>^={$I_H$}] (3.8,0);
-        \draw (6.0,3) to[R, l={$R_M=3\,\mathrm{M}\Omega$}, i>^={$I_M$}] (6.0,0);
+          to[R, l={$R_s=3\,\Omega$}] (3,3) -- (6.9,3);
+        \draw (0,0) -- (6.9,0);
+        \draw (3.7,3) to[R, l={$R_H=6\,\Omega$}, i>^={$I_H$}] (3.7,0);
+        \draw (6.5,3) to[R, l={$R_M=3\,\mathrm{M}\Omega$}, i>^={$I_M$}] (6.5,0);
         \node[ground] at (0,0) {};
       \end{circuitikz}
     \end{column}
@@ -458,10 +458,10 @@
     \begin{column}{0.52\textwidth}
       \begin{circuitikz}[american currents, scale=0.75]
         \draw (0,0) to[I, l_=$6\,\mathrm{A}$] (0,3)
-          to[R, l={$R_s=2\,\Omega$}] (3,3) -- (6.4,3);
-        \draw (0,0) -- (6.4,0);
-        \draw (3.8,3) to[R, l={$R_A=6\,\Omega$}, i>^={$I_A$}] (3.8,0);
-        \draw (6.0,3) to[R, l={$R_B=3\,\Omega$}, i>^={$I_B$}] (6.0,0);
+          to[R, l={$R_s=2\,\Omega$}] (3,3) -- (6.9,3);
+        \draw (0,0) -- (6.9,0);
+        \draw (3.7,3) to[R, l={$R_A=6\,\Omega$}, i>^={$I_A$}] (3.7,0);
+        \draw (6.5,3) to[R, l={$R_B=3\,\Omega$}, i>^={$I_B$}] (6.5,0);
         \node[ground] at (0,0) {};
       \end{circuitikz}
     \end{column}
@@ -547,6 +547,10 @@
     \item Con $V_{bus} = \SI{5}{\volt}$, ¿cuánto disipa la rama de $2.2\,\text{k}\Omega$?
       \uncover<4->{\emph{(\SI{11.36}{\milli\watt}.)}}
     \item ¿Por qué un fusible por rama protege mejor el bus que un solo fusible general?
+      \uncover<5->{\emph{(Aísla la falla: al cortarse una rama se abre solo su fusible y
+      el resto del bus sigue alimentado; con un único fusible general un corto en
+      cualquier rama caería todo el bus. Además permite dimensionar cada fusible a su
+      corriente y mantener la redundancia.)}}
   \end{enumerate}
 \end{frame}
 
