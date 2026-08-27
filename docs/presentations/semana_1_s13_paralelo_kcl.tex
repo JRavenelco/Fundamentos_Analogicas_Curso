@@ -56,7 +56,7 @@
   \begin{itemize}
     \item Definir una conexión \textbf{en paralelo} y sus propiedades inmediatas.
     \item Usar la \textbf{conductancia} $G = 1/R$ para sumar ramas en paralelo.
-    \item Calcular la \textbf{resistencia equivalente} y verificar que $R_{eq} < R_{mín}$.
+    \item Calcular la \textbf{resistencia equivalente} y verificar que $R_{eq} < R_{\min}$.
     \item Aplicar la \textbf{Ley de corrientes de Kirchhoff (KCL)} en el nodo del bus y en el retorno.
     \item Desarrollar por completo el ejercicio del bus de \SI{5}{\volt} con
       $1\,\text{k}\Omega$, $2.2\,\text{k}\Omega$ y $3.3\,\text{k}\Omega$.
@@ -110,7 +110,7 @@
   \pause
   \begin{itemize}
     \item Dos resistencias: $R_{eq} = \dfrac{R_1\cdot R_2}{R_1 + R_2}$ (solo para dos).
-    \item \textbf{Reglas de verificación:} $R_{eq} < R_{mín}$; si todas son $R$, $R_{eq} = R/n$.
+    \item \textbf{Reglas de verificación:} $R_{eq} < R_{\min}$; si todas son $R$, $R_{eq} = R/n$.
     \item $G$ es la pendiente de $I$ vs $V$ de cada rama: conecta con la pendiente-conductancia de S1.1.
   \end{itemize}
 \end{frame}
@@ -173,12 +173,12 @@
   \end{block}
   \begin{center}
     \begin{circuitikz}[american voltages, scale=0.95]
-      \draw (0,3) to[V, l={$V_{bus}=5\,\mathrm{V}$}, i=$I$] (0,0);
+      \draw (0,3) to[V, l_={$V_{bus}=5\,\mathrm{V}$}, i_=$I_{fuente}$] (0,0);
       \draw (0,3) -- (8.6,3);
       \draw (0,0) -- (8.6,0);
-      \draw (2.4,3) to[R, l=$R_1$] (2.4,0);
-      \draw (4.8,3) to[R, l=$R_2$] (4.8,0);
-      \draw (7.2,3) to[R, l=$R_3$] (7.2,0);
+      \draw (2.4,3) to[R, l=$R_1$, i>^=$I_1$] (2.4,0);
+      \draw (4.8,3) to[R, l=$R_2$, i>^=$I_2$] (4.8,0);
+      \draw (7.2,3) to[R, l=$R_3$, i>^=$I_3$] (7.2,0);
     \node[ground] at (0,0) {};
     \end{circuitikz}
   \end{center}
@@ -215,7 +215,7 @@
   \]
   \pause
   \begin{block}{Verificación}
-    $R_{eq} = 568.97\ \Omega < R_{mín} = 1\,\text{k}\Omega$ \checkmark
+    $R_{eq} = 568.97\ \Omega < R_{\min} = 1\,\text{k}\Omega$ \checkmark
     (más ramas en paralelo $\Rightarrow$ menos resistencia vista por la fuente).
   \end{block}
 \end{frame}
@@ -289,7 +289,7 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
-\begin{frame}{Resultados LTspice · Corrientes (del Error Log)}
+\begin{frame}{LTspice XVII · Punto nominal de \SI{5}{\volt}}
   \begin{table}
     \small
     \begin{tabular}{lcl}
@@ -361,14 +361,13 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
-\begin{frame}{Resultado de la simulación · Gráfica}
+\begin{frame}{Verificación con LTspice XVII · Barrido DC}
   \begin{center}
-    \includegraphics[width=0.86\textwidth]{figs/s13_kcl_balance.png}
+    \includegraphics[width=0.88\textwidth]{figs/s13_ltspice_barrido.png}
   \end{center}
   \begin{itemize}
-    \item \textbf{KCL:} las barras de rama suman $I_{fuente}$ (línea discontinua).
-    \item \textbf{Balance:} las potencias de rama suman $P_{fuente}$.
-    \item La rama de menor resistencia ($R_1$) lleva \textbf{más} corriente y disipa más.
+    \item \textbf{KCL:} $I_{fuente}$ coincide con la suma de las tres trazas de rama.
+    \item \textbf{Balance:} $P_{fuente}$ coincide con $P_1+P_2+P_3$ en todo el barrido.
   \end{itemize}
 \end{frame}
 
@@ -390,34 +389,126 @@
 
 % ---------------------------------------------------------------------
 \begin{frame}[fragile]{Verificación en LTspice}
-  Abrir \texttt{semana1\_03\_kcl\_paralelo.asc}, ejecutar \texttt{.op} y consultar
-  \texttt{View > SPICE Error Log}. El esquema ya mide las tres corrientes de rama,
-  la corriente de fuente y el error de KCL; para cerrar el balance agregar:
+  Construye el esquema en LTspice XVII y coloca esta \textbf{directiva integrada}
+  para obtener las trazas desde \SI{0}{\volt} hasta \SI{5}{\volt}:
 
   \begin{verbatim}
-.meas op P_R1_mW PARAM V(bus)*V(bus)/1k*1e3
-.meas op P_R2_mW PARAM V(bus)*V(bus)/2.2k*1e3
-.meas op P_R3_mW PARAM V(bus)*V(bus)/3.3k*1e3
-.meas op P_fuente_mW PARAM V(bus)*(-I(V1))*1e3
-.meas op Balance_mW PARAM P_fuente_mW-(P_R1_mW+P_R2_mW+P_R3_mW)
+.dc V1 0 5 0.1
+.meas dc I_R1_5V_mA FIND I(R1)*1e3 AT=5
+.meas dc I_R2_5V_mA FIND I(R2)*1e3 AT=5
+.meas dc I_R3_5V_mA FIND I(R3)*1e3 AT=5
+.meas dc I_fuente_5V_mA FIND -I(V1)*1e3 AT=5
   \end{verbatim}
 
-  \textbf{Criterio de éxito:} \texttt{KCL\_error\_uA} $\approx 0$ y
-  \texttt{Balance\_mW} $\approx 0$.
+  En el visor agrega \texttt{I(R1)}, \texttt{I(R2)}, \texttt{I(R3)} y
+  \texttt{-I(V1)}; para potencia usa \texttt{V(bus)*I(Rk)}.
+
+  \begin{block}{Nota para el estudiante}
+    Desarrolla el circuito y genera tus propias trazas. Usa los valores y gráficas
+    de esta presentación únicamente como referencia para comparar tus resultados.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ejercicio aeroespacial A · Carga de alta impedancia}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{circuitikz}[american voltages, scale=0.75]
+        \draw (0,3) to[V, l_=$12\,\mathrm{V}$] (0,0)
+          to[R, l={$R_s=3\,\Omega$}] (3,3) -- (6.4,3);
+        \draw (0,0) -- (6.4,0);
+        \draw (3.8,3) to[R, l={$R_H=6\,\Omega$}, i>^={$I_H$}] (3.8,0);
+        \draw (6.0,3) to[R, l={$R_M=3\,\mathrm{M}\Omega$}, i>^={$I_M$}] (6.0,0);
+        \node[ground] at (0,0) {};
+      \end{circuitikz}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \textbf{Escenario:} un calefactor de una bahía de aviónica se supervisa con
+      una entrada de telemetría de alta impedancia.
+      \begin{enumerate}
+        \item Calcula $R_H\parallel R_M$.
+        \item Obtén $V_s$, $I_H$, $I_M$ e $I_{fuente}$.
+        \item Verifica KCL y cuantifica el error de carga del medidor.
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}[fragile]{Comparación A · LTspice XVII}
+  \begin{center}
+    \includegraphics[width=0.82\textwidth]{figs/s13_caso_tension_ltspice.png}
+  \end{center}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \small $R_p=\SI{5.999988}{\ohm}$, $V_s\approx\SI{8.00}{\volt}$,
+      $I_H\approx\SI{1.333}{\ampere}$, $I_M\approx\SI{2.667}{\micro\ampere}$.
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{verbatim}
+.dc V1 0 12 0.25
+      \end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Ejercicio aeroespacial B · Reparto con fuente de corriente}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{circuitikz}[american currents, scale=0.75]
+        \draw (0,0) to[I, l_=$6\,\mathrm{A}$] (0,3)
+          to[R, l={$R_s=2\,\Omega$}] (3,3) -- (6.4,3);
+        \draw (0,0) -- (6.4,0);
+        \draw (3.8,3) to[R, l={$R_A=6\,\Omega$}, i>^={$I_A$}] (3.8,0);
+        \draw (6.0,3) to[R, l={$R_B=3\,\Omega$}, i>^={$I_B$}] (6.0,0);
+        \node[ground] at (0,0) {};
+      \end{circuitikz}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \textbf{Escenario:} una fuente regulada alimenta dos actuadores térmicos
+      redundantes a través de la resistencia del arnés.
+      \begin{enumerate}
+        \item Calcula $I_A$ e $I_B$ por divisor de corriente.
+        \item Obtén $V_{bus}$ y la tensión de cumplimiento de la fuente.
+        \item Explica qué cambia y qué no cambia si aumenta $R_s$.
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}[fragile]{Comparación B · LTspice XVII}
+  \begin{center}
+    \includegraphics[width=0.82\textwidth]{figs/s13_caso_corriente_ltspice.png}
+  \end{center}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \small $R_p=\SI{2}{\ohm}$, $I_{3\Omega}=\SI{4}{\ampere}$,
+      $I_{6\Omega}=\SI{2}{\ampere}$, $V_{bus}=\SI{12}{\volt}$ y
+      $V_{fuente}=\SI{24}{\volt}$.
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{verbatim}
+.dc I1 0 6 0.1
+      \end{verbatim}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 % ---------------------------------------------------------------------
 \begin{frame}{Errores comunes}
   \begin{table}
     \small
-    \begin{tabular}{p{0.34\textwidth}p{0.28\textwidth}p{0.32\textwidth}}
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{0.33\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}p{0.30\textwidth}}
       \toprule
       Error & Consecuencia & Corrección \\
       \midrule
       Sumar resistencias en paralelo como serie & $R_{eq}$ demasiado grande & Sumar conductancias: $1/R_{eq} = \sum 1/R$ \\
       Usar $(R_1R_2)/(R_1+R_2)$ con tres ramas & $R_{eq}$ incorrecta & Esa fórmula solo vale para dos \\
       Creer que la mayor $R$ lleva más corriente & Orden invertido & $I_k \propto 1/R_k$ \\
-      Olvidar que $R_{eq} < R_{mín}$ & No detectar el error & Verificación rápida siempre \\
+      Olvidar que $R_{eq} < R_{\min}$ & No detectar el error & Verificación rápida siempre \\
       Calcular $P_k$ con la corriente total & Potencias $\approx 3\times$ mayores & Cada rama usa su propia corriente \\
       \bottomrule
     \end{tabular}
