@@ -289,6 +289,90 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{Resultados LTspice · Corrientes (del Error Log)}
+  \begin{table}
+    \small
+    \begin{tabular}{lcl}
+      \toprule
+      Magnitud & Valor & Cómo lo da LTspice \\
+      \midrule
+      $I_{R1}$ & $\SI{5.000}{\milli\ampere}$ & \texttt{V(bus)/1k*1e3} \\
+      $I_{R2}$ & $\SI{2.273}{\milli\ampere}$ & \texttt{V(bus)/2.2k*1e3} \\
+      $I_{R3}$ & $\SI{1.515}{\milli\ampere}$ & \texttt{V(bus)/3.3k*1e3} \\
+      $I_{fuente}$ & $\SI{8.788}{\milli\ampere}$ & \texttt{-I(V1)*1e3} \\
+      \midrule
+      $KCL\_error$ & $\approx 0\,\mu\text{A}$ & \texttt{(-I(V1)-$\dots$)*1e6} \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \textbf{KCL se cumple:} $8.78788 \approx 5.000 + 2.273 + 1.515 = \SI{8.788}{\milli\ampere}$;
+  el error residual es $\approx 1\times10^{-6}\,\mu\text{A}$ (ruido numérico).
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resultados LTspice · Conductancias y equivalente}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{table}
+        \small
+        \begin{tabular}{ll}
+          \toprule
+          & $G = 1/R$ \\
+          \midrule
+          $G_1 = 1/R_1$ & $1.000\,\text{mS}$ \\
+          $G_2 = 1/R_2$ & $0.4545\,\text{mS}$ \\
+          $G_3 = 1/R_3$ & $0.3030\,\text{mS}$ \\
+          $G_t$ & $1.7576\,\text{mS}$ \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \[
+        R_{eq} = \frac{1}{G_t} = \SI{568.97}{\ohm}
+      \]
+      $R_{eq} < R_{min} = 1\,\text{k}\Omega$ $\checkmark$
+      \pause
+      \small Divisor de corriente:
+      $I_k = I_{fuente}\cdot\dfrac{G_k}{G_t}$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resultados LTspice · Potencias y balance}
+  \begin{table}
+    \small
+    \begin{tabular}{lcc}
+      \toprule
+      & $P = V_{bus}^2/R$ & Valor \\
+      \midrule
+      $P_1$ & $R_1 = 1\,\text{k}\Omega$ & $\SI{25.00}{\milli\watt}$ \\
+      $P_2$ & $R_2 = 2.2\,\text{k}\Omega$ & $\SI{11.36}{\milli\watt}$ \\
+      $P_3$ & $R_3 = 3.3\,\text{k}\Omega$ & $\SI{7.58}{\milli\watt}$ \\
+      $\sum P$ & & $\SI{43.94}{\milli\watt}$ \\
+      $P_{fuente}$ & $5\,\text{V}\times 8.788\,\text{mA}$ & $\SI{43.94}{\milli\watt}$ \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \textbf{Balance:} $\sum P = P_{fuente} = \SI{43.94}{\milli\watt}$ $\checkmark$
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resultado de la simulación · Gráfica}
+  \begin{center}
+    \includegraphics[width=0.86\textwidth]{figs/s13_kcl_balance.png}
+  \end{center}
+  \begin{itemize}
+    \item \textbf{KCL:} las barras de rama suman $I_{fuente}$ (línea discontinua).
+    \item \textbf{Balance:} las potencias de rama suman $P_{fuente}$.
+    \item La rama de menor resistencia ($R_1$) lleva \textbf{más} corriente y disipa más.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
 \begin{frame}{Desarrollo del ejercicio · Paso 7 — Derating}
   \begin{itemize}
     \item Límite con derating de 50\,\%: $P_{derated} = \SI{125}{\milli\watt}$.
@@ -320,18 +404,6 @@
 
   \textbf{Criterio de éxito:} \texttt{KCL\_error\_uA} $\approx 0$ y
   \texttt{Balance\_mW} $\approx 0$.
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Resultado de la simulación}
-  \begin{center}
-    \includegraphics[width=0.82\textwidth]{figs/s13_kcl_balance.png}
-  \end{center}
-  \begin{itemize}
-    \item \textbf{KCL:} $I_{R1}+I_{R2}+I_{R3} = 8.79\,\text{mA} = I_{fuente}$: la suma de las corrientes de rama.
-    \item \textbf{Balance de potencia:} $P_{fuente} = 43.9\,\text{mW} = P_1+P_2+P_3$: la energía se conserva.
-    \item \textbf{La rama de menor resistencia ($R_1 = 1\,\text{k}\Omega$) lleva más corriente y disipa más}: en paralelo, $P \propto 1/R$.
-  \end{itemize}
 \end{frame}
 
 % ---------------------------------------------------------------------
