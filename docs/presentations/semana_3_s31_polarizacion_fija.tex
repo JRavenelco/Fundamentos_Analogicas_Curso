@@ -133,6 +133,33 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{Resultados LTspice · Lectura del log ($\beta$ = 300)}
+  \begin{table}
+    \small
+    \begin{tabular}{lcc}
+      \toprule
+      Magnitud & Valor (log) & Nota \\
+
+      \midrule
+      $I_B$ & \SI{23.81}{\micro\ampere} & \texttt{(V(vcc)-V(base))/470k*1e6} \\
+
+      $I_C$ & \SI{3.59}{\milli\ampere} & \texttt{I(RC)*1e3} \\
+
+      $V_{CE}$ & \SI{0.148}{\volt} & \texttt{V(cole)} \\
+
+      $P = V_{CE}\cdot I_C$ & \SI{0.53}{\milli\watt} & disipación \\
+
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \textbf{El transistor \emph{satura}:} $V_{CE}\approx 0.15$ V (no está en activa). A
+  $\beta=300$, $I_C$ ya \textbf{no} crece con $\beta$ (la recta de carga lo limita).
+  $\Rightarrow$ la polarización \textbf{fija} es inestable (ver la gráfica).
+\end{frame}
+
+
+% ---------------------------------------------------------------------
 \begin{frame}{Errores comunes}
   \begin{table}
     \small

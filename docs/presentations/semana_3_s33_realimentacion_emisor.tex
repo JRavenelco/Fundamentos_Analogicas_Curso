@@ -134,6 +134,30 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{Resultados LTspice · Lectura del log ($\beta$ = 300)}
+  \begin{table}
+    \small
+    \begin{tabular}{lcc}
+      \toprule
+      Magnitud & Valor (log) & Nota \\
+
+      \midrule
+      $I_C$ & \SI{2.752}{\milli\ampere} & \texttt{I(RC)*1e3} \\
+
+      $V_{CE}$ & \SI{0.149}{\volt} & \texttt{V(cole)-V(emis)} \\
+
+      $P = V_{CE}\cdot I_C$ & \SI{0.41}{\milli\watt} & disipación \\
+
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \textbf{Satura a $\beta$ alto:} $V_{CE}\approx 0.15$ V. Es más estable que la
+  fija pero \textbf{no} tanto como el divisor de base (ver la gráfica).
+\end{frame}
+
+
+% ---------------------------------------------------------------------
 \begin{frame}{Errores comunes}
   \begin{table}
     \small

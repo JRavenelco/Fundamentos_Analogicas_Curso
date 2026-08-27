@@ -137,6 +137,31 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{Resultados LTspice · Lectura del log ($\beta$ = 300)}
+  \begin{table}
+    \small
+    \begin{tabular}{lcc}
+      \toprule
+      Magnitud & Valor (log) & Nota \\
+
+      \midrule
+      $I_C$ & \SI{1.285}{\milli\ampere} & \texttt{I(RC)*1e3} \\
+
+      $V_{CE}$ & \SI{4.672}{\volt} & \texttt{V(cole)-V(emis)} \\
+
+      $P = V_{CE}\cdot I_C$ & \SI{6.00}{\milli\watt} & disipación \\
+
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \textbf{Activa y estable:} con $\beta=300$ el punto Q sigue en activa
+  ($V_{CE}\approx 4.67$ V). $I_C$ cambia muy poco con $\beta$: es la topología
+  \textbf{más estable} (ver la gráfica).
+\end{frame}
+
+
+% ---------------------------------------------------------------------
 \begin{frame}{Errores comunes}
   \begin{table}
     \small
