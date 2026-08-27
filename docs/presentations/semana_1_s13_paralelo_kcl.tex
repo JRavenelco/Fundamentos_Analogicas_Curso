@@ -414,12 +414,12 @@
   \begin{columns}[T]
     \begin{column}{0.52\textwidth}
       \begin{circuitikz}[american voltages, scale=0.75]
-        \draw (0,3) to[V, l_=$12\,\mathrm{V}$] (0,0)
-          to[R, l={$R_s=3\,\Omega$}] (3,3) -- (6.9,3);
-        \draw (0,0) -- (6.9,0);
-        \draw (3.7,3) to[R, l={$R_H=6\,\Omega$}, i>^={$I_H$}] (3.7,0);
-        \draw (6.5,3) to[R, l={$R_M=3\,\mathrm{M}\Omega$}, i>^={$I_M$}] (6.5,0);
+        \draw (0,3) to[V, l_=$12\,\mathrm{V}$] (0,0);
+        \draw (0,3) to[R, l={$R_s=3\,\Omega$}] (3,3) -- (7.6,3);
+        \draw (0,0) -- (7.6,0);
         \node[ground] at (0,0) {};
+        \draw (4.2,3) to[R, l={$R_H=6\,\Omega$}, i>^={$I_H$}] (4.2,0);
+        \draw (7.0,3) to[R, l={$R_M=3\,\mathrm{M}\Omega$}, i>^={$I_M$}] (7.0,0);
       \end{circuitikz}
     \end{column}
     \begin{column}{0.44\textwidth}
