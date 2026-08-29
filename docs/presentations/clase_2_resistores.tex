@@ -1,0 +1,325 @@
+% =====================================================================
+% Fundamentos de Sistemas Electrónicos Analógicos — Resistores
+% Compilar: pdflatex clase_2_resistores.tex  (2 pasadas)
+% =====================================================================
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{circuitikz}
+
+\definecolor{navy}{RGB}{23,54,93}
+\definecolor{navysoft}{RGB}{72,101,140}
+\definecolor{gold}{RGB}{179,142,62}
+\definecolor{ink}{RGB}{44,51,58}
+\definecolor{soft}{RGB}{244,241,234}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamercolor{structure}{fg=navy}
+\setbeamercolor{frametitle}{fg=white,bg=navy}
+\setbeamercolor{title}{fg=navy}
+\setbeamercolor{subtitle}{fg=navysoft}
+\setbeamercolor{itemize item}{fg=gold}
+\setbeamercolor{itemize subitem}{fg=gold}
+\setbeamercolor{block title}{fg=white,bg=navy}
+\setbeamercolor{block body}{bg=soft}
+\setbeamercolor{example text}{fg=navy}
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}
+\setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\circ$}}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+\title[Resistores]{Resistores: fundamentos y aplicaciones}
+\subtitle{Clase de teoría · Fundamentos de Sistemas Electrónicos Analógicos}
+\institute{Licenciatura en Ingeniería Aeroespacial · UNAM}
+\date{Semestre 2027-1}
+
+\begin{document}
+
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Objetivos}
+  \begin{itemize}
+    \item Definir un \textbf{resistor} y su papel en el circuito.
+    \item Clasificar en \textbf{fijos, variables y no lineales}.
+    \item Interpretar \textbf{tolerancia}, \textbf{series E} y \textbf{código de colores} (4/5/6 bandas).
+    \item Modelar el \textbf{TCR} y la \textbf{potencia disipada}.
+    \item Elegir el tipo constructivo y el valor para una aplicación.
+  \end{itemize}
+  \pause
+  \begin{block}{Conexión con la semana}
+    Todo lo de aquí se usa para \textbf{dimensionar} el divisor, el puente y el
+    acondicionamiento de señales de las semanas 1–2.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{1 · ¿Qué es un resistor?}
+  \begin{columns}[T]
+    \begin{column}{0.45\textwidth}
+      \begin{center}
+        \resizebox{0.9\linewidth}{!}{%
+        \begin{circuitikz}[american voltages, scale=1.0]
+          \draw (0,2.6) -- (2.6,2.6) to[R, l={$R$}] (5.2,2.6) -- (6.6,2.6);
+          \node[left] at (0,2.6) {$+$};
+        \end{circuitikz}}
+      \end{center}
+      \begin{itemize}
+        \item Un resistor \textbf{se opone al paso de la corriente}.
+        \item Transforma energía eléctrica en \textbf{calor}.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \[
+        V = I\cdot R
+        \qquad
+        I = \frac{V}{R}
+      \]
+      \textbf{Unidad:} ohm ($\Omega$). \textbf{Ley de Ohm:} la corriente es
+      proporcional a la tensión e inversa a la resistencia.
+      \pause
+      \begin{block}{Punto de trabajo}
+        Todo componente tiene un punto de reposo; el resistor lo fija/limita.
+        Sin resistor, corrientes no controladas y sobrecalentamiento.
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{2 · Clasificación de los resistores}
+  \begin{table}
+    \small
+    \begin{tabular}{p{0.26\textwidth}p{0.34\textwidth}p{0.32\textwidth}}
+      \toprule
+      Tipo & Característica & Ejemplo \\
+      \midrule
+      \textbf{Fijos} & $R$ constante (solo cambia con T/tolerancia) & divisor, limitación de LED \\
+      \textbf{Variables} & $R$ ajustable con un cursor (potenciómetro) & control de volumen, divisor ajustable \\
+      \textbf{No lineales} & $R$ cambia con una magnitud física & termistor, LDR, varistor \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \begin{itemize}
+    \item Un resistor \textbf{ideal} sería constante; el \textbf{real} depende de
+      tolerancia, temperatura y (si es no lineal) de la magnitud a sensar.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{3 · Fijos: valor nominal y tolerancia}
+  El valor real puede desviarse del nominal dentro de la \textbf{tolerancia}:
+  \[
+    R_{min} = R\left(1-\frac{t}{100}\right)
+    \qquad
+    R_{max} = R\left(1+\frac{t}{100}\right)
+  \]
+  \textbf{Ejemplo:} $1\,\text{k}\Omega \pm 5\text{\%}$ $\Rightarrow$ \SI{950}{\ohm} a \SI{1050}{\ohm}.
+  \pause
+  \begin{itemize}
+    \item Tolerancia típica: $\pm5\text{\%}$ (E24), $\pm1\text{\%}$ (E96), $\pm0.1\text{\%}$ (precisión).
+    \item En un divisor, importa la \emph{razón} (ver S2.2): los cambios comunes se cancelan.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{4 · Fijos: series normalizadas (IEC 60063)}
+  No existe "cualquier valor": se usa el de la \textbf{serie} más cercano al cálculo.
+  \begin{itemize}
+    \item \textbf{E12} ($\pm10\text{\%}$): \texttt{1.0 1.2 1.5 1.8 2.2 2.7 3.3 3.9 4.7 5.6 6.8 8.2}
+    \item \textbf{E24} ($\pm5\text{\%}$): \texttt{1.0 1.1 1.2 1.3 1.5 1.6 1.8 2.0 2.2 2.4 2.7 3.0 3.3 3.6 3.9 4.3 4.7 5.1 5.6 6.2 6.8 7.5 8.2 9.1}
+    \item \textbf{E96} ($\pm1\text{\%}$): 3 cifras (más fina).
+  \end{itemize}
+  \pause
+  \textbf{Ejemplo:} cálculo da $2.37\,\text{k}\Omega$ $\Rightarrow$ E24: \texttt{2.4 k} (error 1.3\text{\%}); E96: \texttt{2.37 k} (error 0\text{\%}).
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{5 · Fijos: código de colores (IEC 60062)}
+  Se leen de izquierda a derecha: \textbf{4} (dígito, dígito, mult., tol.), \textbf{5}
+  (3 dígitos), \textbf{6} (agrega una banda de \textbf{TCR}).
+  \begin{center}
+    \resizebox{0.92\linewidth}{!}{%
+    \begin{tabular}{llll}
+      \toprule
+      Color & Dígito & Multiplicador & Tolerancia \\
+      \midrule
+      Negro & 0 & $\times1$ & — \\
+      Marrón & 1 & $\times10$ & $\pm1\text{\%}$ \\
+      Rojo & 2 & $\times100$ & $\pm2\text{\%}$ \\
+      Naranja & 3 & $\times1$k & — \\
+      Amarillo & 4 & $\times10$k & — \\
+      Verde & 5 & $\times100$k & $\pm0.5\text{\%}$ \\
+      Azul & 6 & $\times1$M & $\pm0.25\text{\%}$ \\
+      Violeta & 7 & — & $\pm0.1\text{\%}$ \\
+      Gris & 8 & — & $\pm0.05\text{\%}$ \\
+      Blanco & 9 & — & — \\
+      Dorado & — & $\times0.1$ & $\pm5\text{\%}$ \\
+      Plata & — & $\times0.01$ & $\pm10\text{\%}$ \\
+      \bottomrule
+    \end{tabular}}
+  \end{center}
+  \textbf{Ejemplo:} \texttt{Marrón–Negro–Rojo–Dorado} $\Rightarrow$ $10\times100 = \SI{1}{\kilo\ohm}\ \pm5\text{\%}$.
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{6 · Fijos: coeficiente de temperatura (TCR)}
+  El valor cambia con la temperatura (\textbf{TCR}, ppm/°C):
+  \[
+    \Delta R = R_{nominal}\cdot TCR\cdot \Delta T
+    \qquad
+    error\text{\%} = \frac{\Delta R}{R}
+  \]
+  \textbf{Ejemplo:} $10\,\text{k}\Omega$, $100\,\text{ppm/°C}$, $\Delta T = 50\,^\circ\text{C}$
+  $\Rightarrow \Delta R = \SI{50}{\ohm}$ (0.5\text{\%}).
+  \pause
+  \begin{itemize}
+    \item \textbf{Carbón}: $\sim100$–$200$ ppm/°C. \textbf{Película metálica}: $\le 50$ ppm/°C.
+    \item En un divisor de precisión (referencia de ADC) se exige TCR \textbf{bajo}.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{7 · Fijos: potencia nominal y disipación}
+  \[
+    P = V\cdot I = I^2\,R = \frac{V^2}{R}
+  \]
+  El resistor debe soportar la potencia disipada; \textbf{en el vacío} (sin convección)
+  las normas aplican \textbf{derating} ($\approx 50\text{\%}$):
+  \[
+    P_{derated} = 0.5\cdot P_{nominal}
+  \]
+  \textbf{Ejemplo:} $1\,\text{k}\Omega$ de $1/4\,\text{W}$ a \SI{12}{\volt}
+  $\Rightarrow P = \SI{144}{\milli\watt} > \SI{125}{\milli\watt}$ (límite) $\Rightarrow$ usar $1/2\,\text{W}$.
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{8 · Fijos: tipos constructivos}
+  \begin{table}
+    \small
+    \begin{tabular}{p{0.24\textwidth}p{0.30\textwidth}p{0.30\textwidth}}
+      \toprule
+      Tipo & Precisión/TCR & Ruido y uso \\
+      \midrule
+      Composición de carbono & $\pm10\text{\%}$, TCR alto & Alto ruido (evitar en aeroespacial) \\
+      Película de carbono & $\pm5\text{\%}$, TCR medio & Uso general \\
+      Película metálica & $\pm0.1$–$1\text{\%}$, TCR bajo & \textbf{Señales/sensores} \\
+      Bobinado & Buena precisión, alta potencia & Inductivo (no para RF) \\
+      SMD (montaje superficial) & Excelente & \textbf{Vibración/avionica} \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \begin{itemize}
+    \item \textbf{En vuelo} se prefiere \textbf{SMD} y \textbf{película metálica}:
+      baja masa (menos fatiga en vibración) y bajo ruido.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{9 · Variables: potenciómetro y reóstato}
+  \begin{columns}[T]
+    \begin{column}{0.46\textwidth}
+      \resizebox{\linewidth}{!}{%
+      \begin{circuitikz}[american voltages, scale=0.95]
+        \draw (0,0) to[V, l={$V_{in}$}] (0,2.6);
+        \draw (0,2.6) -- (1.4,2.6) to[R, l={$R_{top}$}] (4.4,2.6);
+        \draw (4.4,2.6) -- (5.4,2.6) to[R, l={$R_{bot}$}] (5.4,0);
+        \draw (5.4,0) -- (0,0);
+        \node[circle,fill=gold,inner sep=0.9pt] at (4.4,2.6) {};
+        \node[above,text=gold] at (4.4,2.9) {$V_{out}$};
+      \end{circuitikz}}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item \textbf{Potenciómetro}: divisor con cursor; $V_{out} = V_{in}\,[R_{bot}/(R_{top}+R_{bot})]$.
+        \item \textbf{Reóstato}: solo dos terminales (resistencia variable en serie).
+        \item \textbf{Trimpot}: ajuste de precisión con destornillador.
+        \item \textbf{Lineal vs logarítmico}: la curva puede ser lineal o de audio.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{10 · No lineales: sensores y protección}
+  \begin{table}
+    \small
+    \begin{tabular}{p{0.22\textwidth}p{0.40\textwidth}p{0.30\textwidth}}
+      \toprule
+      Tipo & $R$ varía con & Uso \\
+      \midrule
+      \textbf{NTC} & temperatura (baja al subir $T$) & sensor/sensor de temperatura \\
+      \textbf{PTC} & temperatura (sube al subir $T$) & protección por sobrecorriente \\
+      \textbf{RTD (Pt100)} & temperatura (lineal, precisa) & medición de precisión \\
+      \textbf{Varistor} & tensión (cae ante sobretensión) & \textbf{protección} contra transitorios \\
+      \textbf{LDR} & luz (baja al iluminar) & detección de luz \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \begin{itemize}
+    \item En aeroespacial, \textbf{RTD} (Pt100) para temperatura precisa; \textbf{varistor}
+      para proteger el bus de transitorios; un \textbf{termistor NTC} para sensor barato.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Aplicación aeroespacial}
+  \begin{itemize}
+    \item \textbf{Precisión:} divisores de referencia requieren \textbf{película metálica}
+      (tol. $\pm0.1\text{\%}$, TCR $\le 25$ ppm/°C).
+    \item \textbf{Robustez:} en el \textbf{vacío} no hay convección $\Rightarrow$ \textbf{derating}
+      y acoplamiento térmico al chasis; el \textbf{SMD} resiste vibración.
+    \item \textbf{Interfaz:} el acondicionamiento usa divisores, puentes de Wheatstone
+      (con RTD/galga) y \textbf{equivalente de Thévenin} para las etapas de amplificación y ADC.
+    \item \textbf{Selección:} se elige el resistor con \emph{valor} + \emph{tolerancia} +
+      \emph{TCR} + \emph{potencia con derating}, y se documenta en la \emph{ficha} de la interfaz.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item El resistor \textbf{opone} paso a corriente y \textbf{disipa} calor ($V=IR$, $P=V^2/R$).
+    \item Se clasifica en \textbf{fijo, variable y no lineal}.
+    \item El fijo se elige por \textbf{valor} (serie E), \textbf{tolerancia}, \textbf{TCR} y \textbf{potencia (derating)}.
+    \item \textbf{Película metálica + SMD} para aeroespacial; \textbf{RTD} para temperatura precisa.
+    \item El divisor (con carga) y su equivalente conectan con el acondicionamiento de señales.
+  \end{itemize}
+  \pause
+  \begin{block}{Frase clave}
+    Un resistor "que funciona" en el cálculo no basta: hay que elegirlo con
+    \textbf{tolerancia}, \textbf{deriva térmica} y \textbf{potencia} para la misión.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Preguntas de verificación}
+  \begin{enumerate}
+    \item ¿Qué describe la tolerancia y en qué unidades se da el TCR?
+      \uncover<2->{\emph{(El desvío del valor (\text{\%}); TCR en ppm/°C.)}}
+    \item Lee \texttt{Amarillo–Violeta–Naranja–Plata}: ¿valor y tolerancia?
+      \uncover<3->{\emph{($47\times1\text{k} = \SI{47}{\kilo\ohm}$, $\pm10\text{\%}$.)}}
+    \item ¿Cuál usarías para un divisor de precisión: carbón o película metálica? ¿Por qué?
+      \uncover<4->{\emph{(Película metálica: menor TCR y tolerancia.)}}
+    \item ¿Qué tipo de resistor cambia su valor con la luz? ¿Y con la tensión?
+      \uncover<5->{\emph{(LDR; varistor.)}}
+    \item ¿Por qué en el vacío se debe derating de potencia?
+      \uncover<6->{\emph{(No hay convección; el sobrecalentamiento se agrava.)}}
+  \end{enumerate}
+\end{frame}
+
+\end{document}
