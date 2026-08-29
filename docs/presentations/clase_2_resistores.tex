@@ -175,6 +175,58 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{5b · Código de colores · ejemplo}
+  \begin{center}
+    \resizebox{0.82\linewidth}{!}{%
+    \begin{tikzpicture}[x=0.5cm,y=0.5cm]
+      \draw[fill=gray!25] (0,0) rectangle (11,3);
+      \draw[fill=gray!70] (-0.9,0.7) rectangle (0,2.3);
+      \draw[fill=gray!70] (11,0.7) rectangle (11.9,2.3);
+      \draw[fill=brown!85!black] (1.5,0) rectangle (2.5,3);
+      \draw[fill=black] (3.0,0) rectangle (4.0,3);
+      \draw[fill=red!70!black] (4.5,0) rectangle (5.5,3);
+      \draw[fill=yellow!70!red] (6.0,0) rectangle (7.0,3);
+      \draw[fill=gray!50] (7.6,0) rectangle (8.6,3);
+      \node at (2.0,3.6) {\scriptsize 1º};
+      \node at (3.5,3.6) {\scriptsize 2º};
+      \node at (5.0,3.6) {\scriptsize mult.};
+      \node at (6.5,3.6) {\scriptsize tol.};
+      \node at (8.1,3.6) {\scriptsize TCR};
+      \node at (5.5,-1.3) {\scriptsize Marrón–Negro–Rojo–Dorado (6ª: TCR) $\Rightarrow$ $1\,0\times100 = \SI{1}{\kilo\ohm}\ \pm5\text{\%}$};
+    \end{tikzpicture}}
+  \end{center}
+  \begin{itemize}
+    \item \textbf{4 bandas}: dígito, dígito, multiplicador, tolerancia.
+    \item \textbf{5 bandas}: 3 dígitos (mayor precisión).
+    \item \textbf{6 bandas}: añade la banda de \textbf{TCR} (ppm/°C).
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Códigos de marcado (SMD y potencia)}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{SMD}: \texttt{R} = coma decimal.
+      \[
+        \texttt{5R5} = \SI{5.5}{\ohm},\quad
+        \texttt{47R0} = \SI{47}{\ohm},\quad
+        \texttt{1000} = 100 + 0\ \text{ceros} = \SI{100}{\ohm}
+      \]
+      \small 3 cifras (E24): \texttt{221} = $22\times10 = \SI{220}{\ohm}$.
+      \\Precisión (E96, 4 cifras): \texttt{1502} = $150\times10^2 = \SI{15}{\kilo\ohm}$.
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Potencia}: \texttt{2W1K8J}
+      \[
+        \text{2 W} + \underbrace{\text{1K8}}_{\text{K = decimal}} + \underbrace{\text{J}}_{\text{tol. } \pm5\text{\%}}
+      \]
+      \small Letras de tolerancia: \texttt{F=$\pm1$\text{\%}}, \texttt{G=$\pm2$\text{\%}},
+      \texttt{J=$\pm5$\text{\%}}, \texttt{K=$\pm10$\text{\%}}.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
 \begin{frame}{6 · Fijos: coeficiente de temperatura (TCR)}
   El valor cambia con la temperatura (\textbf{TCR}, ppm/°C):
   \[
@@ -229,6 +281,18 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{Fijos · Reconocimiento (foto)}
+  \begin{center}
+    \includegraphics[width=0.56\textwidth]{figs/Resistors-photo.jpg}
+  \end{center}
+  \begin{itemize}
+    \item Arriba: resistor de \textbf{potencia} (bobinado, \texttt{KH 19350 18K 5\%}).
+    \item Abajo: resistores de \textbf{película} con código de colores.
+    \item Se identifican por \textbf{valor}, \textbf{tolerancia} y \textbf{potencia} (y \textbf{TCR} en precisión).
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
 \begin{frame}{9 · Variables: potenciómetro y reóstato}
   \begin{columns}[T]
     \begin{column}{0.46\textwidth}
@@ -251,6 +315,18 @@
       \end{itemize}
     \end{column}
   \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Variables · Potenciómetro real}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{figs/Potentiometer.jpg}
+  \end{center}
+  \begin{itemize}
+    \item Potenciómetro \textbf{rotatorio}: el eje mueve el cursor.
+    \item Terminales: dos extremos + el \textbf{cursor}; se usa como divisor o reóstato.
+    \item En aviónica se fija con epoxi (vibración) o se sustituye por una red de precisión.
+  \end{itemize}
 \end{frame}
 
 % ---------------------------------------------------------------------
