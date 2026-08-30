@@ -147,6 +147,17 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
+\begin{frame}{Fijos · Series normalizadas (tabla completa)}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{figs/series_e.png}
+  \end{center}
+  \begin{itemize}
+    \item Los valores de cada serie se multiplican por $10^k$ para obtener el valor nominal.
+    \item \textbf{E96} (3 cifras) da errores menores; \textbf{E12/E24} son más gruesos.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
 \begin{frame}{5 · Fijos: código de colores (IEC 60062)}
   Se leen de izquierda a derecha: \textbf{4} (dígito, dígito, mult., tol.), \textbf{5}
   (3 dígitos), \textbf{6} (agrega una banda de \textbf{TCR}).
@@ -377,6 +388,25 @@
     \includegraphics[width=0.42\textwidth]{figs/chip_resistor_surface_mount_Arduino_ftdi_c.jpg}\\[2pt]
     \scriptsize SMD · resistores de montaje superficial en una PCB
   \end{center}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{PTC y trimpots de ajuste (foto)}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \centering\includegraphics[height=0.32\textheight]{figs/ptc_atx_5vsb_ob_jump.jpg}\\[2pt]
+      \scriptsize PTC · termistor de coeficiente positivo
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering\includegraphics[height=0.32\textheight]{figs/multiturn_trimmer_potentiometer_bourns_3296_se.jpg}\\[2pt]
+      \scriptsize Trimmer \textbf{multivuelta} (trimpot)
+    \end{column}
+  \end{columns}
+  \vfill
+  \begin{itemize}
+    \item \textbf{PTC}: $R$ crece con la temperatura (protección y sensor).
+    \item \textbf{Trimpot multivuelta}: ajuste fino (muchas vueltas) y alta resolución.
+  \end{itemize}
 \end{frame}
 
 % ---------------------------------------------------------------------
