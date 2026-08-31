@@ -1,0 +1,280 @@
+% =====================================================================
+% Fundamentos de Sistemas Electrónicos Analógicos — BJT NPN
+% Compilar: pdflatex clase_3_bjt_npn.tex  (2 pasadas)
+% =====================================================================
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{circuitikz}
+
+\definecolor{navy}{RGB}{23,54,93}
+\definecolor{navysoft}{RGB}{72,101,140}
+\definecolor{gold}{RGB}{179,142,62}
+\definecolor{ink}{RGB}{44,51,58}
+\definecolor{soft}{RGB}{244,241,234}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamercolor{structure}{fg=navy}
+\setbeamercolor{frametitle}{fg=white,bg=navy}
+\setbeamercolor{title}{fg=navy}
+\setbeamercolor{subtitle}{fg=navysoft}
+\setbeamercolor{itemize item}{fg=gold}
+\setbeamercolor{itemize subitem}{fg=gold}
+\setbeamercolor{block title}{fg=white,bg=navy}
+\setbeamercolor{block body}{bg=soft}
+\setbeamercolor{example text}{fg=navy}
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}
+\setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\circ$}}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+\title[BJT NPN]{Transistor de Unión Bipolar (BJT) tipo NPN}
+\subtitle{Clase de teoría · Fundamentos de Sistemas Electrónicos Analógicos}
+\institute{Licenciatura en Ingeniería Aeroespacial · UNAM}
+\date{Semestre 2027-1}
+
+\begin{document}
+
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Objetivos}
+  \begin{itemize}
+    \item Entender la \textbf{estructura N-P-N} y el \textbf{símbolo} del BJT.
+    \item Relacionar las corrientes: $I_E = I_B + I_C$ y $I_C = \beta\,I_B$.
+    \item Distinguir las \textbf{regiones} de operación: corte, activa y saturación.
+    \item Analizar un \textbf{circuito de polarización} y calcular su punto de trabajo.
+    \item Reconocer los \textbf{encapsulados} típicos.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{1 · Estructura del BJT NPN}
+  Tres regiones de semiconductor "sándwich" N–P–N:
+  \begin{center}
+    \resizebox{0.55\linewidth}{!}{%
+    \begin{tikzpicture}[scale=1.1]
+      \draw[fill=blue!25] (0,0) rectangle (2.4,0.9);   % N (emisor)
+      \draw[fill=red!20]  (0,0.9) rectangle (2.4,1.7);  % P (base)
+      \draw[fill=blue!25] (0,1.7) rectangle (2.4,2.6);  % N (colector)
+      \draw (1.2,0) -- (1.2,-0.7) node[below] {\scriptsize Emisor (E)};
+      \draw (0,1.3) -- (-0.9,1.3) node[left] {\scriptsize Base (B)};
+      \draw (1.2,2.6) -- (1.2,3.3) node[above] {\scriptsize Colector (C)};
+      \node at (0.6,2.15) {\tiny N};
+      \node at (0.6,1.3) {\tiny P};
+      \node at (0.6,0.45) {\tiny N};
+    \end{tikzpicture}}
+  \end{center}
+  \begin{itemize}
+    \item La \textbf{base} es delgada y poco dopada; el \textbf{emisor} y el \textbf{colector} son N.
+    \item Se conduce cuando la unión \textbf{base-emisor} está polarizada en directa.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{2 · Símbolo del BJT NPN}
+  \begin{center}
+    \resizebox{0.5\linewidth}{!}{%
+    \begin{circuitikz}[american voltages, scale=1.1]
+      \node[npn] (Q) at (0,0) {};
+      \node[left]  at (Q.B) {$B$};
+      \node[above] at (Q.C) {$C$};
+      \node[below] at (Q.E) {$E$};
+    \end{circuitikz}}
+  \end{center}
+  \begin{itemize}
+    \item La \textbf{flecha del emisor} indica el sentido de la corriente (NPN: sale).
+    \item En el NPN, $I_B$ e $I_C$ \textbf{entran}; $I_E$ \textbf{sale}.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{3 · Corrientes del BJT}
+  \[
+    I_E = I_B + I_C
+    \qquad\qquad
+    I_C = \beta\cdot I_B = h_{FE}\cdot I_B
+  \]
+  \begin{itemize}
+    \item $\beta = h_{FE}$: \textbf{ganancia estática de corriente} (típicamente $50$–$300$).
+    \item Como $\beta \gg 1$: $I_C \approx I_E$ y $I_B \ll I_C$.
+    \item El transistor es un \textbf{amplificador de corriente}: una pequeña $I_B$ controla una gran $I_C$.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{4 · Regiones de operación}
+  \begin{table}
+    \small
+    \begin{tabular}{p{0.22\textwidth}p{0.36\textwidth}p{0.32\textwidth}}
+      \toprule
+      Región & Condición & Comportamiento \\
+      \midrule
+      \textbf{CORTE} & $I_B = 0$ & $I_C = 0$, $V_{CE} = V_{CC}$ (máx.) \\
+      \textbf{ACTIVA} & $0 < I_B$, $I_C = \beta\,I_B$ & Amplificación lineal; $V_{CE}$ intermedio \\
+      \textbf{SATURACIÓN} & $I_C \ne \beta\,I_B$ (topado) & $I_C$ máximo, $V_{CE} \approx V_{CEsat}$ \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \begin{block}{Clave}
+    \textbf{Activa} sólo mientras $I_C = \beta\,I_B$; si la red limita a $I_C$ por su
+    valor máximo, el transistor \textbf{satura}: $I_C \ne \beta\,I_B$.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{5 · Recordatorio: $V_{BE} \approx 0.7\,\mathrm{V}$}
+  \begin{block}{¡Cuidado!}
+    La unión base-emisor polarizada en directa presenta $\mathbf{V_{BE} \approx +0.7\,V}$
+    (no $-0.7$).
+  \end{block}
+  \[
+    V_B - I_B\,R_B - V_{BE} = 0
+    \qquad\Longrightarrow\qquad
+    I_B = \frac{V_B - 0.7}{R_B}
+  \]
+  \begin{itemize}
+    \item Si $V_B < 0.7\,\mathrm{V}$: $I_B = 0$ $\Rightarrow$ \textbf{corte}.
+    \item El signo de $V_{BE}$ es crítico: un error de signo invierte el análisis.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{6 · Circuito de polarización (ejemplo)}
+  \begin{center}
+    \resizebox{0.72\linewidth}{!}{%
+    \begin{circuitikz}[american voltages, scale=1.0]
+      \node[npn] (Q) at (4.4,1.7) {};
+      \draw (0,0) to[V, l={$V_B$}] (0,3);
+      \draw (0,3) -- (7,3);
+      \draw (0,0) -- (7,0);
+      \node[ground] at (7,0) {};
+      \draw (Q.C) to[R, l={$R_C=1\,\mathrm{k}5$}] (7,3);
+      \draw (Q.E) -- (4.4,0);
+      \draw (Q.B) to[R, l={$R_B=50\,\mathrm{k}$}] (2.3,1.7) -- (2.3,3);
+      \node[above, text=navy] at (8.8,3) {\scriptsize $V_{CC}=15$ V (colector)};
+    \end{circuitikz}}
+  \end{center}
+  \textbf{Datos:} $V_{CC}=15\,\mathrm{V}$, $R_B=50\,\mathrm{k}$, $R_C=1\,\mathrm{k}5$,
+  $\beta=100$, $V_{BE}=0.7\,\mathrm{V}$, $V_{CEsat}=0.8\,\mathrm{V}$.
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{6b · Análisis de las tres regiones}
+  \begin{enumerate}
+    \item \textbf{CORTE} ($V_B < 0.7$): $I_B=0$, $I_C=0$, $V_{CE}=15\,\mathrm{V}$ (transistor abierto).
+    \item \textbf{ACTIVA} ($V_B > 0.7$): $I_B = \dfrac{V_B-0.7}{50\,\mathrm{k}}$, $I_C = 100\,I_B$,
+      $V_{CE} = 15 - I_C\cdot 1\,\mathrm{k}5$.
+    \item \textbf{SATURACIÓN} (cuando $I_C$ intenta superar el máximo):
+      \[
+        I_{C,max} = \frac{V_{CC}-V_{CEsat}}{R_C} = \frac{15-0.8}{1500} \approx \SI{9.5}{\milli\ampere}
+        \ (\approx 10\,\mathrm{mA})
+      \]
+      En saturación $V_{CE}\approx 0.8\,\mathrm{V}$ y $I_C \ne \beta\,I_B$.
+  \end{enumerate}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{6c · Cálculo del punto (IB = 0.1 mA)}
+  Con $I_C = 10\,\mathrm{mA}$ y $\beta = 100$:
+  \[
+    I_B = \frac{I_C}{\beta} = \frac{10\,\mathrm{mA}}{100} = \SI{0.1}{\milli\ampere}
+  \]
+  \pause
+  De la malla de base:
+  \[
+    V_B = I_B\,R_B + V_{BE} = (0.1\,\mathrm{mA})(50\,\mathrm{k}) + 0.7
+        = 5 + 0.7 = \SI{5.7}{\volt}
+  \]
+  \begin{block}{Recuerda}
+    $\mathbf{V_B = 5.7\,\mathrm{V}}$ es la tensión de base que lleva el transistor a
+    saturación con estos valores. Por encima, $I_C$ se queda en $\approx 10\,\mathrm{mA}$.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Regiones en el tiempo}
+  \begin{center}
+    \includegraphics[width=0.62\textwidth]{figs/bjt_regiones.png}
+  \end{center}
+  \begin{itemize}
+    \item Mientras $V_B$ sube: \textbf{corte} ($I_B=I_C=0$, $V_{CE}=15$ V) $\rightarrow$
+      \textbf{activa} ($I_C=\beta I_B$, $V_{CE}$ cae) $\rightarrow$ \textbf{saturación}
+      ($I_C$ tope, $V_{CE}\approx V_{CEsat}$).
+    \item La pendiente de $I_C$ en activa es $\beta$ veces la de $I_B$.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Encapsulados}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \includegraphics[height=0.38\textheight]{figs/bjt_pkg_to_3_package_botto.jpg}\\[2pt]
+      \scriptsize TO-3 (potencia, montaje a chasis)
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \includegraphics[height=0.38\textheight]{figs/bjt_pkg_sony_vpl_hs1___lam.jpg}\\[2pt]
+      \scriptsize TO-220 sobre disipador
+    \end{column}
+  \end{columns}
+  \vfill
+  \begin{itemize}
+    \item \textbf{TO-92} (señal), \textbf{TO-126/TO-220} (potencia con disipador),
+      \textbf{TO-3} (alta potencia, chasis).
+    \item En aviónica el paquete se elige por potencia, disipación y ambiente (vibración/vacío).
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Aplicación aeroespacial}
+  \begin{itemize}
+    \item Los transistores se usan como \textbf{amplificadores} (región activa) y
+      \textbf{interruptores} (corte/saturación) en fuentes, drivers y acondicionamiento.
+    \item El punto Q debe quedar en \textbf{activa} para amplificar; la variación de
+      $\beta$ y temperatura lo desplaza (ver semana 3: polarización fija, divisor, realimentación).
+    \item En el vacío no hay convección: la \textbf{disipación} $P = V_{CE}\cdot I_C$
+      y el \textbf{derating} del encapsulado son críticos.
+    \item Se prefiere \textbf{MOSFET} para conmutación eficiente (menor $V_{CE}$ de saturación) — tema de la semana 4.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item El BJT NPN es un "sándwich" \textbf{N-P-N}: emisor, base y colector.
+    \item $I_E = I_B + I_C$ y $I_C = \beta\,I_B$ ($h_{FE}$).
+    \item Tres regiones: \textbf{corte} ($I_B=0$), \textbf{activa} ($I_C=\beta I_B$),
+      \textbf{saturación} ($I_C$ topado).
+    \item $V_{BE}\approx +0.7\,\mathrm{V}$ (¡ojo el signo!).
+    \item En el ejemplo: $I_{C,max}\approx 10\,\mathrm{mA}$ y $V_B = 5.7\,\mathrm{V}$.
+    \item El encapsulado se elige por potencia y disipación.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Preguntas de verificación}
+  \begin{enumerate}
+    \item ¿Qué relación hay entre $I_E$, $I_B$ e $I_C$?
+      \uncover<2->{\emph{($I_E = I_B + I_C$; con $\beta \gg 1$, $I_E\approx I_C$.)}}
+    \item ¿En qué región $I_C = \beta\,I_B$? \uncover<3->{\emph{(Activa.)}}
+    \item Si $V_B < 0.7\,\mathrm{V}$, ¿qué región? \uncover<4->{\emph{(Corte: $I_B=I_C=0$.)}}
+    \item ¿Por qué en saturación $I_C \ne \beta\,I_B$?
+      \uncover<5->{\emph{(La red limita a $I_{C,max}=(V_{CC}-V_{CEsat})/R_C$.)}}
+    \item Con $I_C = 10\,\mathrm{mA}$, $R_B = 50\,\mathrm{k}$ y $\beta=100$, ¿cuánto vale $V_B$?
+      \uncover<6->{\emph{($I_B = 0.1\,\mathrm{mA}$, $V_B = 0.1\,\mathrm{mA}\cdot 50\,\mathrm{k} + 0.7 = \SI{5.7}{\volt}$.)}}
+  \end{enumerate}
+\end{frame}
+
+\end{document}
