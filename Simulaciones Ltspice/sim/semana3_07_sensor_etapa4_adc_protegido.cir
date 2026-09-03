@@ -1,0 +1,29 @@
+* Semana 3.7 - Etapa 4: divisor y filtro de proteccion para GP26/ADC0
+* Entrada calibrada con mediciones reales: 4.493 V seco y 1.600 V mojado.
+* Montaje: ADC_RAW -- 680k -- ADC_GP26; desde ADC_GP26, 1Meg || 1uF a GND.
+
+.param RPROT=680k RLOAD=1Meg CFILT=1u
+VRAW adc_raw 0 DC 4.493 PWL(0 0 1m 4.493 2.2 4.493 2.201 1.6 4.4 1.6)
+R5 adc_raw adc_gp26 {RPROT}
+R1 adc_gp26 0 {RLOAD}
+C1 adc_gp26 0 {CFILT}
+
+.tran 0 4.4 0 1m
+
+.meas tran VADC_DRY AVG V(adc_gp26) FROM 2.0 TO 2.2
+.meas tran VADC_WET AVG V(adc_gp26) FROM 4.2 TO 4.4
+.meas tran T_90_WET WHEN V(adc_gp26)=1.124 FALL=1
+
+* LTspice admite un tipo de analisis activo por ejecucion. Alternativas:
+* 1) comentar .tran y sus .meas; luego descomentar .op y las dos .meas op.
+* .op
+* .meas op VADC_OP FIND V(adc_gp26)
+* .meas op I_DIV_OP PARAM 4.493/(RPROT+RLOAD)
+* 2) comentar .tran y sus .meas; luego descomentar .dc y sus dos .meas dc.
+* .dc VRAW 0 5 0.05
+* .meas dc VADC_AT_4V5 FIND V(adc_gp26) AT=4.5
+* .meas dc VADC_WORST_5V FIND V(adc_gp26) AT=5
+
+* Comparacion opcional: descomentar para barrer 470k y 680k.
+* .step param RPROT list 470k 680k
+.end

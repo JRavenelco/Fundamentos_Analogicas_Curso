@@ -1,0 +1,32 @@
+* Semana 3.6 - Etapa 3: sensor, diodo y detector de envolvente SIN conectar al Pico
+* ATENCION: ADC_RAW puede aproximarse a 4.5 V; no conectarlo directamente a GP26.
+* HUM=0 seco, 1 ligeramente humedo, 2 humedo, 3 mojado.
+
+.param VCC=5 VGPIO=3.3 RBVAL=2.2k RCVAL=10k HUM=0
+.param CS=table(HUM,0,15p,1,68p,2,120p,3,180p)
+.param RLEAK=table(HUM,0,100Meg,1,20Meg,2,5Meg,3,1Meg)
+.param RESR=200 RLOAD=1Meg CFILT_SIM=10n
+
+VCC vcc 0 {VCC}
+VPWM gpio 0 PULSE(0 {VGPIO} 0 1n 1n 1u 2u)
+RB gpio base {RBVAL}
+RC vcc colector {RCVAL}
+Q1 colector base 0 QNPN
+CSENSOR colector sensor_int {CS}
+RSENSOR sensor_int 0 {RESR}
+RLEAK_SENSOR colector 0 {RLEAK}
+D1 colector adc_raw D4148
+R1 adc_raw 0 {RLOAD}
+C1 adc_raw 0 {CFILT_SIM}
+
+.model QNPN NPN(BF=200 VAF=100 IS=1e-14 RB=20 CJE=10p CJC=4p TF=0.5n)
+.model D4148 D(IS=4.352n RS=0.6458 N=1.906 CJO=7.048p M=0.4 TT=3.48n BV=110 IBV=0.1u)
+
+.step param HUM list 0 1 2 3
+* Para acelerar esta etapa se usa 10 nF; el montaje real conserva C1=1 uF.
+* El escalamiento reduce 100 veces las constantes de tiempo del filtro.
+.tran 0 1.2m 0 20n startup
+.meas tran VRAW_AVG AVG V(adc_raw) FROM 1m TO 1.2m
+.meas tran VRAW_MAX MAX V(adc_raw) FROM 1m TO 1.2m
+.meas tran VRAW_MIN MIN V(adc_raw) FROM 1m TO 1.2m
+.end

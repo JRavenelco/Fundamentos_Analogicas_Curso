@@ -1,0 +1,19 @@
+* Semana 3.4 - Etapa 1: GPIO de 3.3 V y conmutador NPN
+* Montaje: GP16 -- RB=2.2k -- base; emisor a GND; RC=10k de +5 V al colector.
+* La salida de colector queda invertida respecto al PWM.
+
+.param VCC=5 VGPIO=3.3 RBVAL=2.2k RCVAL=10k
+VCC vcc 0 {VCC}
+VPWM gpio 0 PULSE(0 {VGPIO} 0 1n 1n 1u 2u)
+RB gpio base {RBVAL}
+RC vcc colector {RCVAL}
+Q1 colector base 0 QNPN
+
+.model QNPN NPN(BF=200 VAF=100 IS=1e-14 RB=20 CJE=10p CJC=4p TF=0.5n)
+
+.tran 0 10u 0 5n
+.meas tran IB_ON_AVG AVG I(RB) FROM 0.20u TO 0.80u
+.meas tran VC_ON_MIN MIN V(colector) FROM 0.20u TO 0.80u
+.meas tran VC_OFF_MAX MAX V(colector) FROM 1.20u TO 1.80u
+.meas tran IC_ON_AVG AVG I(RC) FROM 0.20u TO 0.80u
+.end

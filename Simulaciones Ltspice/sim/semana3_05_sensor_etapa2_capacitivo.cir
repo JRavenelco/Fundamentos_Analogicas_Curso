@@ -1,0 +1,26 @@
+* Semana 3.5 - Etapa 2: conmutador NPN y sensor capacitivo equivalente
+* El sensor se modela como (Cs en serie con RESR) en paralelo con RLEAK.
+* HUM=0 seco, 1 ligeramente humedo, 2 humedo, 3 mojado.
+
+.param VCC=5 VGPIO=3.3 RBVAL=2.2k RCVAL=10k HUM=0
+.param CS=table(HUM,0,15p,1,68p,2,120p,3,180p)
+.param RLEAK=table(HUM,0,100Meg,1,20Meg,2,5Meg,3,1Meg)
+.param RESR=200
+
+VCC vcc 0 {VCC}
+VPWM gpio 0 PULSE(0 {VGPIO} 0 1n 1n 1u 2u)
+RB gpio base {RBVAL}
+RC vcc colector {RCVAL}
+Q1 colector base 0 QNPN
+CSENSOR colector sensor_int {CS}
+RSENSOR sensor_int 0 {RESR}
+RLEAK_SENSOR colector 0 {RLEAK}
+
+.model QNPN NPN(BF=200 VAF=100 IS=1e-14 RB=20 CJE=10p CJC=4p TF=0.5n)
+
+.step param HUM list 0 1 2 3
+.tran 0 20u 0 5n
+.meas tran VC_PK MAX V(colector) FROM 11u TO 19u
+.meas tran VC_MIN MIN V(colector) FROM 11u TO 19u
+.meas tran VC_AVG AVG V(colector) FROM 11u TO 19u
+.end
