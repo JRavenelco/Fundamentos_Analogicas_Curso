@@ -1,0 +1,284 @@
+% =====================================================================
+% Fundamentos de Sistemas Electrónicos Analógicos — MOSFET
+% Compilar: pdflatex clase_4_mosfet.tex  (2 pasadas)
+% =====================================================================
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{circuitikz}
+
+\definecolor{navy}{RGB}{23,54,93}
+\definecolor{navysoft}{RGB}{72,101,140}
+\definecolor{gold}{RGB}{179,142,62}
+\definecolor{ink}{RGB}{44,51,58}
+\definecolor{soft}{RGB}{244,241,234}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamercolor{structure}{fg=navy}
+\setbeamercolor{frametitle}{fg=white,bg=navy}
+\setbeamercolor{title}{fg=navy}
+\setbeamercolor{subtitle}{fg=navysoft}
+\setbeamercolor{itemize item}{fg=gold}
+\setbeamercolor{itemize subitem}{fg=gold}
+\setbeamercolor{block title}{fg=white,bg=navy}
+\setbeamercolor{block body}{bg=soft}
+\setbeamercolor{example text}{fg=navy}
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}
+\setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\circ$}}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+\title[MOSFET]{Transistor MOSFET: fundamentos y aplicaciones}
+\subtitle{Clase de teoría · Fundamentos de Sistemas Electrónicos Analógicos}
+\institute{Licenciatura en Ingeniería Aeroespacial · UNAM}
+\date{Semestre 2027-1}
+
+\begin{document}
+
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Objetivos}
+  \begin{itemize}
+    \item Entender la \textbf{estructura} del MOSFET y su control por \textbf{tensión} (no por corriente).
+    \item Identificar sus \textbf{tres regiones}: corte, triodo (lineal) y saturación.
+    \item Usar las ecuaciones de $I_D$, el umbral $V_{th}$ y la transconductancia.
+    \item Modelar el MOSFET como \textbf{interruptor} (lado bajo/alto) y manejar cargas inductivas.
+    \item Aplicarlo en conmutación de potencia y compararlo con el BJT (semana 3).
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{1 · Estructura del MOSFET (NMOS de enriquecimiento)}
+  \begin{center}
+    \resizebox{0.55\linewidth}{!}{%
+    \begin{tikzpicture}[scale=1.05]
+      \draw[fill=gray!18] (0,0) rectangle (4.4,2.4);
+      \draw[fill=blue!25] (0.5,0.1) rectangle (1.6,2.3);   % N+ fuente
+      \draw[fill=blue!25] (2.8,0.1) rectangle (3.9,2.3);   % N+ drenaje
+      \draw[fill=orange!35] (0.4,1.15) rectangle (4.0,1.55); % substrato P (canal)
+      \draw[very thick] (0,1.6) rectangle (4.4,1.75);       % óxido (puerta)
+      \draw (2.2,1.75) -- (2.2,2.6);                       % puerta
+      \draw (1.05,2.3) -- (1.05,2.8) node[above] {S};
+      \draw (3.35,2.3) -- (3.35,2.8) node[above] {D};
+      \node[below] at (2.2,2.9) {G};
+      \node at (2.2,0.55) {\tiny sustrato P};
+      \node at (1.05,1.85) {\tiny N+};
+      \node at (3.35,1.85) {\tiny N+};
+    \end{tikzpicture}}
+  \end{center}
+  \begin{itemize}
+    \item El \textbf{gate} está aislado por el óxido: \textbf{no consume corriente} en DC ($I_G \approx 0$).
+    \item $V_{GS}$ crea el canal entre S y D: el MOSFET se controla por \textbf{tensión}.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{2 · Símbolos}
+  \begin{center}
+    \begin{tabular}{cc}
+      \textbf{NMOS} & \textbf{PMOS} \\
+      \begin{circuitikz}[scale=1.2]
+        \node[nmos] (M) at (0,0) {};
+        \node[left] at (M.G) {G};
+        \node[above] at (M.D) {D};
+        \node[below] at (M.S) {S};
+      \end{circuitikz}
+      &
+      \begin{circuitikz}[scale=1.2]
+        \node[pmos] (M) at (0,0) {};
+        \node[left] at (M.G) {G};
+        \node[above] at (M.D) {D};
+        \node[below] at (M.S) {S};
+      \end{circuitikz}
+      \\
+    \end{tabular}
+  \end{center}
+  \begin{itemize}
+    \item La \textbf{flecha} indica el sustrato/canal: NMOS (n) o PMOS (p).
+    \item Principio de conmutación: $V_{GS}$ mayor que $V_{th}$ (NMOS) $\Rightarrow$ conduce; menor $\Rightarrow$ corte.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{3 · Regiones de operación}
+  \begin{table}
+    \small
+    \begin{tabular}{p{0.20\textwidth}p{0.34\textwidth}p{0.34\textwidth}}
+      \toprule
+      Región & Condición & Comportamiento \\
+      \midrule
+      \textbf{CORTE} & $V_{GS} < V_{th}$ & $I_D = 0$ (interruptor abierto) \\
+      \textbf{TRIODO (lineal)} & $V_{GS} > V_{th}$, $V_{DS}$ pequeña & Canal resistivo: $I_D \approx k_n (V_{GS}-V_{th}) V_{DS}$ \\
+      \textbf{SATURACIÓN} & $V_{GS} > V_{th}$, $V_{DS}$ grande & $I_D \approx \tfrac{1}{2} k_n (V_{GS}-V_{th})^2$ (casi independiente de $V_{DS}$) \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \begin{block}{Clave para conmutación}
+    \textbf{ON:} se prefiere el \textbf{triodo} (canal resistivo, $V_{DS}$ mínima, baja pérdida).
+    \textbf{Saturación:} amplificación (como en el BJT activa).
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{4 · Ecuaciones del MOSFET}
+  \[
+    I_D = \tfrac{1}{2}\,k_n\,(V_{GS}-V_{th})^2
+    \qquad
+    k_n = \mu_n C_{ox}\frac{W}{L}
+  \]
+  \begin{itemize}
+    \item $V_{th}$: tensión umbral ($2$–$4\,\mathrm{V}$ típico); por debajo no conduce.
+    \item $k_n$: factor de transconductancia (depende del proceso y de $W/L$).
+    \item En triodo el canal actúa como resistor: $R_{DS(on)} = \dfrac{V_{DS}}{I_D}$.
+    \item El \textbf{gate} es un capacitor: sólo consume energía al \emph{cambiar} de estado ($Q_G$).
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{5 · Curvas características}
+  \begin{center}
+    \includegraphics[width=0.72\textwidth]{figs/mosfet_curvas.png}
+  \end{center}
+  \begin{itemize}
+    \item Izquierda: familia $I_D$-$V_{DS}$ (triodo $\to$ saturación al crecer $V_{GS}$).
+    \item Derecha: transferencia $I_D$-$V_{GS}$; corte por debajo de $V_{th}=2\,\mathrm{V}$.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{6 · Modelo equivalente (interruptor)}
+  \begin{columns}[T]
+    \begin{column}{0.46\textwidth}
+      \textbf{Equivalente dinámico}
+      \[
+        G \text{ --- } C_{gs} \text{ --- } S
+      \]
+      \begin{itemize}
+        \item Puerta $=$ capacitor ($C_{gs}$, $C_{gd}$): no hay corriente DC.
+        \item Conexión S-D se modela como \textbf{fuente controlada} (saturación) o
+          \textbf{$R_{DS(on)}$} (triodo).
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \textbf{Interruptor ideal}
+      \begin{itemize}
+        \item $V_{GS} > V_{th}$: ON $\Rightarrow$ $V_{DS} \approx I_D R_{DS(on)}$ (baja tensión).
+        \item $V_{GS} < V_{th}$: OFF $\Rightarrow$ $V_{DS} \approx V_{CC}$ (abierto).
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \pause
+  \begin{block}{Diferenciador contra el BJT}
+    El BJT se controla con \textbf{corriente} ($I_C = \beta I_B$); el MOSFET con
+    \textbf{tensión} ($I_G \approx 0$): ideal para drivers que no tienen corriente a entregar.
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{7 · Ejemplo numérico}
+  \textbf{Datos:} $V_{th}=2\,\mathrm{V}$, $k_n=0.5\,\mathrm{mA/V^2}$, $V_{GS}=5\,\mathrm{V}$,
+  $V_{DD}=12\,\mathrm{V}$, $R_D=2.2\,\mathrm{k\Omega}$.
+  \pause
+  \[
+    I_D = \tfrac{1}{2}(0.5)(5-2)^2 = \SI{2.25}{\milli\ampere}
+    \qquad
+    V_{DS} = V_{DD} - I_D R_D = 12 - 2.25\cdot 2.2 \approx \SI{7.05}{\volt}
+  \]
+  \begin{itemize}
+    \item La región depende del punto: con $V_{DS}=7.05 > V_{GS}-V_{th}=3$ está en \textbf{saturación}.
+    \item Como \textbf{interruptor} (triodo): $R_{DS(on)}=100\,\mathrm{m\Omega}$, $I_D=1\,\mathrm{A}$
+      $\Rightarrow V_{DS}=0.1\,\mathrm{V}$, $P = I_D^2 R_{DS}\approx \SI{100}{\milli\watt}$ (pérdida mínima).
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{8 · MOSFET vs BJT}
+  \begin{table}
+    \small
+    \begin{tabular}{p{0.22\textwidth}p{0.36\textwidth}p{0.36\textwidth}}
+      \toprule
+      & BJT (NPN) & MOSFET (NMOS) \\
+      \midrule
+      Control & \textbf{Corriente} de base ($I_C=\beta I_B$) & \textbf{Tensión} de compuerta ($I_G\approx 0$) \\
+      Ganancia & $\beta = h_{FE}$ ($50$–$300$) & transconductancia $g_m$; $k_n$ \\
+      ON & $V_{CE,sat}\approx0.2\,\mathrm{V}$ & $V_{DS}=I_D R_{DS(on)}$ (muy pequeña) \\
+      Entrada & Consume $I_B$ & Capacitiva ($Q_G$) \\
+      Uso típico & Amplificación de señal & \textbf{Conmutación de potencia} \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \pause
+  \begin{itemize}
+    \item Para \textbf{conmutar cargas} (motores, calentadores, actuadores) se prefiere \textbf{MOSFET}.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{9 · Conmutación de cargas inductivas}
+  \begin{itemize}
+    \item Una carga inductiva (motor, bobina, relé) almacena energía:
+      al apagar, el colapso genera un \textbf{pico de tensión} que puede destruir el MOSFET.
+    \item Solución: \textbf{diodo de libre circulación} (flyback) en paralelo con la carga.
+    \item Energía de conmutación: la puerta se carga con $Q_G$; se limita la corriente
+      de gate con $R_G$ (controla tiempos de encendido/apagado).
+    \item En el vacío (sin convección) las \textbf{pérdidas} y el \textbf{derating} del
+      encapsulado son críticos (igual que en la semana 3).
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Aplicación aeroespacial}
+  \begin{itemize}
+    \item \textbf{Conmutación de potencia:} calentadores de traje/mantos de baterías,
+      actuadores, cargas auxiliares (eficiencia sin caída extra de $V_{CE}$).
+    \item \textbf{Driver de motor:} puente H con NMOS/PMOS (o driver de MOSFET) en
+      actuadores de superficies.
+    \item \textbf{Condicionamiento:} multiplexores/switch de señales con $R_{DS(on)}$ baja y
+      alta impedancia de entrada (casi no carga el sensor).
+    \item \textbf{Selección:} $V_{th}$, $R_{DS(on)}$, $Q_G$, $V_{DS,max}$, $I_D$ y
+      temperatura; con derating y diodo de protección (libre circulación) en cargas inductivas.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item El MOSFET es un switch de \textbf{tensión}: $I_G \approx 0$ y $V_{GS}$ controla el canal.
+    \item Regiones: \textbf{corte} ($I_D=0$), \textbf{triodo} (canal resistivo, ON),
+      \textbf{saturación} ($I_D \approx \frac{1}{2}k_n(V_{GS}-V_{th})^2$).
+    \item Umbral $V_{th}$; $k_n = \mu_n C_{ox} W/L$; puerta capacitiva ($Q_G$).
+    \item Como \textbf{interruptor} (triodo): $P = I_D^2 R_{DS(on)}$; fuentes inductivas
+      requieren diodo flyback.
+    \item Ideal para conmutación de potencia aeroespacial; el BJT para amplificar señal.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Preguntas de verificación}
+  \begin{enumerate}
+    \item ¿Qué controla al MOSFET: corriente o tensión?
+      \uncover<2->{\emph{(Tensión $V_{GS}$; $I_G \approx 0$ en DC.)}}
+    \item ¿En qué región está como interruptor cerrado?
+      \uncover<3->{\emph{(Triodo/lineal, con $V_{DS} = I_D R_{DS(on)}$ pequeña.)}}
+    \item Con $V_{th}=2\,\mathrm{V}$ y $k_n=0.5\,\mathrm{mA/V^2}$, ¿cuánto vale $I_D$ con $V_{GS}=5\,\mathrm{V}$?
+      \uncover<4->{\emph{($I_D = \frac{1}{2}\cdot 0.5\cdot 3^2 = \SI{2.25}{\milli\ampere}$.)}}
+    \item ¿Por qué un MOSFET gana al BJT en conmutación de potencia?
+      \uncover<5->{\emph{(No consume corriente de entrada y su $V_{DS}$ de ON (pérdida) es mínima.)}}
+    \item ¿Qué componente protege un MOSFET ante una carga inductiva?
+      \uncover<6->{\emph{(Diodo de libre circulación en paralelo con la carga.)}}
+  \end{enumerate}
+\end{frame}
+
+\end{document}

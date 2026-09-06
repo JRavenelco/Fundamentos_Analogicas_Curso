@@ -1,0 +1,25 @@
+* Semana 4.3 - Etapa 3: sensor de corriente con shunt y ADC protegido
+* RSENSE=1R en serie con la fuente del MOSFET; V_sense = ID*RSENSE (~120 mV).
+* Divisor RF=10k / R2=10k -> VADC = 0.5*V_sense (~60 mV), siempre << 3.3 V.
+
+.param VCC=12 VPWM=3.3 RG=100 RL=100 RSENSE=1 RF=10k R2=10k
+VCC vcc 0 {VCC}
+VPWM gpio 0 PULSE(0 {VPWM} 0 1n 1n 5u 10u)
+RG gpio gate {RG}
+M1 drain gate sense 0 NMOS1
+RSENSE sense 0 {RSENSE}
+RL vcc drain {RL}
+RF sense adc {RF}
+R2 adc 0 {R2}
+
+* C1 opcional anti-ruido en el ADC (1nF); descomentar para filtrar:
+* C1 adc 0 1n
+
+.model NMOS1 NMOS(VTO=2.1 KP=1.0 LAMBDA=0.01)
+
+.tran 0 40u 0 10n
+
+.meas tran VSENSE_ON AVG V(sense) FROM 11u TO 14u
+.meas tran VADC_ON AVG V(adc) FROM 11u TO 14u
+.meas tran VADC_MAX MAX V(adc) FROM 0 TO 40u
+.end

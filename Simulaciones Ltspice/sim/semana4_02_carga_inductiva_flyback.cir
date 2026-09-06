@@ -1,0 +1,26 @@
+* Semana 4.2 - Etapa 2: carga inductiva (motor/bobina) y diodo de libre circulacion
+* Sin D1 el colapso de L genera un pico destructivo en el drenaje; con D1 se fija a ~VCC+VD.
+* Comparacion: D1 presente vs ausente (descomentar la linea indicada).
+
+.param VCC=12 VPWM=3.3 RG=100 LVAL=100m RLVAL=100
+VCC vcc 0 {VCC}
+VPWM gpio 0 PULSE(0 {VPWM} 0 1n 1n 5m 10m)
+RG gpio gate {RG}
+M1 drain gate 0 0 NMOS1
+L1 vcc lnode {LVAL}
+RL1 lnode drain {RLVAL}
+* Diodo de libre circulacion: anodo al drenaje, catodo a VCC
+D1 drain vcc D4148
+
+* Para ver el pico SIN proteccion, descomentar esta linea y comentar D1:
+* ;D1 drain vcc D4148
+
+.model NMOS1 NMOS(VTO=2.1 KP=1.0 LAMBDA=0.01)
+.model D4148 D(IS=4.352n RS=0.6458 N=1.906 CJO=7.048p M=0.4 TT=3.48n BV=110 IBV=0.1u)
+
+.tran 0 30m 0 1u
+
+.meas tran VDS_MAX MAX V(drain) FROM 6m TO 8m
+.meas tran ID_ON_AVG AVG I(RL1) FROM 3m TO 5m
+.meas tran ID_OFF_TAIL AVG I(D1) FROM 8m TO 10m
+.end
