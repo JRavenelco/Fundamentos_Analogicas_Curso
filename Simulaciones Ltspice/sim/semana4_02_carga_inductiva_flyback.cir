@@ -1,26 +1,28 @@
-* Semana 4.2 - Etapa 2: carga inductiva (motor/bobina) y diodo de libre circulacion
-* Sin D1 el colapso de L genera un pico destructivo en el drenaje; con D1 se fija a ~VCC+VD.
-* Mosfet IRF640N (Infineon): VGS(th) 2-4 V, VGS=12 V del driver; RDS(on)<=0.22 ohm.
+* Semana 4.2A - Motor DC equivalente CON diodo de libre circulacion
+* D1: anodo al drenaje, catodo a VCC. El valor de clamp es VCC+VF(I,T),
+* no un 5.7 V universal. La corriente de la bobina mantiene su sentido.
 
-.param VCC=12 VPWM=12 RG=100 LVAL=100m RLVAL=100
+.param VCC=5 VDRV=12 RDRV=10 RG=100 LPLACE=100m RMEQ=12.5 QGMAX=67n
 VCC vcc 0 {VCC}
-VPWM gpio 0 PULSE(0 {VPWM} 0 1n 1n 5m 10m)
+VDRV driver 0 PULSE(0 {VDRV} 0 10n 10n 40m 80m)
+RDRV driver gpio {RDRV}
 RG gpio gate {RG}
-M1 drain gate 0 0 NMOS640
-L1 vcc lnode {LVAL}
-RL1 lnode drain {RLVAL}
-* Diodo de libre circulacion: anodo al drenaje, catodo a VCC
-D1 drain vcc D4148
+X1 drain gate 0 IRF640N_EDU
+* Modelo terminal pedagogico: RMEQ representa el punto nominal cargado
+* (5 V/0.4 A=12.5 ohm, envolvente conservadora). LPLACE es provisional:
+* sustituir por la medida real. El motor es nominal de 6 V y se alimenta a 5 V.
+LMOTOR vcc lnode {LPLACE}
+RMOTOR lnode drain {RMEQ}
+D1 drain vcc DFLY_EDU
+CGEQ gate 0 {QGMAX/VDRV}
 
-* Para ver el pico SIN proteccion, descomentar esta linea y comentar D1:
-* ;D1 drain vcc D4148
+* Diodo generico de laboratorio; sustituir por el modelo del componente real.
+.model DFLY_EDU D(IS=5n RS=0.20 N=1.75 CJO=25p TT=2u BV=100 IBV=10u)
+.include semana4_irf640n_educativo.lib
+.tran 0 200m 0 5u
 
-.model NMOS640 NMOS(VTO=3 KP=1.0 LAMBDA=0.01)
-.model D4148 D(IS=4.352n RS=0.6458 N=1.906 CJO=7.048p M=0.4 TT=3.48n BV=110 IBV=0.1u)
-
-.tran 0 30m 0 1u
-
-.meas tran VDS_MAX MAX V(drain) FROM 6m TO 8m
-.meas tran ID_ON_AVG AVG I(RL1) FROM 3m TO 5m
-.meas tran ID_OFF_TAIL AVG I(D1) FROM 8m TO 10m
+.meas tran VDS_CLAMP_MAX MAX V(drain) FROM 40m TO 60m
+.meas tran ID_END_ON AVG I(RMOTOR) FROM 39m TO 39.8m
+.meas tran IFLY_PEAK MAX I(D1) FROM 40m TO 40.5m
+.meas tran IFLY_3MS AVG I(D1) FROM 42.9m TO 43.1m
 .end

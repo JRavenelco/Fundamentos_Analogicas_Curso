@@ -1,0 +1,17 @@
+* IRF640N_EDU - sustituto PEDAGOGICO de tres terminales para Semana 4
+* -------------------------------------------------------------------
+* NO es el macromodelo oficial de Infineon y NO sirve para validar SOA,
+* temperatura, avalancha, perdidas de conmutacion ni tiempos reales.
+*
+* Ajuste estatico aproximado:
+*   VTO = 3 V (solo valor nominal dentro del rango 2...4 V)
+*   Rcanal ~ 0.15 ohm a VGS=10 V y VDS pequeno, a 25 C
+* El diodo DBODY solo limita numericamente cerca de 200 V; no modela
+* energia de avalancha. Para dimensionamiento final manda el datasheet.
+
+.subckt IRF640N_EDU D G S
+MCH D G S S MCORE
+DBODY S D DBODY_EDU
+.model MCORE NMOS(Level=1 VTO=3 KP=1.10 LAMBDA=0.002 RD=10m RS=10m)
+.model DBODY_EDU D(IS=1n N=1.4 RS=50m BV=200 IBV=1m CJO=185p)
+.ends IRF640N_EDU

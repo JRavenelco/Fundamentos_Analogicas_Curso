@@ -140,8 +140,9 @@ Teoria, 4 h:
 
 Practica, 2 h:
 
-- Driver MOSFET de bajo voltaje para carga resistiva/LED.
-- Medir caida, corriente y potencia.
+- Driver gate-source de 10--12 V para IRF640N y motor nominal de 6 V alimentado
+  con un bus separado de 5 V; envolvente nominal informada de 250--400 mA.
+- Medir caída, corriente y potencia; estudiar flyback y corriente de bloqueo.
 
 Salida:
 

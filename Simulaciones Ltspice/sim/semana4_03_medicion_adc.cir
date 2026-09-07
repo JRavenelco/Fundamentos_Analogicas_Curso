@@ -1,26 +1,34 @@
-* Semana 4.3 - Etapa 3: sensor de corriente con shunt y ADC protegido
-* RSENSE=1R en serie con la fuente del MOSFET; V_sense = ID*RSENSE (~120 mV).
-* Divisor RF=10k / R2=10k -> VADC = 0.5*V_sense (~60 mV), siempre << 3.3 V.
-* Mosfet IRF640N (Infineon); VGS=12 V del driver (no satura con 3.3 V).
+* Semana 4.3 - Motor DC, shunt de lado bajo y escalado hacia un ADC
+* El divisor 10k/10k atenua; NO es una proteccion completa ante fallas.
+* La fuente del MOSFET esta en SENSE, por lo que VGS=V(gate,sense).
+* Motor nominal 6 V alimentado con 5 V. RMEQ=20/12.5 ohm reproduce
+* 250/400 mA a 5 V antes de agregar el shunt, como envolvente conservadora.
+* La corriente de bloqueo del motor no esta incluida y debe medirse.
 
-.param VCC=12 VPWM=12 RG=100 RL=100 RSENSE=1 RF=10k R2=10k
+.param VCC=5 VDRV=12 RDRV=10 RG=100 RMEQ=12.5 RSENSE=1 RF=10k R2=10k QGMAX=67n
 VCC vcc 0 {VCC}
-VPWM gpio 0 PULSE(0 {VPWM} 0 1n 1n 5u 10u)
+VDRV driver 0 PULSE(0 {VDRV} 0 1n 1n 5u 10u)
+RDRV driver gpio {RDRV}
 RG gpio gate {RG}
-M1 drain gate sense 0 NMOS640
+X1 drain gate sense IRF640N_EDU
 RSENSE sense 0 {RSENSE}
-RL vcc drain {RL}
+RMOTOR vcc drain {RMEQ}
 RF sense adc {RF}
 R2 adc 0 {R2}
+CGEQ gate sense {QGMAX/VDRV}
 
-* C1 opcional anti-ruido en el ADC (1nF); descomentar para filtrar:
+* Filtro opcional: descomentar para estudiar el compromiso ruido/respuesta.
 * C1 adc 0 1n
 
-.model NMOS640 NMOS(VTO=3 KP=1.0 LAMBDA=0.01)
-
+.include semana4_irf640n_educativo.lib
+.step param RMEQ list 20 12.5
 .tran 0 40u 0 10n
 
-.meas tran VSENSE_ON AVG V(sense) FROM 11u TO 14u
-.meas tran VADC_ON AVG V(adc) FROM 11u TO 14u
-.meas tran VADC_MAX MAX V(adc) FROM 0 TO 40u
+.meas tran VGS_ON AVG V(gate,sense) FROM 14u TO 14.8u
+.meas tran VDS_ON AVG V(drain,sense) FROM 14u TO 14.8u
+.meas tran ID_ON AVG I(RMOTOR) FROM 14u TO 14.8u
+.meas tran VSENSE_ON AVG V(sense) FROM 14u TO 14.8u
+.meas tran VADC_ON AVG V(adc) FROM 14u TO 14.8u
+.meas tran VADC_STEADY_MAX MAX V(adc) FROM 14u TO 14.8u
+.meas tran VADC_TRANSIENT_MAX MAX V(adc) FROM 0 TO 40u
 .end

@@ -1,6 +1,6 @@
 % =====================================================================
-% Fundamentos de Sistemas Electrónicos Analógicos — MOSFET
-% Compilar: pdflatex clase_4_mosfet.tex  (2 pasadas)
+% Semana 4 — MOSFET de potencia con IRF640N
+% Compilar desde docs/presentations con pdflatex (2 pasadas)
 % =====================================================================
 \documentclass[aspectratio=169]{beamer}
 
@@ -19,6 +19,7 @@
 \definecolor{gold}{RGB}{179,142,62}
 \definecolor{ink}{RGB}{44,51,58}
 \definecolor{soft}{RGB}{244,241,234}
+\definecolor{warn}{RGB}{150,44,35}
 
 \usetheme{default}
 \setbeamertemplate{navigation symbols}{}
@@ -31,263 +32,455 @@
 \setbeamercolor{itemize subitem}{fg=gold}
 \setbeamercolor{block title}{fg=white,bg=navy}
 \setbeamercolor{block body}{bg=soft}
-\setbeamercolor{example text}{fg=navy}
+\setbeamercolor{alerted text}{fg=warn}
 \setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}
 \setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\circ$}}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
 
-\title[MOSFET]{Transistor MOSFET: fundamentos y aplicaciones}
-\subtitle{Clase de teoría · Fundamentos de Sistemas Electrónicos Analógicos}
+\title[MOSFET]{MOSFET de potencia: del datasheet al conmutador}
+\subtitle{IRF640N · Semana 4 · Fundamentos de Sistemas Electrónicos Analógicos}
 \institute{Licenciatura en Ingeniería Aeroespacial · UNAM}
 \date{Semestre 2027-1}
 
 \begin{document}
 
-% ---------------------------------------------------------------------
 \begin{frame}[plain]
   \titlepage
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{Objetivos}
+\begin{frame}{Pregunta de entrada}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.47\textwidth}
+      \begin{block}{Afirmación}
+        ``El IRF640N tiene $V_{GS(th)}=2$--$4\,\mathrm{V}$; por tanto un GPIO
+        de \SI{3.3}{\volt} lo enciende por completo.''
+      \end{block}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{Antes de seguir:}
+      \begin{enumerate}
+        \item ¿Verdadero o falso?
+        \item ¿Qué fila del datasheet usarías para demostrarlo?
+        \item ¿Qué variable falta para hablar de pérdidas?
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  \vfill
+  \begin{alertblock}{Meta de la clase}
+    Separar \textbf{inicio de conducción}, \textbf{drive garantizado} y
+    \textbf{límite absoluto}.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Objetivos observables}
+  Al finalizar podrás:
   \begin{itemize}
-    \item Entender la \textbf{estructura} del MOSFET y su control por \textbf{tensión} (no por corriente).
-    \item Identificar sus \textbf{tres regiones}: corte, triodo (lineal) y saturación.
-    \item Usar las ecuaciones de $I_D$, el umbral $V_{th}$ y la transconductancia.
-    \item Modelar el MOSFET como \textbf{interruptor} (lado bajo/alto) y manejar cargas inductivas.
-    \item Aplicarlo en conmutación de potencia y compararlo con el BJT (semana 3).
+    \item identificar corte, región óhmica y saturación con sus condiciones;
+    \item decidir si una tensión de compuerta garantiza baja $R_{DS(on)}$;
+    \item estimar pérdida de conducción y esfuerzo del driver mediante $Q_g$;
+    \item dibujar el camino de una corriente inductiva al apagar;
+    \item convertir corriente en tensión para un ADC y evaluar su resolución;
+    \item explicar qué puede y qué no puede validar un modelo SPICE.
   \end{itemize}
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{1 · Estructura del MOSFET (NMOS de enriquecimiento)}
-  \begin{center}
-    \resizebox{0.55\linewidth}{!}{%
-    \begin{tikzpicture}[scale=1.05]
-      \draw[fill=gray!18] (0,0) rectangle (4.4,2.4);
-      \draw[fill=blue!25] (0.5,0.1) rectangle (1.6,2.3);   % N+ fuente
-      \draw[fill=blue!25] (2.8,0.1) rectangle (3.9,2.3);   % N+ drenaje
-      \draw[fill=orange!35] (0.4,1.15) rectangle (4.0,1.55); % substrato P (canal)
-      \draw[very thick] (0,1.6) rectangle (4.4,1.75);       % óxido (puerta)
-      \draw (2.2,1.75) -- (2.2,2.6);                       % puerta
-      \draw (1.05,2.3) -- (1.05,2.8) node[above] {S};
-      \draw (3.35,2.3) -- (3.35,2.8) node[above] {D};
-      \node[below] at (2.2,2.9) {G};
-      \node at (2.2,0.55) {\tiny sustrato P};
-      \node at (1.05,1.85) {\tiny N+};
-      \node at (3.35,1.85) {\tiny N+};
-    \end{tikzpicture}}
-  \end{center}
-  \begin{itemize}
-    \item El \textbf{gate} está aislado por el óxido: \textbf{no consume corriente} en DC ($I_G \approx 0$).
-    \item $V_{GS}$ crea el canal entre S y D: el MOSFET se controla por \textbf{tensión}.
-  \end{itemize}
+\begin{frame}{1 · Estructura y control por campo eléctrico}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.83]
+        \draw[fill=gray!18] (0,0) rectangle (5.1,2.5);
+        \draw[fill=blue!25] (0.5,0.15) rectangle (1.55,2.1);
+        \draw[fill=blue!25] (3.55,0.15) rectangle (4.6,2.1);
+        \draw[fill=orange!30] (0.35,1.1) rectangle (4.75,1.5);
+        \draw[very thick,fill=white] (0.3,1.55) rectangle (4.8,1.72);
+        \draw[very thick] (1.7,1.92) -- (3.4,1.92);
+        \draw (2.55,1.92) -- (2.55,2.75) node[above] {G};
+        \draw (1.0,2.1) -- (1.0,2.75) node[above] {S};
+        \draw (4.1,2.1) -- (4.1,2.75) node[above] {D};
+        \node at (2.55,0.52) {sustrato P};
+        \node[navy] at (2.55,1.30) {canal inducido};
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \begin{itemize}
+        \item El óxido aísla el gate: $I_G\approx0$ en estado estacionario.
+        \item $V_{GS}$ crea y modula el canal.
+        \item El gate es una \textbf{carga capacitiva}; en cada flanco el driver
+          entrega o retira carga.
+      \end{itemize}
+      \begin{block}{No olvidar}
+        Control por tensión no significa driver sin corriente.
+      \end{block}
+    \end{column}
+  \end{columns}
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{2 · Símbolos}
-  \begin{center}
-    \begin{tabular}{cc}
-      \textbf{NMOS} & \textbf{PMOS} \\
-      \begin{circuitikz}[scale=1.2]
-        \node[nmos] (M) at (0,0) {};
-        \node[left] at (M.G) {G};
-        \node[above] at (M.D) {D};
-        \node[below] at (M.S) {S};
-      \end{circuitikz}
-      &
-      \begin{circuitikz}[scale=1.2]
-        \node[pmos] (M) at (0,0) {};
-        \node[left] at (M.G) {G};
-        \node[above] at (M.D) {D};
-        \node[below] at (M.S) {S};
-      \end{circuitikz}
-      \\
-    \end{tabular}
-  \end{center}
-  \begin{itemize}
-    \item La \textbf{flecha} indica el sustrato/canal: NMOS (n) o PMOS (p).
-    \item Principio de conmutación: $V_{GS}$ mayor que $V_{th}$ (NMOS) $\Rightarrow$ conduce; menor $\Rightarrow$ corte.
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{3 · Regiones de operación}
-  \begin{table}
-    \small
-    \begin{tabular}{p{0.20\textwidth}p{0.34\textwidth}p{0.34\textwidth}}
-      \toprule
-      Región & Condición & Comportamiento \\
-      \midrule
-      \textbf{CORTE} & $V_{GS} < V_{th}$ & $I_D = 0$ (interruptor abierto) \\
-      \textbf{TRIODO (lineal)} & $V_{GS} > V_{th}$, $V_{DS}$ pequeña & Canal resistivo: $I_D \approx k_n (V_{GS}-V_{th}) V_{DS}$ \\
-      \textbf{SATURACIÓN} & $V_{GS} > V_{th}$, $V_{DS}$ grande & $I_D \approx \tfrac{1}{2} k_n (V_{GS}-V_{th})^2$ (casi independiente de $V_{DS}$) \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
-  \begin{block}{Clave para conmutación}
-    \textbf{ON:} se prefiere el \textbf{triodo} (canal resistivo, $V_{DS}$ mínima, baja pérdida).
-    \textbf{Saturación:} amplificación (como en el BJT activa).
+\begin{frame}{2 · Regiones del NMOS}
+  \small
+  \begin{tabular}{p{0.16\textwidth}p{0.28\textwidth}p{0.42\textwidth}}
+    \toprule
+    Región & Condición ideal & Modelo de primer orden \\
+    \midrule
+    \textbf{Corte} & $V_{GS}<V_{th}$ & $I_D\approx0$ \\
+    \textbf{Óhmica / triodo} & $V_{GS}>V_{th}$ y $0\le V_{DS}<V_{GS}-V_{th}$ &
+      $I_D=k_n\!\left[(V_{GS}-V_{th})V_{DS}-\tfrac12V_{DS}^{2}\right]$ \\
+    \textbf{Saturación} & $V_{GS}>V_{th}$ y $V_{DS}\ge V_{GS}-V_{th}$ &
+      $I_D\approx\tfrac12k_n(V_{GS}-V_{th})^2$ \\
+    \bottomrule
+  \end{tabular}
+  \vfill
+  \begin{block}{Convención de esta semana}
+    Interruptor \textbf{ON} $\Rightarrow$ región \textbf{óhmica}, con
+    $V_{DS}\approx I_D R_{DS(on)}$. Saturación MOSFET no equivale a
+    saturación BJT.
   \end{block}
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{4 · Ecuaciones del MOSFET}
-  \[
-    I_D = \tfrac{1}{2}\,k_n\,(V_{GS}-V_{th})^2
-    \qquad
-    k_n = \mu_n C_{ox}\frac{W}{L}
-  \]
-  \begin{itemize}
-    \item $V_{th}$: tensión umbral ($2$–$4\,\mathrm{V}$ típico); por debajo no conduce.
-    \item $k_n$: factor de transconductancia (depende del proceso y de $W/L$).
-    \item En triodo el canal actúa como resistor: $R_{DS(on)} = \dfrac{V_{DS}}{I_D}$.
-    \item El \textbf{gate} es un capacitor: sólo consume energía al \emph{cambiar} de estado ($Q_G$).
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{5 · Curvas características}
-  \begin{center}
-    \includegraphics[width=0.72\textwidth]{figs/mosfet_curvas.png}
-  \end{center}
-  \begin{itemize}
-    \item Izquierda: familia $I_D$-$V_{DS}$ (triodo $\to$ saturación al crecer $V_{GS}$).
-    \item Derecha: transferencia $I_D$-$V_{GS}$; corte por debajo de $V_{th}=2\,\mathrm{V}$.
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{6 · Modelo equivalente (interruptor)}
+\begin{frame}{3 · Umbral no es encendido}
   \begin{columns}[T]
     \begin{column}{0.46\textwidth}
-      \textbf{Equivalente dinámico}
-      \[
-        G \text{ --- } C_{gs} \text{ --- } S
-      \]
-      \begin{itemize}
-        \item Puerta $=$ capacitor ($C_{gs}$, $C_{gd}$): no hay corriente DC.
-        \item Conexión S-D se modela como \textbf{fuente controlada} (saturación) o
-          \textbf{$R_{DS(on)}$} (triodo).
-      \end{itemize}
+      \begin{block}{$V_{GS(th)}=2$--$4\,\mathrm{V}$}
+        Se mide con $I_D=\SI{250}{\micro\ampere}$ y $V_{DS}=V_{GS}$.
+        Detecta el \textbf{inicio} del canal.
+      \end{block}
+      \begin{alertblock}{A \SI{3.3}{\volt}}
+        El fabricante no garantiza $R_{DS(on)}$ para el IRF640N.
+      \end{alertblock}
     \end{column}
-    \begin{column}{0.5\textwidth}
-      \textbf{Interruptor ideal}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{$R_{DS(on)}\le\SI{0.15}{\ohm}$}
+        Se especifica con $V_{GS}=\SI{10}{\volt}$, $I_D=\SI{11}{\ampere}$ y
+        $T_J=\SI{25}{\celsius}$.
+      \end{block}
+      \begin{exampleblock}{Decisión}
+        Para esta práctica: driver de 10--12 V. Para drive directo de 3.3 V:
+        escoger otro MOSFET con $R_{DS(on)}$ garantizada a 3.3 V.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \vfill
+  {\tiny Fuente: datasheet IRF640N de Infineon, características eléctricas.}
+\end{frame}
+
+\begin{frame}{4 · Leer el datasheet con condiciones}
+  \small
+  \begin{tabular}{p{0.26\textwidth}p{0.20\textwidth}p{0.44\textwidth}}
+    \toprule
+    Dato & Valor & Qué significa \\
+    \midrule
+    $V_{DS,max}$ & \SI{200}{\volt} & límite absoluto; requiere margen y revisión de SOA \\
+    $V_{GS,max}$ & $\pm\SI{20}{\volt}$ & límite gate-source, no tensión recomendada \\
+    $I_D$ publicado & \SI{18}{\ampere} & con $T_C=\SI{25}{\celsius}$ y condiciones térmicas \\
+    $Q_g$ máximo & \SI{67}{\nano\coulomb} & $I_D=\SI{11}{\ampere}$, $V_{DS}=\SI{160}{\volt}$, $V_{GS}=\SI{10}{\volt}$ \\
+    $C_{iss}$ típico & \SI{1160}{\pico\farad} & $V_{GS}=0$, $V_{DS}=\SI{25}{\volt}$, \SI{1}{\mega\hertz} \\
+    \bottomrule
+  \end{tabular}
+  \begin{block}{Regla de lectura}
+    Un número sin condición de prueba está incompleto. Un máximo absoluto no
+    es un punto normal de operación.
+  \end{block}
+\end{frame}
+
+\begin{frame}{5 · NMOS de lado bajo}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.42\textwidth}
+      \centering
+      \resizebox{0.90\linewidth}{!}{%
+      \begin{circuitikz}[american]
+        \node[nmos] (M) at (0,1.3) {};
+        \draw (M.S) -- (0,0) node[ground]{};
+        \draw (M.D) -- (0,2.55);
+        \draw (0,3.0) circle (0.45) node {M};
+        \draw (0,3.45) -- (0,3.8);
+        \node[above] at (0,3.8) {$+5\,\mathrm{V}$};
+        \node[right,align=left] at (0.55,3.0) {motor DC, 6 V nom.\\250--400 mA};
+        \draw (M.G) to[R,l_={$R_G=100\,\Omega$}] (-2.3,1.3);
+        \node[left,align=right] at (-2.3,1.3) {driver\\0/12 V};
+        \draw[->,gold,very thick] (0.45,3.0) -- (0.45,2.2) node[midway,right] {$I_D$};
+        \node[right] at (0.5,1.55) {D};
+        \node[right] at (0.5,0.75) {S};
+      \end{circuitikz}
+      }
+    \end{column}
+    \begin{column}{0.54\textwidth}
+      \footnotesize
+      \begin{tabular}{@{}lll@{}}
+        \toprule
+        & OFF & ON \\
+        \midrule
+        $V_{GS}$ & $0$ & $\approx\SI{12}{\volt}$ \\
+        $I_D$ & $\approx0$ & $0.25$--$0.40\,\mathrm{A}$ \\
+        $V_D$ & $\approx\SI{5}{\volt}$ & $\le60\,\mathrm{mV}$ \\
+        Región & corte & óhmica \\
+        \bottomrule
+      \end{tabular}
+      \vspace{0.6em}
+      \begin{block}{Inversión}
+        Gate alto $\Rightarrow$ drenaje bajo. Gate bajo $\Rightarrow$ drenaje alto.
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{6 · Dos puntos nominales del motor}
+  Motor nominal de 6 V, alimentado con 5 V. Como envolvente conservadora,
+  $5/0.25=\SI{20}{\ohm}$ sin carga y $5/0.40=\SI{12.5}{\ohm}$ con carga. Con
+  $R_{DS(on),max}=\SI{0.15}{\ohm}$ a \SI{25}{\celsius}:
+  \[
+    I_{0}\approx\frac{5}{20+0.15}=\SI{248.1}{\milli\ampere},\qquad
+    I_{carga}\approx\frac{5}{12.5+0.15}=\SI{395.3}{\milli\ampere}
+  \]
+  \[
+    V_{DS(on)}\le\SI{59.3}{\milli\volt},\qquad
+    P_{cond}\le\SI{23.4}{\milli\watt}\quad\text{(punto cargado)}
+  \]
+  \begin{alertblock}{Alcance}
+    Si 250/400 mA son de ficha a 6 V, use 24/15 $\Omega$ y mida a 5 V.
+    \SI{400}{\milli\ampere} tampoco es la corriente de bloqueo.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{7 · La compuerta es capacitiva}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \[
+        I_{G,avg}\approx Q_g f
+        =\SI{67}{\nano\coulomb}\cdot\SI{100}{\kilo\hertz}
+        =\SI{6.7}{\milli\ampere}
+      \]
+      \[
+        P_{driver}\approx Q_g V_{drive}f\approx\SI{80}{\milli\watt}
+      \]
+    \end{column}
+    \begin{column}{0.46\textwidth}
       \begin{itemize}
-        \item $V_{GS} > V_{th}$: ON $\Rightarrow$ $V_{DS} \approx I_D R_{DS(on)}$ (baja tensión).
-        \item $V_{GS} < V_{th}$: OFF $\Rightarrow$ $V_{DS} \approx V_{CC}$ (abierto).
+        \item $R_G$ limita corriente pico y amortigua oscilación.
+        \item La meseta Miller ocurre mientras cambia $V_{DS}$.
+        \item Para tiempos de conmutación se usa la curva de $Q_g$, no solo
+          $C_{iss}$.
       \end{itemize}
     \end{column}
   \end{columns}
-  \pause
-  \begin{block}{Diferenciador contra el BJT}
-    El BJT se controla con \textbf{corriente} ($I_C = \beta I_B$); el MOSFET con
-    \textbf{tensión} ($I_G \approx 0$): ideal para drivers que no tienen corriente a entregar.
+  \begin{block}{Predicción}
+    Si $f$ aumenta diez veces, ¿qué ocurre con la corriente media y la potencia
+    del driver?
   \end{block}
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{7 · Ejemplo numérico · IRF640N}
-  \textbf{Datos del IRF640N (Infineon):} $V_{th}=3\,\mathrm{V}$, $R_{DS(on)}\le 0.22\,\mathrm{\Omega}$
-  (tip.\ $0.15\,\mathrm{\Omega}$), $Q_g=67\,\mathrm{nC}$, $C_{iss}=1300\,\mathrm{pF}$,
-  $V_{DS,max}=200\,\mathrm{V}$, $I_D=18\,\mathrm{A}$.
-  \pause
-  \begin{itemize}
-    \item \textbf{Amplificador (saturación):} con $V_{GS}=12\,\mathrm{V}$ y
-      $k_n\approx 1\,\mathrm{A/V^2}$:
-      $I_D=\tfrac{1}{2}k_n(12-3)^2 \approx \SI{40}{\ampere}$ (muy grande: para amplificar
-      se prefiere un MOSFET pequeño de señal).
-    \item \textbf{Interruptor (triodo):} $I_D = 120\,\mathrm{mA}$ con $V_{CC}=12\,\mathrm{V}$,
-      $R_L=100\,\mathrm{\Omega}$:
+\begin{frame}{8 · Carga inductiva: la corriente busca camino}
+  \begin{columns}[T]
+    \begin{column}{0.44\textwidth}
+      \centering
+      \begin{circuitikz}[american]
+        \node[nmos] (M) at (0,0.9) {};
+        \draw (M.S) -- (0,-0.2) node[ground]{};
+        \draw (M.D) -- (0,2.35);
+        \draw (0,2.85) circle (0.50) node {M};
+        \draw (0,3.35) -- (0,3.7);
+        \node[above] at (0,3.7) {$+5\,\mathrm{V}$};
+        \draw (0,1.75) -- (2.0,1.75) to[D,l={$D_F$}] (2.0,3.7) -- (0,3.7);
+        \draw (M.G) -- (-1.1,0.9) node[left] {driver};
+        \draw[->,gold,very thick] (1.55,2.05) -- (1.55,3.2);
+      \end{circuitikz}
+    \end{column}
+    \begin{column}{0.52\textwidth}
+      \begin{itemize}
+        \item Diodo: ánodo al drenaje, cátodo a $+5\,\mathrm{V}$.
+        \item Durante ON está inversamente polarizado.
+        \item Al apagar, conduce el mismo sentido de corriente de la bobina.
+        \item El drenaje queda cerca de $V_{CC}+V_F(I,T)$.
+      \end{itemize}
       \[
-        V_{DS} = I_D R_{DS(on)} \approx 0.12\cdot 0.15 \approx \SI{0.02}{\volt}
-        \qquad
-        P = I_D^2 R_{DS} \approx \SI{2.2}{\milli\watt}
+        E_L=\tfrac12L_{motor}I^2
       \]
-      Pérdida mínima $\Rightarrow$ ideal para conmutar.
+      El modelo didáctico usa $L_{place}=\SI{100}{\milli\henry}$ y
+      $R_{eq}=\SI{12.5}{\ohm}$: $\tau\approx\SI{7.9}{\milli\second}$ y
+      $E\approx\SI{7.7}{\milli\joule}$. Se debe medir la $L$ real.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{9 · Con diodo y sin diodo}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \begin{exampleblock}{Con flyback}
+        La energía se disipa en la resistencia de la bobina y el diodo. El
+        drenaje queda cerca de $\SI{5}{\volt}+V_F(I,T)$. El netlist da
+        $V_{DS,max}=\SI{5.901}{\volt}$ e $I_{fly,pico}=\SI{393.6}{\milli\ampere}$.
+      \end{exampleblock}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{alertblock}{Sin flyback}
+        $V_{DS}$ aumenta hasta que una capacitancia, un clamp, la avalancha o
+        una falla ofrece camino. No existe un pico universal.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \vfill
+  \textbf{Interpretación correcta:} el archivo sin diodo usa un clamp
+  pedagógico cerca de \SI{200}{\volt} para mantener una solución numérica; no
+  predice supervivencia ni energía de avalancha.
+\end{frame}
+
+\begin{frame}{10 · De corriente a tensión para el ADC}
+  \begin{columns}[T]
+    \begin{column}{0.46\textwidth}
+      \resizebox{0.94\linewidth}{!}{%
+      \begin{circuitikz}[american]
+        \node[nmos] (M) at (0,1.7) {};
+        \draw (M.D) -- (0,3.15);
+        \draw (0,3.55) circle (0.40) node {M};
+        \draw (0,3.95) -- (0,4.1);
+        \node[above] at (0,4.1) {$+5\,\mathrm{V}$};
+        \draw (M.S) -- (0,0.9) to[R,l={$R_S=1\,\Omega$}] (0,-0.5) node[ground]{};
+        \draw (0,0.9) -- (2.0,0.9) to[R,l={$10\,\mathrm{k}\Omega$}] (3.7,0.9)
+          to[R,l={$10\,\mathrm{k}\Omega$}] (3.7,-0.5) node[ground]{};
+        \node[above] at (3.7,0.9) {ADC};
+      \end{circuitikz}
+      }
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      \footnotesize
+      Con $R_S=\SI{1}{\ohm}$, el shunt cambia el punto de operación:
+      \begin{center}
+      \begin{tabular}{@{}lcc@{}}
+        \toprule
+        & sin carga & con carga \\
+        \midrule
+        $I_D$ & 236.4 mA & 366.3 mA \\
+        $V_S$ & 236.4 mV & 366.3 mV \\
+        $V_{ADC}$ & 118.2 mV & 183.2 mV \\
+        \bottomrule
+      \end{tabular}
+      \end{center}
+      \begin{block}{Resolución}
+        ADC ideal de 12 bits y 3.3 V: 147/227 cuentas. El shunt disipa
+        aproximadamente 55.9/134.2 mW.
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{11 · Medir bien: $V_{GS}$ no siempre es $V_G$}
+  \begin{itemize}
+    \item Con un shunt de fuente, $V_S>0$ y $V_{GS}=V_G-V_S$.
+    \item La simulación mide $V(\text{gate},\text{sense})$ y
+      $V(\text{drain},\text{sense})$.
+    \item El divisor 10 k$\Omega$/10 k$\Omega$ atenúa por 0.5; no puede dar
+      ganancia mayor que uno.
+    \item Protección ante fallas requiere análisis adicional: resistencia de
+      entrada, clamps, rango común y corriente de inyección del ADC.
   \end{itemize}
-  \begin{block}{Nota de aplicación}
-    El IRF640N \textbf{no es de nivel lógico}: para saturar bien necesita
-    $V_{GS}\ge 10\,\mathrm{V}$ (un GPIO de 3.3 V no basta; se usa un driver de 12 V).
+  \begin{alertblock}{Pregunta}
+    ¿Qué error aparece si se reporta $V_G=12\,\mathrm{V}$ como si fuera
+    $V_{GS}$ cuando $V_S\approx\SI{367}{\milli\volt}$?
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{12 · Qué valida cada modelo}
+  \small
+  \begin{tabular}{p{0.24\textwidth}p{0.28\textwidth}p{0.34\textwidth}}
+    \toprule
+    Herramienta & Sí ayuda a estudiar & No autoriza por sí sola \\
+    \midrule
+    Cálculo con datasheet & peor caso de conducción y límites & forma de onda dinámica completa \\
+    Sustituto pedagógico & nodos, polaridades, causalidad, medidas & SOA, térmica, avalancha, EMI \\
+    Modelo validado & comportamiento dentro de su alcance documentado & ignorar tolerancias o montaje \\
+    Prototipo medido & parásitos y hardware real & exceder límites o eliminar protecciones \\
+    \bottomrule
+  \end{tabular}
+  \begin{block}{Nuestro archivo}
+    \texttt{semana4\_irf640n\_educativo.lib} es deliberadamente un sustituto
+    de aprendizaje, no un macromodelo oficial de Infineon.
   \end{block}
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{8 · MOSFET vs BJT}
-  \begin{table}
-    \small
-    \begin{tabular}{p{0.22\textwidth}p{0.36\textwidth}p{0.36\textwidth}}
-      \toprule
-      & BJT (NPN) & MOSFET (NMOS) \\
-      \midrule
-      Control & \textbf{Corriente} de base ($I_C=\beta I_B$) & \textbf{Tensión} de compuerta ($I_G\approx 0$) \\
-      Ganancia & $\beta = h_{FE}$ ($50$–$300$) & transconductancia $g_m$; $k_n$ \\
-      ON & $V_{CE,sat}\approx0.2\,\mathrm{V}$ & $V_{DS}=I_D R_{DS(on)}$ (muy pequeña) \\
-      Entrada & Consume $I_B$ & Capacitiva ($Q_G$) \\
-      Uso típico & Amplificación de señal & \textbf{Conmutación de potencia} \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
-  \pause
-  \begin{itemize}
-    \item Para \textbf{conmutar cargas} (motores, calentadores, actuadores) se prefiere \textbf{MOSFET}.
-  \end{itemize}
+\begin{frame}{13 · MOSFET y BJT: comparar sin absolutos}
+  \small
+  \begin{tabular}{p{0.23\textwidth}p{0.32\textwidth}p{0.35\textwidth}}
+    \toprule
+    Criterio & BJT NPN & NMOS \\
+    \midrule
+    Entrada & corriente de base & carga/descarga de gate \\
+    ON & $V_{CE(sat)}$ a un $I_C/I_B$ dado & $I_D R_{DS(on)}$ a un $V_{GS}$ dado \\
+    Dinámica & carga almacenada si satura profundo & $Q_g$ y meseta Miller \\
+    Diseño & verificar base, ganancia forzada y disipación & verificar drive, SOA, térmica y transitorios \\
+    Usos & ambos pueden amplificar o conmutar & depende de tensión, corriente y frecuencia \\
+    \bottomrule
+  \end{tabular}
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{9 · Conmutación de cargas inductivas}
-  \begin{itemize}
-    \item Una carga inductiva (motor, bobina, relé) almacena energía:
-      al apagar, el colapso genera un \textbf{pico de tensión} que puede destruir el MOSFET.
-    \item Solución: \textbf{diodo de libre circulación} (flyback) en paralelo con la carga.
-    \item Energía de conmutación: la puerta se carga con $Q_G$; se limita la corriente
-      de gate con $R_G$ (controla tiempos de encendido/apagado).
-    \item En el vacío (sin convección) las \textbf{pérdidas} y el \textbf{derating} del
-      encapsulado son críticos (igual que en la semana 3).
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Aplicación aeroespacial}
-  \begin{itemize}
-    \item \textbf{Conmutación de potencia:} calentadores de traje/mantos de baterías,
-      actuadores, cargas auxiliares (eficiencia sin caída extra de $V_{CE}$).
-    \item \textbf{Driver de motor:} puente H con NMOS/PMOS (o driver de MOSFET) en
-      actuadores de superficies.
-    \item \textbf{Condicionamiento:} multiplexores/switch de señales con $R_{DS(on)}$ baja y
-      alta impedancia de entrada (casi no carga el sensor).
-    \item \textbf{Selección:} $V_{th}$, $R_{DS(on)}$, $Q_G$, $V_{DS,max}$, $I_D$ y
-      temperatura; con derating y diodo de protección (libre circulación) en cargas inductivas.
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Resumen}
-  \begin{itemize}
-    \item El MOSFET es un switch de \textbf{tensión}: $I_G \approx 0$ y $V_{GS}$ controla el canal.
-    \item Regiones: \textbf{corte} ($I_D=0$), \textbf{triodo} (canal resistivo, ON),
-      \textbf{saturación} ($I_D \approx \frac{1}{2}k_n(V_{GS}-V_{th})^2$).
-    \item Umbral $V_{th}$; $k_n = \mu_n C_{ox} W/L$; puerta capacitiva ($Q_G$).
-    \item Como \textbf{interruptor} (triodo): $P = I_D^2 R_{DS(on)}$; fuentes inductivas
-      requieren diodo flyback.
-    \item Ideal para conmutación de potencia aeroespacial; el BJT para amplificar señal.
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Preguntas de verificación}
+\begin{frame}{14 · Flujo de trabajo y herramientas}
   \begin{enumerate}
-    \item ¿Qué controla al MOSFET: corriente o tensión?
-      \uncover<2->{\emph{(Tensión $V_{GS}$; $I_G \approx 0$ en DC.)}}
-    \item ¿En qué región está como interruptor cerrado?
-      \uncover<3->{\emph{(Triodo/lineal, con $V_{DS} = I_D R_{DS(on)}$ pequeña.)}}
-    \item Con $V_{th}=2\,\mathrm{V}$ y $k_n=0.5\,\mathrm{mA/V^2}$, ¿cuánto vale $I_D$ con $V_{GS}=5\,\mathrm{V}$?
-      \uncover<4->{\emph{($I_D = \frac{1}{2}\cdot 0.5\cdot 3^2 = \SI{2.25}{\milli\ampere}$.)}}
-    \item ¿Por qué un MOSFET gana al BJT en conmutación de potencia?
-      \uncover<5->{\emph{(No consume corriente de entrada y su $V_{DS}$ de ON (pérdida) es mínima.)}}
-    \item ¿Qué componente protege un MOSFET ante una carga inductiva?
-      \uncover<6->{\emph{(Diodo de libre circulación en paralelo con la carga.)}}
+    \item Definir $V$, $I$, carga, frecuencia, temperatura y fallas.
+    \item Leer límites, SOA, $R_{DS(on)}$ a la tensión real y $Q_g$.
+    \item Calcular conducción, driver, protección y térmica.
+    \item Simular primero cada bloque en LTspice.
+    \item Cuando exista, usar un modelo validado del fabricante; InfineonSpice
+      ofrece una biblioteca de componentes.
+    \item Construir con límites de corriente y medir con masa común.
   \end{enumerate}
+  \begin{block}{Orden sano}
+    Predice $\rightarrow$ simula $\rightarrow$ explica la diferencia
+    $\rightarrow$ decide si el hardware es seguro.
+  \end{block}
+\end{frame}
+
+\begin{frame}{15 · Contexto aeroespacial y térmico}
+  \begin{itemize}
+    \item Calentadores, solenoides, actuadores y buses auxiliares combinan
+      cargas resistivas, inductivas y capacitivas.
+    \item Seleccionar con margen de tensión, SOA, transitorios, radiación,
+      temperatura y modo de falla; no solo con corriente nominal.
+    \item En vacío no hay convección, pero sí conducción al montaje y radiación.
+      Un $R_{\theta JA}$ de aire quieto no se transfiere automáticamente.
+    \item El diodo flyback puede ralentizar la liberación de un actuador; una
+      red de clamp distinta puede ser necesaria si el tiempo importa.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{16 · Ruta de laboratorio}
+  \begin{enumerate}
+    \item PWM resistivo y carga equivalente de gate.
+    \item Bobina con flyback y contraste numérico sin diodo.
+    \item Shunt de fuente y escalado al ADC.
+    \item Conmutador BJT corregido con dos constantes de tiempo.
+  \end{enumerate}
+  \begin{block}{Evidencia por etapa}
+    Predicción, captura de ondas, tabla \texttt{.meas}, diferencia contra el
+    cálculo, limitación del modelo y decisión de hardware.
+  \end{block}
+  \vfill
+  \centering
+  \texttt{docs/labs/semana\_4\_conmutador\_potencia\_mosfet.md}
+\end{frame}
+
+\begin{frame}{Recuperación final}
+  Responde sin apuntes:
+  \begin{enumerate}
+    \item ¿Por qué $V_{GS(th)}$ no decide si un GPIO de 3.3 V es suficiente?
+    \item ¿En qué región está un NMOS usado como switch ON?
+    \item ¿Por qué $Q_g$ importa si $I_G\approx0$ en DC?
+    \item ¿Qué camino sigue la corriente de la bobina al apagar?
+    \item ¿Qué sacrifica un divisor que lleva aproximadamente
+      \SI{237}{\milli\volt}--\SI{367}{\milli\volt} a la mitad?
+    \item ¿Qué resultado SPICE no aceptarías sin revisar el alcance del modelo?
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Fuentes y material de apoyo}
+  \begin{itemize}
+    \item \href{https://www.infineon.com/assets/row/public/documents/24/49/infineon-irf640n-datasheet-en.pdf}{Infineon: IRF640N datasheet}.
+    \item \href{https://www.infineon.com/design-resources/simulation-modeling/infineonspice-offline-simulation-tool}{InfineonSpice: simulador y biblioteca de modelos}.
+    \item \href{https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html}{Analog Devices: LTspice}.
+    \item Guía, netlists verificados, hoja activa y pizarrones de la Semana 4
+      incluidos en el repositorio del curso.
+  \end{itemize}
+  \begin{alertblock}{Criterio final}
+    Para límites eléctricos manda el datasheet; para aprender causalidad ayuda
+    el modelo; para aprobar hardware se necesitan ambos más verificación.
+  \end{alertblock}
 \end{frame}
 
 \end{document}

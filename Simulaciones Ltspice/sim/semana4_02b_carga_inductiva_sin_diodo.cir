@@ -1,0 +1,23 @@
+* Semana 4.2B - Motor DC equivalente SIN diodo externo (solo demostracion)
+* El sustituto pedagogico limita cerca de BV=200 V para evitar una solucion
+* infinita. El pico NO predice la avalancha ni la supervivencia de un IRF640N.
+* Nunca retirar el flyback en hardware solo para repetir esta demostracion.
+* RMEQ=12.5 ohm reproduce 400 mA a 5 V como envolvente conservadora;
+* LPLACE=100 mH es provisional. El motor nominal de 6 V se alimenta a 5 V.
+
+.param VCC=5 VDRV=12 RDRV=10 RG=100 LPLACE=100m RMEQ=12.5 QGMAX=67n
+VCC vcc 0 {VCC}
+VDRV driver 0 PULSE(0 {VDRV} 0 10n 10n 40m 80m)
+RDRV driver gpio {RDRV}
+RG gpio gate {RG}
+X1 drain gate 0 IRF640N_EDU
+LMOTOR vcc lnode {LPLACE}
+RMOTOR lnode drain {RMEQ}
+CGEQ gate 0 {QGMAX/VDRV}
+
+.include semana4_irf640n_educativo.lib
+.tran 0 45m 0 100n
+
+.meas tran VDS_UNPROTECTED_MAX MAX V(drain) FROM 40m TO 40.5m
+.meas tran ID_END_ON AVG I(RMOTOR) FROM 39m TO 39.8m
+.end

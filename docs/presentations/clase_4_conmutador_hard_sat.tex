@@ -1,7 +1,6 @@
 % =====================================================================
-% Fundamentos de Sistemas Electrónicos Analógicos — Semana 4: diseño
-% Conmutador de saturación dura (T1-T2 BC548) con carga RC a 5 V
-% Compilar: pdflatex clase_4_conmutador_hard_sat.tex  (2 pasadas)
+% Semana 4 — Conmutador BJT corregido con carga RC
+% Compilar desde docs/presentations con pdflatex (2 pasadas)
 % =====================================================================
 \documentclass[aspectratio=169]{beamer}
 
@@ -18,8 +17,8 @@
 \definecolor{navy}{RGB}{23,54,93}
 \definecolor{navysoft}{RGB}{72,101,140}
 \definecolor{gold}{RGB}{179,142,62}
-\definecolor{ink}{RGB}{44,51,58}
 \definecolor{soft}{RGB}{244,241,234}
+\definecolor{warn}{RGB}{150,44,35}
 
 \usetheme{default}
 \setbeamertemplate{navigation symbols}{}
@@ -29,214 +28,261 @@
 \setbeamercolor{title}{fg=navy}
 \setbeamercolor{subtitle}{fg=navysoft}
 \setbeamercolor{itemize item}{fg=gold}
-\setbeamercolor{itemize subitem}{fg=gold}
 \setbeamercolor{block title}{fg=white,bg=navy}
 \setbeamercolor{block body}{bg=soft}
-\setbeamercolor{example text}{fg=navy}
+\setbeamercolor{alerted text}{fg=warn}
 \setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}
-\setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\circ$}}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
 
-\title[Conmutador saturado]{Conmutador de saturación dura con carga RC}
-\subtitle{Clase de diseño · Semana 4 · Fundamentos de Sistemas Electrónicos Analógicos}
+\title[Conmutador BJT]{Conmutador BJT corregido con carga RC}
+\subtitle{Saturación forzada, dos constantes de tiempo y puente al MOSFET}
 \institute{Licenciatura en Ingeniería Aeroespacial · UNAM}
 \date{Semestre 2027-1}
 
 \begin{document}
 
-% ---------------------------------------------------------------------
 \begin{frame}[plain]
   \titlepage
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{Esta clase gira alrededor de un diseño}
-  \begin{center}
-    \resizebox{0.86\linewidth}{!}{%
-    \begin{circuitikz}[american voltages, scale=0.95]
-      % entrada PULSE
-      \draw (0,0) to[V, l={$5\,\mathrm{V}$}] (0,2.6);
-      \draw (0,2.6) to[R, l={$2\,\mathrm{k}$}] (2.4,2.6) -- (3.5,1.9);
-      % T1
-      \node[npn] (T1) at (4.0,1.6) {};
-      \draw (T1.E) -- (4.0,0);
-      \node[above, text=navy] at (4.0,2.2) {\scriptsize T1};
-      % T1 collector -> 2k -> base de T2
-      \draw (T1.C) to[R, l={$2\,\mathrm{k}$}] (6.2,2.6) -- (6.6,1.9);
-      % T2
-      \node[npn] (T2) at (7.0,1.6) {};
-      \draw (T2.E) -- (7.0,0);
-      \node[above, text=navy] at (7.0,2.2) {\scriptsize T2};
-      \draw (4.0,0) -- (7.0,0);
-      % colector de T2 = N1 -> 100R -> VCC
-      \draw (T2.C) -- (9.4,2.6);
-      \node[left, text=navy] at (9.4,2.6) {\scriptsize N1};
-      \draw (9.4,2.6) to[R, l={$100\,\mathrm{\Omega}$}] (9.4,4.3) -- (11.8,4.3);
-      \node[above, text=navy] at (12.2,4.3) {\scriptsize $V_{CC}=5\,\mathrm{V}$};
-      \node[ground] at (5.5,0) {};
-      % carga RC desde N1: 100R -> N2 -> C=5uF -> GND
-      \draw (9.4,2.6) -- (9.4,1.6) to[R, l={$100\,\mathrm{\Omega}$}] (11.8,1.6) -- (12.6,1.6);
-      \node[above, text=navy] at (12.6,1.6) {\scriptsize N2};
-      \draw (12.6,1.6) to[C, l={$C=5\,\mathrm{\mu F}$}] (12.6,0);
-      \draw (12.6,0) -- (7.0,0);
-    \end{circuitikz}}
-  \end{center}
-  \begin{itemize}
-    \item \textbf{Q1 (PULSE)} driver, \textbf{T1} pre-driver BC548, \textbf{T2} BC548
-      en \textbf{saturación dura}, y una \textbf{carga RC} ($100\,\mathrm{\Omega}$ + $5\,\mathrm{\mu F}$) a 5 V.
-    \item Ideas de diseño: \textbf{regla 10:1}, límite de corriente y transitorio RC.
-  \end{itemize}
+\begin{frame}{Diagnóstico del circuito anterior}
+  \begin{alertblock}{Dos fallas eléctricas}
+    \begin{enumerate}
+      \item En SPICE, un BJT debe usar prefijo \texttt{Q}; \texttt{T} describe
+        una línea de transmisión.
+      \item Un NPN con emisor a GND y colector sin pull-up solo puede
+        \textbf{hundir} corriente: no podía alimentar la base de T2.
+    \end{enumerate}
+  \end{alertblock}
+  \begin{block}{Corrección}
+    Q1 será un inversor/pull-down y una resistencia $R_{PU}$ desde $+5\,\mathrm{V}$
+    suministrará la corriente de base de Q2.
+  \end{block}
+  \textbf{Predicción:} con entrada alta, ¿Q2 debe quedar encendido o apagado?
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{1 · Regla 10:1 · Saturación dura}
-  Para garantizar que \textbf{T2} conduce sin depender del $\beta$ real de cada
-  transistor, se \textbf{sobre-excita} la base: se toma $\beta = 10$ en el diseño.
-  \[
-    I_{C,max} = \frac{V_{CC}}{R_C} = \frac{5}{100\,\mathrm{\Omega}} = \SI{50}{\milli\ampere}
-  \]
-  \pause
-  \[
-    I_{B2,sat} = \frac{I_{C,max}}{10} = \frac{50\,\mathrm{mA}}{10} = \SI{5}{\milli\ampere}
-  \]
-  \begin{block}{Resultado de diseño}
-    Se entrega solo $\SI{2.5}{\milli\ampere} \times 10 = \SI{25}{\milli\ampere}$ del npn
-    necesidad: la base de T2 se dimensiona con $\SI{5}{\milli\ampere}$ para estar
-    \textbf{siempre en saturación} incluso si el transistor real tiene $\beta < 10$.
+\begin{frame}{1 · Topología corregida}
+  \centering
+  \resizebox{0.91\linewidth}{!}{%
+  \begin{circuitikz}[american]
+    \node[npn] (Q1) at (2.7,1.5) {};
+    \node[npn] (Q2) at (6.3,1.5) {};
+    \draw (-0.2,1.5) node[left] {$V_{IN}$}
+      to[R,l={$R_{B1}=2\,\mathrm{k}\Omega$}] (Q1.B);
+    \draw (Q1.E) -- (2.7,0);
+    \coordinate (b2) at (4.8,2.35);
+    \draw (Q1.C) |- (b2) -- (Q2.B);
+    \draw (b2) to[R,l={$R_{PU}=910\,\Omega$}] (4.8,4.2);
+    \node[above] at (4.8,4.2) {$+5\,\mathrm{V}$};
+    \draw (Q2.E) -- (6.3,0);
+    \draw (2.7,0) -- (10.3,0) node[ground]{};
+    \coordinate (n1) at (6.3,2.75);
+    \draw (Q2.C) -- (n1);
+    \draw (n1) to[R,l={$R_C=220\,\Omega$}] (6.3,4.2);
+    \node[above] at (6.3,4.2) {$+5\,\mathrm{V}$};
+    \draw (n1) to[R,l={$R_{ser}=220\,\Omega$}] (9.0,2.75)
+      -- (10.3,2.75) to[C,l={$C=5\,\mu\mathrm{F}$}] (10.3,0);
+    \node[above,navy] at (4.8,2.35) {$B_2$};
+    \node[above,navy] at (6.3,2.75) {$N_1$};
+    \node[above,navy] at (10.3,2.75) {$N_2$};
+    \node[below] at (2.7,-0.05) {Q1};
+    \node[below] at (6.3,-0.05) {Q2};
+  \end{circuitikz}}
+  \vspace{0.3em}
+  \begin{block}{Quién entrega y quién hunde}
+    $R_{PU}$ entrega $I_{B2}$. Q1 la hunde para apagar Q2. Q2 hunde la
+    corriente del colector y la descarga del capacitor.
   \end{block}
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{2 · Pre-driver y corriente de base de T2}
-  \begin{itemize}
-    \item T2 satura cuando su base recibe $\SI{5}{\milli\ampere}$ ($I_{B2,sat}$).
-    \item T1 (BC548) se usa como \textbf{pre-driver}: satura con $I_C = 5\,\mathrm{mA}$
-      y entrega la corriente de base a T2.
-    \item Desde una entrada de \SI{5}{\volt} con $R_{B1}=2\,\mathrm{k}$:
+\begin{frame}{2 · Tabla de estados}
+  \begin{center}
+    \begin{tabular}{llll}
+      \toprule
+      $V_{IN}$ & Q1 & Q2 & Respuesta del capacitor \\
+      \midrule
+      Alto & ON & OFF & carga por $R_C+R_{ser}$ \\
+      Bajo & OFF & ON & descarga por $R_{ser}$ y Q2 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vfill
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \begin{exampleblock}{Entrada alta}
+        Q1 lleva $B_2$ cerca de GND. Q2 abre y la fuente carga $C$ a través de
+        dos resistencias.
+      \end{exampleblock}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{exampleblock}{Entrada baja}
+        Q1 abre. $R_{PU}$ eleva $B_2$, Q2 conduce y el capacitor entrega
+        corriente hacia Q2.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{3 · Dimensionar la base para el peor instante}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      Corriente de base aproximada:
       \[
-        I_{B1} = \frac{5-0.7}{2\,\mathrm{k}} \approx \SI{2.15}{\milli\ampere}
+        I_{B2}\approx\frac{5-0.8}{910}=\SI{4.6}{\milli\ampere}
       \]
-      con $\beta_{act} = 10$: $I_{C1} \approx \SI{21.5}{\milli\ampere}$ (T1 satura
-      fácilmente con la carga de $2\,\mathrm{k}$ conectora a la base de T2).
+      Corriente permanente desde $R_C$:
+      \[
+        I_{RC}\approx\frac{5-0.2}{220}=\SI{21.8}{\milli\ampere}
+      \]
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      Al encender Q2 con $V_C\approx\SI{4.9}{\volt}$:
+      \[
+        I_{C,pico}\approx I_{RC}+\frac{V_C-0.2}{220}
+        \approx\SI{43}{\milli\ampere}
+      \]
+      \[
+        \beta_{forzado}\approx\frac{43}{4.6}\approx9.4
+      \]
+    \end{column}
+  \end{columns}
+  \begin{alertblock}{El error que se evita}
+    Dimensionar solo $5/220$ omite la descarga simultánea del capacitor.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{4 · Hay dos constantes de tiempo}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \begin{block}{Q2 OFF: carga}
+        La trayectoria incluye $R_C+R_{ser}$:
+        \[
+          \tau_{\uparrow}=(220+220)\cdot\SI{5}{\micro\farad}
+          =\SI{2.2}{\milli\second}
+        \]
+        \[
+          V_C(t)=5\left(1-e^{-t/\tau_{\uparrow}}\right)
+        \]
+      \end{block}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{block}{Q2 ON: descarga}
+        La trayectoria principal incluye $R_{ser}$:
+        \[
+          \tau_{\downarrow}\approx220\cdot\SI{5}{\micro\farad}
+          =\SI{1.1}{\milli\second}
+        \]
+        \[
+          V_C(t)\approx V_C(0)e^{-t/\tau_{\downarrow}}
+        \]
+      \end{block}
+    \end{column}
+  \end{columns}
+  \textbf{Predicción:} ¿qué transición debe verse dos veces más lenta?
+\end{frame}
+
+\begin{frame}{5 · Resultados verificados en LTspice}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \small
+      \begin{tabular}{lr}
+        \toprule
+        Medida & Resultado \\
+        \midrule
+        $V_{C,cargado}$ & \SI{4.905}{\volt} \\
+        $V_{C,descargado}$ & \SI{52.51}{\milli\volt} \\
+        $V_{CE2,on}$ & \SI{50.62}{\milli\volt} \\
+        $I_{B2,on}$ & \SI{4.576}{\milli\ampere} \\
+        $I_{C2,estable}$ & \SI{22.515}{\milli\ampere} \\
+        $I_{C2,pico}$ & \SI{44.625}{\milli\ampere} \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \begin{itemize}
+        \item La simulación confirma el pico doble: fuente más capacitor.
+        \item El pulso de 10 ms permite más de cuatro $\tau_{\uparrow}$ y
+          nueve $\tau_{\downarrow}$.
+        \item $V_{CE(sat)}$ es resultado del modelo genérico, no garantía para
+          cualquier BC548.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{6 · Qué significa saturación forzada}
+  \begin{itemize}
+    \item Se diseña con una relación $I_C/I_B$ conservadora en lugar de usar el
+      $\beta$ de región activa.
+    \item La heurística ``10:1'' debe contrastarse con la tabla de
+      $V_{CE(sat)}$ del transistor real para el par $I_C/I_B$ elegido.
+    \item Beneficio estático: menor $V_{CE}$ y menor disipación de conducción.
+    \item Compromiso dinámico: saturar profundo almacena carga y puede retrasar
+      el apagado.
   \end{itemize}
-  \pause
-  \begin{block}{Regla práctica}
-    Si el driver no alcanza: usar $\beta_{safe} = 10$, aumentar la corriente del
-    pre-driver o cambiar a un MOSFET (semana 4, clase: no consume corriente de base).
+  \begin{block}{Cuando importa la velocidad}
+    Evaluar un clamp Baker/Schottky, reducir la sobreexcitación o usar un
+    MOSFET adecuado; no afirmar que ``más saturación siempre es más rápida''.
   \end{block}
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{3 · Corriente a través del $100\,\mathrm{\Omega}$}
-  Con T2 en saturación, el nodo del colector queda en
-  $V_{CE,sat} \approx 0.2\,\mathrm{V}$. La corriente en el resistor de carga:
-  \[
-    I = \frac{V(N_1) - V(N_2)}{100\,\mathrm{\Omega} + 2.5\,\mathrm{\Omega}}
-      \approx \frac{5-0.2}{102.5\,\mathrm{\Omega}}
-      \approx \SI{47}{\milli\ampere}
-  \]
-  \pause
+\begin{frame}{7 · Sustituir Q2 por un MOSFET}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \begin{block}{MOSFET de nivel lógico}
+        Se define por tener $R_{DS(on)}$ garantizada a la tensión lógica real
+        disponible, por ejemplo 2.5, 3.3 o 4.5 V; no por un $V_{th}$ bajo.
+      \end{block}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{alertblock}{IRF640N}
+        No es reemplazo directo para un gate-drive lógico de 5 V: su $R_{DS(on)}$ se
+        especifica a $V_{GS}=\SI{10}{\volt}$. Requiere un driver de 10--12 V.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \vfill
+  El pico capacitivo y la disipación siguen existiendo. Cambia el
+  dimensionamiento de base por el de carga de gate, $R_{DS(on)}$, SOA y térmica.
+\end{frame}
+
+\begin{frame}{8 · Seguridad y aplicación}
   \begin{itemize}
-    \item $2.5\,\mathrm{\Omega}$: caída equivalente (cables/resistencia dinámica del
-      transistor en saturación dura).
-    \item El $100\,\mathrm{\Omega}$ \textbf{limita} la corriente de pico del capacitor:
-      sin él, la corriente sería destructiva.
+    \item Una carga capacitiva puede duplicar transitoriamente la corriente que
+      sugeriría el pull-up por sí solo.
+    \item Verificar corriente pico, potencia pulsada, SOA y repetición; no basta
+      con la corriente permanente.
+    \item En actuadores, buses auxiliares y líneas térmicas, documentar el estado
+      seguro si el driver queda abierto o sin alimentación.
+    \item En vacío, definir la ruta conductiva hacia estructura y el balance
+      radiativo; no reutilizar sin análisis un $R_{\theta JA}$ de aire quieto.
   \end{itemize}
 \end{frame}
 
-% ---------------------------------------------------------------------
-\begin{frame}{4 · Transitorio RC de la carga}
-  La carga ($100\,\mathrm{\Omega}$ + $5\,\mathrm{\mu F}$) se modela como:
-  \[
-    \tau = R\,C = 100\,\mathrm{\Omega}\cdot 5\,\mathrm{\mu F} = \SI{0.5}{\milli\second}
-    \qquad
-    V_C(t) = 5\left(1 - e^{-t/\tau}\right)
-  \]
-  \begin{itemize}
-    \item \textbf{Velocidad:} $t_{90\%} = 2.3\,\tau \approx \SI{1.15}{\milli\second}$.
-    \item \textbf{Pico de corriente} al cerrar:
-      $i_{peak} = \dfrac{V_{CC}-V_{CE,sat}}{100\,\mathrm{\Omega}} \approx \SI{48}{\milli\ampere}$,
-      y decae con $\tau$.
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{5 · Resultados del diseño}
-  \begin{center}
-    \includegraphics[width=0.70\textwidth]{figs/hard_sat_curvas.png}
-  \end{center}
-  \begin{itemize}
-    \item \textbf{Arriba:} $V_C$ sube de 0 a 5 V en $\approx 3\tau = \SI{1.5}{\milli\second}$.
-    \item \textbf{Abajo:} $i_C$ tiene un \textbf{pico de $\approx \SI{48}{\milli\ampere}$}
-      al cerrar T2 y decae exponencialmente.
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{6 · ¿Por qué saturación dura?}
-  \begin{itemize}
-    \item \textbf{Independencia de $\beta$:} con $\beta_{diseño}=10$ el transistor
-      satura aunque el real tenga $\beta=50$–$300$ ($I_B$ de otra configuración no giraría).
-    \item \textbf{Menos pérdidas:} $V_{CE,sat}\approx 0.2\,\mathrm{V}$
-      $\Rightarrow P_{ON}=V_{CE,sat}\cdot I_C \approx 0.2\cdot 50\,\mathrm{mA}
-      = \SI{10}{\milli\watt}$.
-    \item \textbf{Rápido y predecible:} la corriente está limitada por $R_C$ y la carga $RC$.
-    \item \textbf{Contra:} la base consume corriente; en señales muy pequeñas conviene un MOSFET.
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{7 · Diseño alternativo: MOSFET en lugar de T2}
-  \begin{itemize}
-    \item Con un \textbf{NMOS} de nivel lógico ($V_{th}\le 2.1\,\mathrm{V}$) se hace
-      la misma función \textbf{sin} consumir $I_B$: $I_G \approx 0$.
-    \item La corriente de pico la sigue limitando el $100\,\mathrm{\Omega}$; el
-      tiempo lo sigue mandando $\tau = R C$.
-    \item Conmutador de \textbf{lado bajo} (fuente a GND) — igual que T2.
-    \item Cambio de dimensionamiento: $V_{GS}$ vs $I_B$; ya no se usa la regla 10:1.
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Aplicación aeroespacial}
-  \begin{itemize}
-    \item Este tipo de conmutador se usa para \textbf{cargas capacitivas}:
-      mantas térmicas, líneas de retenida de actuadores, buses auxiliares.
-    \item El \textbf{pico de corriente} al encender debe dimensionarse (y a veces
-      limitarse con el resistor en serie) para no dañar el bus ni el driver.
-    \item Regla 10:1 da robustez frente a la variación de $\beta$ por temperatura
-      ($\beta$ cambia en rango -40 °C a +85 °C — por eso "hard saturation" es la norma de diseño).
-    \item En el vacío: verificar $P = V_{CE,sat} I_C$ y derating de cada etapa.
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Resumen del diseño}
-  \begin{itemize}
-    \item \textbf{T1} satura para entregar la base de \textbf{T2}; T2 en
-      \textbf{saturación dura} por la regla \textbf{10:1}.
-    \item Datos clave: $I_{C,max}=\SI{50}{\milli\ampere}$; $I_{B2,sat}=\SI{5}{\milli\ampere}$.
-    \item La carga $RC$ ($100\,\mathrm{\Omega}$, $5\,\mathrm{\mu F}$) define
-      $\tau=\SI{0.5}{\milli\second}$ y limita el pico a $\approx\SI{48}{\milli\ampere}$.
-    \item El diseño es \textbf{predecible e independiente de $\beta$}; el MOSFET
-      (semana 4) puede sustituir a T2 sin consumir base.
-  \end{itemize}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Preguntas de verificación}
+\begin{frame}{9 · Recuperación final}
+  Responde sin mirar el esquema:
   \begin{enumerate}
-    \item ¿Por qué diseñar con $\beta = 10$ (regla 10:1)?
-      \uncover<2->{\emph{(Satura siempre, aunque $\beta$ real sea menor o varíe con la temperatura.)}}
-    \item ¿Cuánto vale $I_{B2,sat}$ con $V_{CC}=5\,\mathrm{V}$ y $R_C=100\,\mathrm{\Omega}$?
-      \uncover<3->{\emph{($I_{C,max}=50\,\mathrm{mA}\Rightarrow I_{B2,sat}=5\,\mathrm{mA}$.)}}
-    \item ¿Cuál es el pico de corriente en el $100\,\mathrm{\Omega}$ de la carga?
-      \uncover<4->{\emph{($\approx (5-0.2)/102.5 \approx \SI{47}{\milli\ampere}$.)}}
-    \item ¿Qué define $\tau$ y qué velocidad tiene la carga?
-      \uncover<5->{\emph{($\tau=RC=0.5\,\mathrm{ms}$; $t_{90\%}\approx 1.15\,\mathrm{ms}$.)}}
-    \item ¿Qué ventaja tendría reemplazar T2 por un NMOS?
-      \uncover<6->{\emph{(No consume corriente de base ($I_G\approx0$); se controla con tensión.)}}
+    \item ¿De dónde sale la corriente de base de Q2?
+    \item Con entrada alta, ¿qué transistor está apagado y por dónde carga $C$?
+    \item ¿Por qué $I_{C2,pico}$ supera a la corriente de $R_C$?
+    \item ¿Por qué carga y descarga tienen constantes de tiempo distintas?
+    \item ¿Qué gana y qué pierde un BJT al saturarse profundamente?
+    \item ¿Por qué $V_{th}$ no define un MOSFET de nivel lógico?
   \end{enumerate}
+\end{frame}
+
+\begin{frame}{Archivos de trabajo}
+  \begin{itemize}
+    \item Netlist validado: \texttt{semana4\_04\_conmutador\_hard\_sat.cir}.
+    \item Guía completa: \texttt{semana\_4\_conmutador\_potencia\_mosfet.md}.
+    \item Hoja de práctica activa:
+      \texttt{semana\_4\_actividades\_aprendizaje.md}.
+    \item Conexión con el IRF640N: \texttt{clase\_4\_mosfet.pdf}.
+  \end{itemize}
+  \begin{block}{Cierre}
+    Una topología, una ecuación y una medida deben contar la misma historia de
+    corriente. Si no coinciden, se corrige el modelo antes de construir.
+  \end{block}
 \end{frame}
 
 \end{document}

@@ -1,22 +1,33 @@
-* Semana 4.1 - Etapa 1: PWM 12 V (driver), RG de compuerta y NMOS lado bajo con carga resistiva
-* Montaje: GP -- RG=100R -- gate; fuente a GND; carga RL=100R de +12 V al drenaje.
-* Mosfet: IRF640N (Infineon): VGS(th)=2-4 V (tip 3 V), necesita VGS>=10 V; RDS(on)<=0.22 ohm.
-* OJO: un GPIO de 3.3 V NO satura el IRF640N; por eso la etapa usa un driver de 12 V.
+* Semana 4.1 - PWM, carga equivalente de gate y motor DC como carga
+* IRF640N: RDS(on) max=0.15 ohm a VGS=10 V, ID=11 A, TJ=25 C.
+* VGS(th)=2...4 V se mide a ID=250 uA: NO es la tension de encendido.
+* El driver 0/12 V se representa con RDRV=10 ohm y RG=100 ohm.
+* Motor nominal 6 V, alimentado con 5 V. Para no subestimar la corriente,
+* RMEQ=20 ohm reproduce 250 mA y 12.5 ohm reproduce 400 mA a 5 V.
+* Si 250/400 mA son datos exclusivos a 6 V, use 24/15 ohm y mida a 5 V.
+* El modelo no representa arranque, bloqueo, FEM ni mecanica.
 
-.param VCC=12 VPWM=12 RG=100 RL=100
+.param VCC=5 VDRV=12 RDRV=10 RG=100 RMEQ=12.5 QGMAX=67n
 VCC vcc 0 {VCC}
-VPWM gpio 0 PULSE(0 {VPWM} 0 1n 1n 5u 10u)
+VDRV driver 0 PULSE(0 {VDRV} 0 1n 1n 5u 10u)
+RDRV driver gpio {RDRV}
 RG gpio gate {RG}
-M1 drain gate 0 0 NMOS640
-RL vcc drain {RL}
+X1 drain gate 0 IRF640N_EDU
+RMOTOR vcc drain {RMEQ}
 
-* Modelo de primer orden apropiado para el IRF640N (VTO~3 V, KP~1.0)
-.model NMOS640 NMOS(VTO=3 KP=1.0 LAMBDA=0.01)
+* Carga equivalente: C=Qg/V. Es una aproximacion conservadora para
+* ejercitar el driver; no reproduce la meseta Miller del dispositivo real.
+CGEQ gate 0 {QGMAX/VDRV}
 
+.include semana4_irf640n_educativo.lib
+.step param RMEQ list 20 12.5
 .tran 0 40u 0 10n
 
-.meas tran VGS_ON AVG V(gate) FROM 11u TO 14u
-.meas tran VDS_ON_MIN MIN V(drain) FROM 11u TO 14u
-.meas tran VDS_OFF_MAX MAX V(drain) FROM 21u TO 29u
-.meas tran ID_ON AVG I(RL) FROM 11u TO 14u
+.meas tran VGS_ON AVG V(gate) FROM 13.5u TO 14.5u
+.meas tran VDS_ON AVG V(drain) FROM 13.5u TO 14.5u
+.meas tran VDS_OFF AVG V(drain) FROM 16u TO 19u
+.meas tran ID_ON AVG I(RMOTOR) FROM 13.5u TO 14.5u
+.meas tran IG_PEAK MAX I(RDRV) FROM 10u TO 11u
+.meas tran TG_10_90 TRIG V(gate) VAL={0.1*VDRV} RISE=2 TARG V(gate) VAL={0.9*VDRV} RISE=2
+.meas tran PDRV_AVG AVG V(driver)*I(RDRV) FROM 10u TO 20u
 .end
