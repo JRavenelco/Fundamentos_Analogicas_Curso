@@ -1,14 +1,80 @@
 % =====================================================================
 % Semana 4 — Pizarrones visuales de aprendizaje
 % Compilar desde docs/presentations con pdflatex (2 pasadas)
+%
+% Secuencia: teoría inicial vectorial (T1-T3, dibujadas en TikZ) +
+% pizarrones generados como imagen, reordenados de teoría a aplicación.
 % =====================================================================
 \documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns,decorations.pathmorphing}
 \setbeamertemplate{navigation symbols}{}
+
+% --- Paleta de pizarra (misma que las láminas generadas) -------------
+\definecolor{pizarra}{RGB}{26,54,46}
+\definecolor{tiza}{RGB}{240,236,224}
+\definecolor{tizasuave}{RGB}{160,176,166}
+\definecolor{cian}{RGB}{96,205,224}
+\definecolor{ambar}{RGB}{240,196,72}
+\definecolor{rojo}{RGB}{226,102,86}
+
+\tikzset{
+  piz/.style={remember picture,overlay,x=1cm,y=1cm,font=\sffamily,color=tiza},
+  panel/.style={draw=tizasuave,thick,rounded corners=3pt},
+  rot/.style={draw=tizasuave!70,dashed,thin}}
+
+% Título de lámina y de panel
+\newcommand{\ltitulo}[1]{\node[anchor=west,text=tiza,font=\sffamily\bfseries\Large]
+  at (0.4,8.55) {#1};
+  \draw[cian,line width=1pt] (0.4,8.22) -- (15.6,8.22);}
+\newcommand{\ptitulo}[3]{\node[anchor=north west,text=cian,
+  font=\sffamily\bfseries\small] at (#1,#2) {#3};}
+\newcommand{\ptexto}[4]{\node[anchor=north west,text=tiza,align=left,
+  text width=#3,font=\sffamily\footnotesize] at (#1,#2) {#4};}
 
 \begin{document}
 
+% =====================================================================
+% Bloque 1 - Teoria: de la fisica del silicio al interruptor
+% =====================================================================
+\input{pizarron_t1_semiconductor}
+
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/09_valvula_controlada_por_campo.png}};
+  \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/10_formacion_del_canal.png}};
+  \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/11_regiones_y_usos.png}};
+  \end{tikzpicture}
+\end{frame}
+
+\input{pizarron_t2_conmutar}
+
+\input{pizarron_t3_corriente_campo}
+
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/12_gate_deposito_miller.png}};
+  \end{tikzpicture}
+\end{frame}
+
+% =====================================================================
+% Bloque 2 - Aplicacion: el conmutador de la semana 4
+% =====================================================================
 \begin{frame}[plain]
   \begin{tikzpicture}[remember picture,overlay]
     \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/01_umbral_no_es_encendido.png}};
@@ -39,12 +105,9 @@
   \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[plain]
-  \begin{tikzpicture}[remember picture,overlay]
-    \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/06_sintesis.png}};
-  \end{tikzpicture}
-\end{frame}
-
+% =====================================================================
+% Bloque 3 - Conmutador BJT y sintesis
+% =====================================================================
 \begin{frame}[plain]
   \begin{tikzpicture}[remember picture,overlay]
     \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/07_bjt_corriente_base.png}};
@@ -59,25 +122,7 @@
 
 \begin{frame}[plain]
   \begin{tikzpicture}[remember picture,overlay]
-    \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/09_valvula_controlada_por_campo.png}};
-  \end{tikzpicture}
-\end{frame}
-
-\begin{frame}[plain]
-  \begin{tikzpicture}[remember picture,overlay]
-    \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/10_formacion_del_canal.png}};
-  \end{tikzpicture}
-\end{frame}
-
-\begin{frame}[plain]
-  \begin{tikzpicture}[remember picture,overlay]
-    \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/11_regiones_y_usos.png}};
-  \end{tikzpicture}
-\end{frame}
-
-\begin{frame}[plain]
-  \begin{tikzpicture}[remember picture,overlay]
-    \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/12_gate_deposito_miller.png}};
+    \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figs/pizarron_semana4/06_sintesis.png}};
   \end{tikzpicture}
 \end{frame}
 

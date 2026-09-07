@@ -1,0 +1,101 @@
+% T2 · Por qué conmutar y no disipar — lámina vectorial de pizarra
+{\setbeamercolor{background canvas}{bg=pizarra}
+\begin{frame}[plain]
+\begin{tikzpicture}[piz]
+\begin{scope}[shift={(current page.south west)}]
+  \ltitulo{T2 · Por qué conmutar y no disipar}
+
+  % ================= modo lineal =================
+  \draw[panel] (0.40,4.45) rectangle (7.70,8.05);
+  \ptitulo{0.62}{7.98}{Modo lineal: el transistor es una resistencia}
+  \begin{scope}[shift={(1.35,5.95)}]
+    % fuente
+    \draw[tiza,thick] (0,0.30) -- (0,0.62);
+    \draw[tiza,thick] (-0.28,0.62) -- (0.28,0.62);
+    \draw[tiza,thick] (-0.15,0.80) -- (0.15,0.80);
+    \draw[tiza,thick] (0,0.80) -- (0,1.20);
+    \node[text=tiza,font=\tiny,anchor=east] at (-0.34,0.71) {5 V};
+    % motor
+    \draw[tiza,thick] (0,1.20) -- (1.35,1.20);
+    \draw[tiza,thick] (1.75,1.20) circle (0.30);
+    \node[text=tiza,font=\tiny] at (1.75,1.20) {M};
+    \draw[tiza,thick] (2.05,1.20) -- (3.30,1.20) -- (3.30,0.95);
+    % elemento lineal
+    \draw[tiza,thick] (3.02,0.95) rectangle (3.58,0.32);
+    \draw[ambar,-{Stealth[length=4pt]},thick] (4.12,0.85) -- (3.66,0.68);
+    \node[text=ambar,font=\tiny,anchor=west] at (4.16,0.85) {2.5 V};
+    % retorno
+    \draw[tiza,thick] (3.30,0.32) -- (3.30,0) -- (0,0) -- (0,0.30);
+    \draw[cian,-{Stealth[length=4pt]}] (1.30,0) -- (1.75,0);
+    \node[text=cian,font=\tiny,anchor=south] at (1.55,0.04) {0.40 A};
+  \end{scope}
+  \node[anchor=north west,text=rojo,font=\sffamily\bfseries\large]
+    at (0.62,5.85)
+    {$P = 2.5\,\mathrm{V}\times0.40\,\mathrm{A} = 1.0\,\mathrm{W}$};
+  \ptexto{0.62}{5.32}{6.9cm}{Toda esa tensión sobrante se vuelve calor
+    \emph{todo el tiempo}.}
+
+  % ================= modo conmutado =================
+  \draw[panel] (7.95,4.45) rectangle (15.60,8.05);
+  \ptitulo{8.17}{7.98}{Modo conmutado: solo dos estados}
+  \draw[rot] (11.77,5.05) -- (11.77,7.45);
+  \node[text=cian,font=\bfseries\small] at (9.90,7.32) {ON};
+  \node[text=cian,font=\bfseries\small] at (13.75,7.32) {OFF};
+  \node[anchor=north west,text=tiza,align=left,text width=3.3cm,
+    font=\sffamily\scriptsize] at (8.30,7.02)
+    {$V_{DS}=I_D\,R_{DS(on)}$\\ $=0.40\times0.15=60\,$mV\\[2pt]
+     $I_D=0.40\,$A};
+  \node[anchor=north west,text=tiza,align=left,text width=3.3cm,
+    font=\sffamily\scriptsize] at (12.05,7.02)
+    {$V_{DS}=5\,$V\\[2pt] $I_D\approx0$ (solo fuga)\\[2pt]
+     la corriente no circula};
+  \node[anchor=north west,text=cian,font=\sffamily\bfseries\large]
+    at (8.30,5.85) {$P_{ON}=24\,$mW};
+  \node[anchor=north west,text=cian,font=\sffamily\bfseries\large]
+    at (12.05,5.85) {$P_{OFF}\approx0$};
+  \node[anchor=north west,text=ambar,align=left,text width=7.2cm,
+    font=\sffamily\scriptsize] at (8.17,5.30)
+    {\textbf{40 veces menos calor} que el modo lineal, con el mismo
+     motor y la misma corriente.};
+
+  % ================= dónde se paga =================
+  \draw[panel] (0.40,0.40) rectangle (15.60,4.20);
+  \ptitulo{0.62}{4.08}{Pero el flanco no es gratis}
+  % ejes
+  \draw[tizasuave,-{Stealth[length=4pt]}] (0.95,1.60) -- (7.30,1.60)
+    node[right,font=\tiny] {$t$};
+  % v_DS
+  \draw[tiza,thick] (1.05,3.35) -- (2.20,3.35) -- (3.00,1.72)
+    -- (5.10,1.72) -- (5.90,3.35) -- (7.10,3.35);
+  \node[text=tiza,font=\tiny,anchor=east] at (1.02,3.35) {$v_{DS}$};
+  % i_D
+  \draw[cian,thick] (1.05,1.68) -- (2.20,1.68) -- (3.00,2.90)
+    -- (5.10,2.90) -- (5.90,1.68) -- (7.10,1.68);
+  \node[text=cian,font=\tiny,anchor=east] at (1.02,1.90) {$i_D$};
+  % solape de potencia
+  \fill[ambar,opacity=0.40] (2.20,1.60) -- (2.60,2.35) -- (3.00,1.60) -- cycle;
+  \fill[ambar,opacity=0.40] (5.10,1.60) -- (5.50,2.35) -- (5.90,1.60) -- cycle;
+  \node[text=ambar,font=\tiny,anchor=east] at (2.15,2.05) {$p=v\,i$};
+  \node[text=ambar,font=\tiny,anchor=south] at (4.05,2.10)
+    {el costo se paga en los flancos};
+  \node[anchor=north west,text=tizasuave,align=left,text width=6.3cm,
+    font=\sffamily\tiny] at (0.95,1.42)
+    {Modelo simplificado con carga resistiva. Con carga inductiva el
+     solape es mayor y depende del camino de recirculación.};
+  % términos de pérdida
+  \node[anchor=north west,text=tiza,align=left,text width=7.5cm,
+    font=\sffamily\footnotesize] at (7.85,3.72)
+    {$P_{cond}=I_D^{2}R_{DS(on)}=24\,$mW \quad
+     \textcolor{tizasuave}{no depende de $f$}\\[5pt]
+     $P_{sw}=(E_{on}+E_{off})\,f$ \quad
+     \textcolor{ambar}{crece en proporción a $f$}\\[5pt]
+     $P_{fuga}=V_{DS}\,I_{DSS}$ \quad
+     \textcolor{tizasuave}{despreciable aquí, no siempre}};
+  \node[anchor=north west,text=cian,align=left,text width=7.5cm,
+    font=\sffamily\footnotesize] at (7.85,2.05)
+    {Subir $f$ reduce rizado y filtro, pero se paga en cada flanco. Ahí
+     $Q_g$ deja de ser un detalle del datasheet y se vuelve el límite
+     del diseño.};
+\end{scope}
+\end{tikzpicture}
+\end{frame}}

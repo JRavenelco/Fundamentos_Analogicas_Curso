@@ -1,0 +1,102 @@
+% T3 · Control por corriente vs control por campo — lámina de pizarra
+{\setbeamercolor{background canvas}{bg=pizarra}
+\begin{frame}[plain]
+\begin{tikzpicture}[piz]
+\begin{scope}[shift={(current page.south west)}]
+  \ltitulo{T3 · Dos maneras de mandar: corriente y campo}
+
+  % ================= BJT =================
+  \draw[panel] (0.40,3.55) rectangle (5.30,8.05);
+  \ptitulo{0.62}{7.98}{BJT NPN · por corriente}
+  \begin{scope}[shift={(2.45,6.50)},scale=0.62]
+    \draw[tiza,thick] (0,-0.60) -- (0,0.60);
+    \draw[tiza,thick] (-0.95,0) -- (0,0);
+    \draw[tiza,thick] (0.05,0.34) -- (0.78,0.98) -- (0.78,1.42);
+    \draw[tiza,thick] (0.05,-0.34) -- (0.78,-0.98) -- (0.78,-1.42);
+    \fill[tiza] (0.60,-0.83) -- (0.33,-0.66) -- (0.47,-0.46) -- cycle;
+    \draw[cian,-{Stealth[length=4pt]}] (-0.90,0.24) -- (-0.34,0.24);
+    \node[text=cian,font=\small,anchor=east] at (-1.00,0) {$I_B$};
+    \node[text=tiza,font=\small,anchor=west] at (0.88,1.26) {C};
+    \node[text=tiza,font=\small,anchor=west] at (0.88,-1.26) {E};
+  \end{scope}
+  \node[anchor=north west,text=tiza,align=left,text width=4.5cm,
+    font=\sffamily\scriptsize] at (0.62,5.45)
+    {$I_C=\beta\,I_B$: la base \textbf{consume corriente todo el tiempo}
+     que el transistor conduce.
+
+     $V_{CE(sat)}\approx0.2\,$V es un \textbf{piso}: no baja aunque baje
+     la corriente.};
+
+  % ================= gráfica =================
+  \draw[panel] (5.55,3.55) rectangle (10.45,8.05);
+  \ptitulo{5.77}{7.98}{La tensión de un ON real}
+  \draw[tizasuave,-{Stealth[length=4pt]}] (6.05,5.30) -- (10.15,5.30)
+    node[below,font=\tiny] {$I$};
+  \draw[tizasuave,-{Stealth[length=4pt]}] (6.05,5.30) -- (6.05,7.50)
+    node[right,font=\tiny] {$V_{ON}$};
+  % BJT: piso plano en 0.2 V
+  \draw[ambar,thick] (6.05,6.61) -- (10.05,6.61);
+  \node[text=ambar,font=\tiny,anchor=south east] at (10.05,6.66) {BJT};
+  % MOSFET: recta por el origen, pendiente R_DS(on)
+  \draw[cian,thick] (6.05,5.30) -- (10.05,7.47);
+  \node[text=cian,font=\tiny,anchor=north east] at (10.02,7.42) {MOSFET};
+  \fill[tiza] (8.47,6.61) circle (0.07);
+  % punto de trabajo
+  \draw[rot] (6.78,5.30) -- (6.78,6.61);
+  \fill[cian]  (6.78,5.69) circle (0.07);
+  \fill[ambar] (6.78,6.61) circle (0.07);
+  \node[text=tiza,font=\tiny,anchor=north]  at (6.78,5.25) {0.40 A};
+  \node[text=cian,font=\tiny,anchor=west]   at (6.88,5.58) {60 mV};
+  \node[text=ambar,font=\tiny,anchor=west]  at (6.88,6.38) {200 mV};
+  \node[anchor=north west,text=tiza,align=left,text width=4.5cm,
+    font=\sffamily\scriptsize] at (5.77,4.80)
+    {A corriente baja gana el MOSFET: su caída baja con $I$. El piso del
+     BJT no baja nunca.};
+
+  % ================= NMOS =================
+  \draw[panel] (10.70,3.55) rectangle (15.60,8.05);
+  \ptitulo{10.92}{7.98}{NMOS · por campo}
+  \begin{scope}[shift={(12.90,6.50)},scale=0.62]
+    \draw[tiza,thick] (-0.34,-0.64) -- (-0.34,0.64);
+    \draw[tiza,thick] (-1.05,0) -- (-0.34,0);
+    \draw[tiza,thick] (0,0.32) -- (0,0.64);
+    \draw[tiza,thick] (0,-0.13) -- (0,0.13);
+    \draw[tiza,thick] (0,-0.64) -- (0,-0.32);
+    \draw[tiza,thick] (0,0.48) -- (0.78,0.48) -- (0.78,1.42);
+    \draw[tiza,thick] (0,-0.48) -- (0.78,-0.48) -- (0.78,-1.42);
+    \draw[tiza,thick] (0,0) -- (0.78,0);
+    \fill[tiza] (0.32,0) -- (0.10,0.14) -- (0.10,-0.14) -- cycle;
+    \node[text=cian,font=\small,anchor=east] at (-1.10,0) {$V_{GS}$};
+    \node[text=tiza,font=\small,anchor=west] at (0.88,1.26) {D};
+    \node[text=tiza,font=\small,anchor=west] at (0.88,-1.26) {S};
+  \end{scope}
+  \node[anchor=north west,text=tiza,align=left,text width=4.5cm,
+    font=\sffamily\scriptsize] at (10.92,5.45)
+    {$I_G\approx0$ en DC porque el óxido aísla, pero cada flanco mueve
+     $Q_g$: $I_{G,avg}\approx Q_g f$.
+
+     $V_{DS(on)}=I_D R_{DS(on)}$: \textbf{sin piso}, baja con la
+     corriente.};
+
+  % ================= franja inferior =================
+  \draw[panel] (0.40,0.40) rectangle (15.60,3.30);
+  \ptitulo{0.62}{3.18}{Lo que hay que llevarse}
+  \node[anchor=north west,text=tiza,align=left,text width=7.1cm,
+    font=\sffamily\footnotesize] at (0.62,2.78)
+    {\textcolor{cian}{Los dos necesitan corriente del driver:} el BJT de
+     forma continua mientras conduce, el MOSFET solo en los flancos. Por
+     eso ``control por tensión'' no significa ``driver sin corriente''.
+     Además, un BJT saturado guarda carga en la base y por eso apaga
+     lento.};
+  \node[anchor=north west,text=tiza,align=left,text width=7.1cm,
+    font=\sffamily\footnotesize] at (8.30,2.78)
+    {\textcolor{ambar}{Ninguno es mejor en abstracto.} La comparación
+     cambia con tensión, corriente, frecuencia y temperatura:
+     $R_{DS(on)}$ \emph{sube} con $T_J$, así que la ventaja del MOSFET
+     se estrecha al calentarse.
+
+     \textcolor{rojo}{Saturación MOSFET $\neq$ saturación BJT:} un
+     MOSFET como interruptor ON trabaja en región óhmica.};
+\end{scope}
+\end{tikzpicture}
+\end{frame}}

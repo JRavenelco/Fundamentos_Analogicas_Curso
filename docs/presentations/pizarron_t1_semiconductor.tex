@@ -1,0 +1,125 @@
+% T1 · Del silicio al canal — lámina vectorial de pizarra (16x9 cm)
+{\setbeamercolor{background canvas}{bg=pizarra}
+\begin{frame}[plain]
+\begin{tikzpicture}[piz]
+\begin{scope}[shift={(current page.south west)}]
+  \ltitulo{T1 · Del silicio al canal: de dónde sale el umbral}
+
+  % ================= fila superior: cristal y dopado =================
+  % --- 1 · silicio puro ---
+  \draw[panel] (0.40,5.60) rectangle (5.30,8.05);
+  \ptitulo{0.62}{7.98}{1 · Silicio puro}
+  \begin{scope}[shift={(0.75,5.95)}]
+    \foreach \i in {0,1,2} \foreach \j in {0,1,2} {
+      \draw[tizasuave,thin] (\i*0.48,\j*0.48) -- ++(0.48,0);
+      \draw[tizasuave,thin] (\i*0.48,\j*0.48) -- ++(0,0.48);}
+    \foreach \i in {0,1,2,3} \foreach \j in {0,1,2,3}
+      \fill[tiza] (\i*0.48,\j*0.48) circle (0.10);
+  \end{scope}
+  \node[anchor=north west,text=tiza,align=left,text width=2.5cm,
+    font=\sffamily\scriptsize] at (2.75,7.50)
+    {Cada átomo comparte \textbf{4 enlaces}. Sin portadores libres,
+     casi no conduce.};
+
+  % --- 2 · dopado N ---
+  \draw[panel] (5.55,5.60) rectangle (10.45,8.05);
+  \ptitulo{5.77}{7.98}{2 · Tipo N (donador)}
+  \begin{scope}[shift={(5.90,5.95)}]
+    \foreach \i in {0,1,2} \foreach \j in {0,1,2} {
+      \draw[tizasuave,thin] (\i*0.48,\j*0.48) -- ++(0.48,0);
+      \draw[tizasuave,thin] (\i*0.48,\j*0.48) -- ++(0,0.48);}
+    \foreach \i in {0,1,2,3} \foreach \j in {0,1,2,3}
+      \fill[tiza] (\i*0.48,\j*0.48) circle (0.10);
+    \fill[ambar] (0.96,0.96) circle (0.16);
+    \node[text=pizarra,font=\tiny\bfseries] at (0.96,0.96) {P};
+    \fill[cian] (1.62,1.52) circle (0.11);
+    \draw[cian,-{Stealth[length=3.5pt]}] (1.10,1.10) -- (1.52,1.42);
+    \node[text=cian,font=\tiny,anchor=west] at (1.74,1.56) {$e^-$};
+  \end{scope}
+  \node[anchor=north west,text=tiza,align=left,text width=2.5cm,
+    font=\sffamily\scriptsize] at (7.90,7.50)
+    {La impureza aporta un electrón de más: queda \textbf{libre}.
+     Mayoritario negativo.};
+
+  % --- 3 · dopado P ---
+  \draw[panel] (10.70,5.60) rectangle (15.60,8.05);
+  \ptitulo{10.92}{7.98}{3 · Tipo P (aceptor)}
+  \begin{scope}[shift={(11.05,5.95)}]
+    \foreach \i in {0,1,2} \foreach \j in {0,1,2} {
+      \draw[tizasuave,thin] (\i*0.48,\j*0.48) -- ++(0.48,0);
+      \draw[tizasuave,thin] (\i*0.48,\j*0.48) -- ++(0,0.48);}
+    \foreach \i in {0,1,2,3} \foreach \j in {0,1,2,3}
+      \fill[tiza] (\i*0.48,\j*0.48) circle (0.10);
+    \fill[cian] (0.96,0.96) circle (0.16);
+    \node[text=pizarra,font=\tiny\bfseries] at (0.96,0.96) {B};
+    \draw[ambar,thick] (1.62,1.52) circle (0.11);
+    \node[text=ambar,font=\tiny,anchor=west] at (1.78,1.56) {$h^+$};
+  \end{scope}
+  \node[anchor=north west,text=tiza,align=left,text width=2.5cm,
+    font=\sffamily\scriptsize] at (13.05,7.50)
+    {Falta un electrón en un enlace: ese \textbf{hueco} se mueve.
+     Mayoritario positivo.};
+
+  % ================= fila inferior: unión PN y NMOS =================
+  % --- 4 · unión PN ---
+  \draw[panel] (0.40,0.30) rectangle (7.70,5.35);
+  \ptitulo{0.62}{5.23}{4 · Unión PN: la barrera}
+  \draw[rojo,-{Stealth[length=5pt]},thick] (5.05,5.02) -- (4.35,5.02);
+  \node[text=rojo,font=\tiny,anchor=west] at (5.15,5.02) {campo interno};
+  \fill[cian!22]      (0.95,3.60) rectangle (3.35,4.75);
+  \fill[tizasuave!18] (3.35,3.60) rectangle (4.15,4.75);
+  \fill[ambar!22]     (4.15,3.60) rectangle (6.55,4.75);
+  \draw[tiza,thick]   (0.95,3.60) rectangle (6.55,4.75);
+  \draw[rot] (3.35,3.60) -- (3.35,4.75);
+  \draw[rot] (4.15,3.60) -- (4.15,4.75);
+  \node[text=cian,font=\bfseries]  at (2.15,4.17) {P};
+  \node[text=ambar,font=\bfseries] at (5.35,4.17) {N};
+  \foreach \y in {3.85,4.17,4.49} {
+    \node[text=tiza,font=\tiny] at (3.62,\y) {$-$};
+    \node[text=tiza,font=\tiny] at (3.90,\y) {$+$};}
+  \node[text=tizasuave,font=\tiny] at (3.75,3.38) {zona de agotamiento};
+  \ptexto{0.62}{3.10}{6.9cm}{Los portadores se recombinan en la frontera
+    y dejan \textbf{iones fijos}. El campo que aparece frena la difusión:
+    nace una barrera de $\approx0.6$--$0.7\,$V en silicio. Solo cede con
+    polarización \textbf{directa}; en inversa la unión bloquea.}
+
+  % --- 5 · el NMOS ---
+  \draw[panel] (7.95,0.30) rectangle (15.60,5.35);
+  \ptitulo{8.17}{5.23}{5 · El NMOS por dentro}
+  \fill[cian!18]  (8.60,3.30) rectangle (14.20,4.30);
+  \draw[tiza,thick] (8.60,3.30) rectangle (14.20,4.30);
+  \fill[ambar!30] (8.85,3.90) rectangle (10.00,4.30);
+  \fill[ambar!30] (12.80,3.90) rectangle (13.95,4.30);
+  \draw[tiza,thick] (8.85,3.90) rectangle (10.00,4.30);
+  \draw[tiza,thick] (12.80,3.90) rectangle (13.95,4.30);
+  \node[text=ambar,font=\tiny\bfseries] at (9.42,4.10)  {N$^+$};
+  \node[text=ambar,font=\tiny\bfseries] at (13.38,4.10) {N$^+$};
+  \node[text=cian,font=\tiny\bfseries]  at (11.40,3.55) {cuerpo P};
+  \fill[rojo!45]   (10.00,4.30) rectangle (12.80,4.42);
+  \fill[tizasuave] (10.00,4.42) rectangle (12.80,4.62);
+  \draw[rot] (10.00,3.30) -- (10.00,4.30);
+  \draw[rot] (12.80,3.30) -- (12.80,4.30);
+  \draw[tiza,thick] (9.42,4.30)  -- (9.42,4.70);
+  \draw[tiza,thick] (11.40,4.62) -- (11.40,4.70);
+  \draw[tiza,thick] (13.38,4.30) -- (13.38,4.70);
+  \node[text=tiza,font=\tiny,anchor=south] at (9.42,4.72)  {S};
+  \node[text=tiza,font=\tiny,anchor=south] at (11.40,4.72) {G};
+  \node[text=tiza,font=\tiny,anchor=south] at (13.38,4.72) {D};
+  % leyenda de capas
+  \fill[rojo!45]   (14.45,4.32) rectangle (14.68,4.44);
+  \node[text=tiza,font=\tiny,anchor=west] at (14.75,4.38) {oxido};
+  \fill[tizasuave] (14.45,4.02) rectangle (14.68,4.14);
+  \node[text=tiza,font=\tiny,anchor=west] at (14.75,4.08) {gate};
+  \ptexto{8.17}{3.05}{7.2cm}{Son \textbf{dos uniones PN opuestas}: con
+    cualquier polaridad de $V_{DS}$ una queda en inversa, así que
+    $I_D\approx0$.
+
+    \textcolor{cian}{El gate no inyecta portadores:} su campo invierte
+    la superficie del cuerpo P a tipo N y fabrica el canal.}
+  \node[anchor=north west,text=ambar,align=left,text width=7.2cm,
+    font=\sffamily\scriptsize] at (8.17,1.15)
+    {$V_{GS(th)}$ es donde la inversión \emph{apenas empieza} (se mide
+     con $I_D=250\,\mu$A). No es la tensión de trabajo.};
+\end{scope}
+\end{tikzpicture}
+\end{frame}}
