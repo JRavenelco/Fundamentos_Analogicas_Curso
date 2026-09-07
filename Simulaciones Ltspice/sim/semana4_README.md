@@ -10,6 +10,8 @@
   nunca reproducir retirando protección en hardware.
 - `semana4_03_medicion_adc.cir`: shunt de fuente y divisor hacia ADC.
 - `semana4_04_conmutador_hard_sat.cir`: BJT corregido, pull-up de base y carga RC.
+- `semana4_05_tl494_pwm.cir`: generador PWM con modelo educativo TL494
+  (`tl494_educativo.sub`) a 100 kHz / 50 %, driver de gate 0-12 V y motor 5 V.
 - `semana4_irf640n_educativo.lib`: sustituto pedagógico compartido.
 
 ## Ejecución

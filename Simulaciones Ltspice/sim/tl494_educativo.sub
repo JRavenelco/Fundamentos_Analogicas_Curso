@@ -1,0 +1,25 @@
+* TL494 educativo - modelo por bloques para LTspice XVII
+* Pines (numeracion estandar DIP-16):
+*  1: 1IN+   2: 1IN-   3: FB    4: DTC    5: CT     6: RT     7: GND   8: C1
+*  9: E1    10: E2    11: C2   12: VCC   13: OUTCTL 14: REF   15: 2IN- 16: 2IN+
+* Modelo pedagogico por bloques (no es el circuito interno real de TI):
+* referencia 5 V, oscilador diente de sierra (F=1.1/(RT*CT)), amplificador de
+* error, comparador de dead-time y comparador PWM con salida en colector
+* abierto. Compatible con LTspice XVII (solo usa min/max/int).
+.subckt TL494 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+* Referencia interna de 5 V (activa con VCC > 6 V)
+BREF 14 0 V=5*min(max(1e6*(V(12)-V(7)-6),0),1)
+* Oscilador: diente de sierra 0.7 V..3.5 V a F = 1.1/(RT*CT)
+BSAW 5 7 V=0.7+2.8*(time*{FOSC}-int(time*{FOSC}))
+* Amplificador de error (ganancia 1, acotado a 0..3.5 V)
+BEA 3 7 V=MAX(0, MIN(3.5, V(1)-V(2)))
+* Comparador PWM: la sierra compara contra MIN(EA, DTC) -> 0/5 V (digital)
+BCMP 99 7 V=5*min(max(1e6*(V(5)-MIN(V(3),V(4))),0),1)
+* Etapa de salida (colector abierto entre C1 y GND, emisores a GND)
+MQ 8 99 7 7 QSTG
+RQ 8 7 1G
+.model QSTG NMOS(VTO=2 KP=10m)
+RIN 1 7 1G
+RIN2 2 7 1G
+RIN4 4 7 1G
+.ends TL494

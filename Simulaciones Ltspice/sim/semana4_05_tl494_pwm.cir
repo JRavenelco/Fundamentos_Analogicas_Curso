@@ -1,0 +1,44 @@
+* Semana 4.5 - Generador PWM con TL494 (modelo educativo) + driver IRF640N + motor 5 V
+* TL494 alimentado a 12 V (VCC>=7 V); RT/CT fijan F = 1.1/(RT*CT) ~ 100 kHz.
+* El motor (nominal 6 V) se alimenta con bus de 5 V; envolvente 20 ohm (sin carga, 250 mA)
+* y 12.5 ohm (con carga, 400 mA) con .step.
+* Salida C1 (colector abierto) con pull-up 2.2k -> RG=100 -> gate del IRF640N.
+
+.param RT=11k CT=1n FOSC=1.1/(RT*CT)
+.param VCC=12 VDRV=12 RMOT=20 VPWM=2.1
+.include tl494_educativo.sub
+
+VCC vcc 0 {VCC}
+* Entrada de control: divisor del REF interno (5 V) -> 2.1 V en 1IN+
+* (duty = (VPWM-0.7)/2.8 = 50 %)
+RREF1 ref pin1 5k
+RREF2 pin1 0 3.62k
+X1 pin1 0 3 dtc ct rt 0 out out 0 0 vcc 0 ref 0 0 TL494
+RCT ct 0 1G
+RRT rt 0 1G
+RDTC_OFF dtc 0 1G
+VDTC dtc 0 3.3
+* Pull-up de la salida de colector abierto y driver de compuerta
+RC1 out vcc 2.2k
+RG out gate 100
+* IRF640N lado bajo con el motor en el bus de 5 V, y .step de carga
+VBUS bus 0 5
+RMOT bus drain {RMOT}
+M1 drain gate 0 0 NMOS640
+.model NMOS640 NMOS(VTO=3 KP=1.0 LAMBDA=0.01)
+
+.step param RMOT list 20 12.5
+.tran 0 120u 0 20n
+
+.meas tran PERIOD TRIG V(drain)=2.5 RISE=2 TARG V(drain)=2.5 RISE=4
+.meas tran DUTY_TIME TRIG V(drain)=2.5 FALL=2 TARG V(drain)=2.5 RISE=2
+.meas tran VGS_HI AVG V(gate) FROM 60u TO 100u
+.meas tran ID_MOT AVG I(RMOT) FROM 60u TO 100u
+.meas tran VDS_ON AVG V(drain) FROM 60u TO 100u
+* diagnostico
+.meas tran DBG_REF AVG V(ref) FROM 60u TO 100u
+.meas tran DBG_EA AVG V(3) FROM 60u TO 100u
+.meas tran DBG_CT_MIN MIN V(ct) FROM 60u TO 100u
+.meas tran DBG_CT_MAX MAX V(ct) FROM 60u TO 100u
+.meas tran DBG_DTC AVG V(dtc) FROM 60u TO 100u
+.end
