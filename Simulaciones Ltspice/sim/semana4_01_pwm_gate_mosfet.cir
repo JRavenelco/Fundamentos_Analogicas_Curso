@@ -1,16 +1,17 @@
-* Semana 4.1 - Etapa 1: PWM 3.3 V, RG de compuerta y NMOS lado bajo con carga resistiva
+* Semana 4.1 - Etapa 1: PWM 12 V (driver), RG de compuerta y NMOS lado bajo con carga resistiva
 * Montaje: GP -- RG=100R -- gate; fuente a GND; carga RL=100R de +12 V al drenaje.
-* La salida de drenaje queda invertida respecto al PWM (como en la semana 3 con el TBJ).
+* Mosfet: IRF640N (Infineon): VGS(th)=2-4 V (tip 3 V), necesita VGS>=10 V; RDS(on)<=0.22 ohm.
+* OJO: un GPIO de 3.3 V NO satura el IRF640N; por eso la etapa usa un driver de 12 V.
 
-.param VCC=12 VPWM=3.3 RG=100 RL=100
+.param VCC=12 VPWM=12 RG=100 RL=100
 VCC vcc 0 {VCC}
 VPWM gpio 0 PULSE(0 {VPWM} 0 1n 1n 5u 10u)
 RG gpio gate {RG}
-M1 drain gate 0 0 NMOS1
+M1 drain gate 0 0 NMOS640
 RL vcc drain {RL}
 
-* MOSFET de nivel logico: Vth baja (2.1 V) y KP alta para saturar con 3.3 V en el gate.
-.model NMOS1 NMOS(VTO=2.1 KP=1.0 LAMBDA=0.01)
+* Modelo de primer orden apropiado para el IRF640N (VTO~3 V, KP~1.0)
+.model NMOS640 NMOS(VTO=3 KP=1.0 LAMBDA=0.01)
 
 .tran 0 40u 0 10n
 

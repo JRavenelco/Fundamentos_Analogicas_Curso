@@ -187,20 +187,29 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
-\begin{frame}{7 · Ejemplo numérico}
-  \textbf{Datos:} $V_{th}=2\,\mathrm{V}$, $k_n=0.5\,\mathrm{mA/V^2}$, $V_{GS}=5\,\mathrm{V}$,
-  $V_{DD}=12\,\mathrm{V}$, $R_D=2.2\,\mathrm{k\Omega}$.
+\begin{frame}{7 · Ejemplo numérico · IRF640N}
+  \textbf{Datos del IRF640N (Infineon):} $V_{th}=3\,\mathrm{V}$, $R_{DS(on)}\le 0.22\,\mathrm{\Omega}$
+  (tip.\ $0.15\,\mathrm{\Omega}$), $Q_g=67\,\mathrm{nC}$, $C_{iss}=1300\,\mathrm{pF}$,
+  $V_{DS,max}=200\,\mathrm{V}$, $I_D=18\,\mathrm{A}$.
   \pause
-  \[
-    I_D = \tfrac{1}{2}(0.5)(5-2)^2 = \SI{2.25}{\milli\ampere}
-    \qquad
-    V_{DS} = V_{DD} - I_D R_D = 12 - 2.25\cdot 2.2 \approx \SI{7.05}{\volt}
-  \]
   \begin{itemize}
-    \item La región depende del punto: con $V_{DS}=7.05 > V_{GS}-V_{th}=3$ está en \textbf{saturación}.
-    \item Como \textbf{interruptor} (triodo): $R_{DS(on)}=100\,\mathrm{m\Omega}$, $I_D=1\,\mathrm{A}$
-      $\Rightarrow V_{DS}=0.1\,\mathrm{V}$, $P = I_D^2 R_{DS}\approx \SI{100}{\milli\watt}$ (pérdida mínima).
+    \item \textbf{Amplificador (saturación):} con $V_{GS}=12\,\mathrm{V}$ y
+      $k_n\approx 1\,\mathrm{A/V^2}$:
+      $I_D=\tfrac{1}{2}k_n(12-3)^2 \approx \SI{40}{\ampere}$ (muy grande: para amplificar
+      se prefiere un MOSFET pequeño de señal).
+    \item \textbf{Interruptor (triodo):} $I_D = 120\,\mathrm{mA}$ con $V_{CC}=12\,\mathrm{V}$,
+      $R_L=100\,\mathrm{\Omega}$:
+      \[
+        V_{DS} = I_D R_{DS(on)} \approx 0.12\cdot 0.15 \approx \SI{0.02}{\volt}
+        \qquad
+        P = I_D^2 R_{DS} \approx \SI{2.2}{\milli\watt}
+      \]
+      Pérdida mínima $\Rightarrow$ ideal para conmutar.
   \end{itemize}
+  \begin{block}{Nota de aplicación}
+    El IRF640N \textbf{no es de nivel lógico}: para saturar bien necesita
+    $V_{GS}\ge 10\,\mathrm{V}$ (un GPIO de 3.3 V no basta; se usa un driver de 12 V).
+  \end{block}
 \end{frame}
 
 % ---------------------------------------------------------------------

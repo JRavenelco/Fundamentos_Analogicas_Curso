@@ -2,9 +2,11 @@
 
 Práctica con tres simulaciones independientes. La secuencia permite montar,
 medir y corregir un bloque antes de agregar el siguiente. Cada etapa usa un
-`NMOS` de nivel lógico (`VTO≈2.1 V`, `KP=1.0`) excitado por un GPIO de 3.3 V,
-y la salida de drenaje está **invertida** respecto al PWM (igual que el TBJ en
-la semana 3: conmutador de lado bajo).
+**IRF640N (Infineon)** como MOSFET de conmutación, excitado con un **driver de
+12 V** (el IRF640N **no es de nivel lógico**: `VGS(th)=2–4 V`, típico 3 V, y
+necesita `VGS ≥ 10 V` para saturar; un GPIO de 3.3 V no basta, se requieren 12 V
+en el gate). La salida de drenaje está **invertida** respecto al PWM (igual que
+el TBJ en la semana 3: conmutador de lado bajo).
 
 ## Corrección de topología
 
@@ -13,43 +15,45 @@ la semana 3: conmutador de lado bajo).
                     |
                  RL=100
                     |
-      GPIO PWM --RG=100-- G|   D
-                            NMOS (lado bajo)
-                           S |
-                             GND
+      GPIO --driver 12 V-- RG=100 -- G|   D
+                            IRF640N (lado bajo)
+                                      S |
+                                        GND
 ```
 
 - El PMOS quedaría al revés del lado alto; aquí el **NMOS de lado bajo** es la
   conexión correcta con la fuente (S) a GND.
 - Verificar el **marcado real** del MOSFET y su pinout en la hoja de datos antes
-  de armar; en las simulaciones se usa el modelo `NMOS1` genérico.
-- Para que un GPIO de 3.3 V sature un NMOS de potencia se requiere un dispositivo
-  de **nivel lógico** (`Vth ≤ 2.1 V` y `KP` alta).
+  de armar; en las simulaciones se usa un modelo de primer orden del IRF640N
+  (`VTO=3`, `KP=1.0` → `RDS(on) ≈ 0.15 Ω`).
+- **Datos clave del IRF640N (Infineon):** `VDS=200 V`, `ID=18 A`,
+  `RDS(on) ≤ 0.22 Ω` (tip. 0.15 Ω @ VGS=10 V), `Qg=67 nC`, `Ciss=1300 pF`,
+  `VGS(th)=2–4 V`.
 
-## Etapa 1 — PWM, compuerta y conmutador resistivo
+## Etapa 1 — PWM (12 V), compuerta y conmutador resistivo
 
 Archivo: `semana4_01_pwm_gate_mosfet.cir`.
 
-Montar GPIO, `RG=100`, el NMOS y `RL=100` de +12 V al drenaje. Graficar
-`V(gate)` y `V(drain)`.
+Montar driver de 12 V, `RG=100`, el IRF640N y `RL=100` de +12 V al drenaje.
+Graficar `V(gate)` y `V(drain)`.
 
 Datos del generador:
 
 ```text
-PULSE(0 3.3 0 1n 1n 5u 10u)  ->  f = 100 kHz, D = 50 %
+PULSE(0 12 0 1n 1n 5u 10u)  ->  f = 100 kHz, D = 50 %
 ```
 
-Predicción con el modelo (`Vth=2.1 V`, `KP=1.0`):
+Predicción con el modelo (`Vth=3 V`, `KP=1.0`, `VGS=12 V`):
 
 ```text
-ID(sat) = 0.5*KP*(VGS - Vth)^2 = 0.5*1.0*(3.3 - 2.1)^2 = 0.72 A
+ID(sat) = 0.5*KP*(VGS - Vth)^2 = 0.5*1.0*(12 - 3)^2 = 40 A  (>> 120 mA)
 ID(carga) = (12 - VDS) / 100 ≈ 120 mA
 ```
 
 Como `ID(sat) >> ID(carga)`, el MOSFET entra en **triodo** (canal resistivo):
 
 ```text
-VDS_ON ≈ ID / (KP*(VGS - Vth)) ≈ 0.12 / (1.0*1.2) ≈ 0.1 V
+VDS_ON ≈ ID * RDS(on) ≈ 0.12 A * 0.15 Ω ≈ 18 mV  (~0.02 V)
 VDS_OFF ≈ 12 V (corte, sin corriente)
 ```
 
@@ -57,13 +61,13 @@ Resultados esperados en el log (`View > SPICE Error Log`):
 
 | Medida | Valor esperado |
 | --- | ---: |
-| `VGS_ON` | ~3.3 V |
-| `VDS_ON_MIN` | ~0.1 V |
+| `VGS_ON` | ~12 V |
+| `VDS_ON_MIN` | ~0.02 V |
 | `VDS_OFF_MAX` | ~12 V |
 | `ID_ON` | ~120 mA |
 
-Comprobación práctica: medir primero `+12 V`, luego el PWM y por último el
-drenaje. La señal está invertida.
+Comprobación práctica: medir primero `+12 V`, luego el PWM del driver y por
+último el drenaje. La señal está invertida.
 
 ## Etapa 2 — Carga inductiva y diodo de libre circulación
 
@@ -142,3 +146,26 @@ Las simulaciones se ejecutan con LTspice XVII. Los valores esperados se
 obtienen del modelo de primer orden (ver arriba) y se confirman con `.meas`;
 si no coinciden, revisar: marcado/pinout del MOSFET, orientación de `D1`
 (ánodo al drenaje), `+12 V` real y masa común.
+
+## Diseño de clase: conmutador de saturación dura con carga RC
+
+Archivo: `semana4_04_conmutador_hard_sat.cir`. Es el diseño alrededor del cual
+gira la clase (`clase_4_conmutador_hard_sat.pdf`): driver PULSE 5 V → 2k → T1
+(BC548, pre-driver) → 2k → T2 (BC548, **saturación dura**), con Rc=100 Ω a 5 V
+y una carga RC (100 Ω + 5 µF) desde el colector (N1) a GND.
+
+```text
+Regla 10:1:  IC,max = 5 V/100 Ω = 50 mA;  IB2,sat = 50 mA/10 = 5 mA
+tau = 100 Ω*5 µF = 0.5 ms;  pico i_carga ≈ (5-0.2)/102.5 ≈ 47 mA
+```
+
+Esperado en el log: `IC2_MAX ≈ 50 mA`, `IB2_AVG ≈ 5 mA`, `VC_FINAL ≈ 5 V`,
+`IC2_PEAK_MAX ≈ 47 mA`. Con el modelo de BC548 real (BF=300) la saturación es
+profunda y los valores coinciden con la regla 10:1.
+
+## Conexión con la clase de MOSFET
+
+El diseño usa BJT en saturación dura; en la práctica se puede sustituir T2 por
+un **NMOS de nivel lógico** (misma función, sin consumir corriente de base),
+que es el tema de la clase teórica `clase_4_mosfet.pdf` y de las etapas 1-3 de
+esta práctica.

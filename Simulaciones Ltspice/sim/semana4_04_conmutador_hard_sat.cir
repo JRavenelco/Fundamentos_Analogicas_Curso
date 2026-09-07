@@ -1,0 +1,25 @@
+* Semana 4.4 - Diseno: conmutador de saturacion dura con carga RC (clase alrededor del diseno)
+* Q1 PULSE 5V -> 2k -> T1 (BC548, pre-driver); T1 -> 2k -> base de T2.
+* T2 (BC548, saturacion dura regla 10:1): colector -> 100R -> VCC=5V.
+* Carga RC: VCC -> 100R -> N2 (C=5uF) -> GND.
+
+.param VCC=5 RLOAD=100 CLOAD=5u
+VCC vcc 0 {VCC}
+VPULSE q1 0 PULSE(0 5 0 1n 1n 0.5m 1m)
+R1 q1 t1b 2k
+T1 t1c t1b 0 QBC548
+R2 t1c t2b 2k
+T2 n1 t2b 0 QBC548
+RC n1 vcc 100
+R3 n1 n2 {RLOAD}
+C1 n2 0 {CLOAD}
+
+.model QBC548 NPN(IS=1e-14 BF=300 VAF=100 RB=20 CJE=10p CJC=4p TF=0.5n)
+
+.tran 0 5m 0 0.5u
+
+.meas tran IC2_MAX MAX I(RC) FROM 0.4m TO 1m
+.meas tran IB2_AVG AVG I(R2) FROM 0.4m TO 1m
+.meas tran VC_FINAL AVG V(n2) FROM 4.5m TO 5m
+.meas tran IC2_PEAK_MAX MAX I(R3) FROM 0 TO 0.5m
+.end
