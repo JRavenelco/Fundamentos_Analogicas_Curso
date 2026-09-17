@@ -1,0 +1,11 @@
+# dependencias y build
+node_modules/
+dist/
+.vite/
+
+# logs
+npm-debug.log*
+yarn-error.log*
+
+# Netlify
+.netlify/
